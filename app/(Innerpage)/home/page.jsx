@@ -110,13 +110,13 @@ const PageDetails = () => {
         if (activeRouteIndex) {
           try {
             const response = await axios.get(
-              `${baseURL}/getEachQuizKeywords.php?userId=${
+              `${baseURL}/getEachTestQuiz.php?userId=${
                 user?.id ? user.id : null
               }&page_id=${page_id}&page_type=${activeRouteIndex}`
             );
             console.log(response.data);
             if (response.data) {
-              setPrivateQuiz(response.data);
+              setQuizData(response.data);
             }
           } catch (error) {
             console.error("Error while fetching quiz");
