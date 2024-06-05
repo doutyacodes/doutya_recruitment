@@ -28,10 +28,10 @@ const Success = ({ params }) => {
         const response = await axios.get(
           `${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
         );
-        console.log(response.data)
+        // console.log(response.data)
         if (response.data.stars);
         {
-          console.log(response.data.stars);
+          // console.log(response.data.stars);
           setStarsDetails(response.data.stars); // Assuming you want to set the data here
 
         }

@@ -94,7 +94,7 @@ const PageDetails = () => {
             const response = await axios.get(
               `${baseURL}/getEachQuiz.php?page_id=${page_id}&page_type=${activeRouteIndex}${baseApiUrl}`
             );
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data) {
               setQuizState(response.data);
             }
@@ -114,7 +114,7 @@ const PageDetails = () => {
                 user?.id ? user.id : null
               }&page_id=${page_id}&page_type=${activeRouteIndex}`
             );
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data) {
               setQuizData(response.data);
             }
@@ -134,7 +134,7 @@ const PageDetails = () => {
                 user?.id ? user.id : null
               }&page_id=${page_id}&page_type=${activeRouteIndex}`
             );
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data) {
               setPrivateQuiz(response.data);
             }
@@ -152,7 +152,7 @@ const PageDetails = () => {
             const response = await axios.get(
               `${baseURL}/get-all-levels.php?userId=${user.id}`
             );
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data) {
               setProgressDetails(response.data);
             }
@@ -170,7 +170,7 @@ const PageDetails = () => {
             const response = await axios.get(
               `${baseURL}/get-all-levels-public.php?userId=${user.id}`
             );
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data) {
               setProgressDetailspublic(response.data);
             }

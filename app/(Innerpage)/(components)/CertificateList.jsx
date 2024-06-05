@@ -47,7 +47,7 @@ const CertificateList = ({ item, user_id }) => {
       const response = await axios.get(
         `${baseURL}/toggle-like-comment.php?people_id=${item.people_data_id}&comment_author=${item.user_id}&comment_id=${item.id}&user_id=${user_id}`
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.status === 200) {
         if (!heartActive) {

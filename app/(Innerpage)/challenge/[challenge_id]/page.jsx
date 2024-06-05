@@ -34,7 +34,7 @@ const PageDetails = ({ params }) => {
         if (response.status === 200) {
           setChallenge(response.data);
           // console.log(response.data);
-          console.log(response.data);
+          // console.log(response.data);
         } else {
           console.error("Failed to fetch challenges");
         }

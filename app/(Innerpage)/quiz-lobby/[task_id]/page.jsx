@@ -30,7 +30,7 @@ const LobbyScreen = ({ params }) => {
           const response = await axios.get(
             `${baseURL}/getSingleQuiz.php?userId=${user?.id}&task_id=${task_id}`
           );
-          console.log(response.data)
+          // console.log(response.data)
           if (response.status === 200) {
             setQuizData(response.data.challenges);
           } else {
@@ -123,7 +123,7 @@ const LobbyScreen = ({ params }) => {
     if (countdown3 === 0) {
       handleQuiz();
     }
-    console.log(countdown3);
+    // console.log(countdown3);
   }, [countdown3]);
 
   const handleQuiz = () => {
