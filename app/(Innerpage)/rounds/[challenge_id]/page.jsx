@@ -115,21 +115,21 @@ const RoundScreen = ({ params }) => {
   return (
     <div className=" px-4 mb-3">
       <div className="mt-3 flex flex-col gap-3">
-      <div className="w-full bg-white shadow-lg border border-muted p-3 rounded-md flex justify-between items-center">
-            <div className="w-fit">
-              <div className=" w-20 h-20  rounded-full relative">
-                <Image
-                  src={baseImgURL + challenge.image}
-                  fill
-                  objectFit="cover"
-                />
-              </div>
+        <div className="w-full p-3 flex justify-between items-center">
+          <div className="w-fit">
+            <div className=" w-20 h-20  rounded-full relative">
+              <Image
+                src={baseImgURL + challenge.image}
+                fill
+                objectFit="cover"
+              />
             </div>
-            <div>
-              <p className="text-lg font-bold">{challenge.title}</p>
-            </div>
-            <div></div>
           </div>
+          <div>
+            <p className="text-lg font-bold">{challenge.title}</p>
+          </div>
+          <div></div>
+        </div>
         {taskArray &&
           taskArray.length > 0 &&
           taskArray.map((item, index) => {
@@ -164,7 +164,7 @@ const RoundScreen = ({ params }) => {
                           className={cn(
                             " rounded-full ",
                             item.success == "yes"
-                              ? "bg-green-600"
+                              ? "bg-[#0b6ebf]"
                               : "bg-red-600"
                           )}
                         >

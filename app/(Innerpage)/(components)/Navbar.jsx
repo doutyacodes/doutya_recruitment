@@ -5,9 +5,7 @@ import { AlignJustify, Clipboard, Home, User } from "lucide-react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
+ SheetClose,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import RightSidebar from "./RightSidebar";

@@ -11,6 +11,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import { logout } from "@/lib/features/authSlice";
+import { SheetClose } from "@/components/ui/sheet";
 
 const RightSidebar = () => {
   const user = useAppSelector((state) => state.auth.user);
