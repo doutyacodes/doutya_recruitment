@@ -83,7 +83,7 @@ const Posts = ({ item, user_id }) => {
           </a>
         )}
         {item.video && item.video.length > 0 && (
-          <video className="w-full h-full rounded-md" controls preload="metadata">
+          <video className="w-full h-full max-h-[75vh] rounded-md" controls preload="metadata">
             <source src={baseVidUrl + item.video+'#t=0.1'} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
