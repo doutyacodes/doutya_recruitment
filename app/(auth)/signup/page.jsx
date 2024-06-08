@@ -71,7 +71,7 @@ const Signup = () => {
         setShowOTP(true);
         setTimer(30);
         setCanResend(false);
-        setLoading(false);
+        // setLoading(false);
 
       })
       .catch((error) => {
