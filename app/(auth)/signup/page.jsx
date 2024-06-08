@@ -68,10 +68,11 @@ const Signup = () => {
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
-        setLoading(false);
         setShowOTP(true);
         setTimer(30);
         setCanResend(false);
+        setLoading(false);
+
       })
       .catch((error) => {
         console.log(error);
@@ -89,7 +90,6 @@ const Signup = () => {
       .confirm(otp)
       .then(async (res) => {
         setUser(res.user);
-        setLoading(false);
         const formatPh = countryCode + ph;
         dispatch(storeMobile({ phone: formatPh, uid: res.user.uid }));
 
@@ -111,7 +111,7 @@ const Signup = () => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
-      });
+      })
   };
 
   return (
