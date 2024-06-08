@@ -19,6 +19,7 @@ const PageDetails = ({ params }) => {
   const [challenge, setChallenge] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEligible, setIsEligible] = useState(true);
 
   const challenge_id = params.challenge_id;
   useEffect(() => {
@@ -36,6 +37,12 @@ const PageDetails = ({ params }) => {
 
         if (response.status === 200) {
           setChallenge(response.data);
+          if (response.data?.eligibility) {
+            const isUserEligible = response.data.eligibility.every(
+              (item) => item.stars <= (item.user_stars || 0)
+            );
+            setIsEligible(isUserEligible);
+          }
           // console.log(response.data);
           // console.log(response.data);
         } else {
@@ -85,13 +92,21 @@ const PageDetails = ({ params }) => {
               {challenge.description}
             </p>
             <div className="flex-1 w-full justify-end h-full">
-              <Button className="bg-[#0d988c] px-3 w-full">
-                <Link
-                  href={user ? `/rounds/${challenge.challenge_id}` : "/signup"}
-                  className="w-full"
-                >
-                  Apply this job
-                </Link>
+            <Button className="bg-[#0d988c] px-3 w-full">
+                {isEligible ? (
+                  <Link
+                    href={
+                      user ? `/rounds/${challenge.challenge_id}` : "/signup"
+                    }
+                    className="w-full"
+                  >
+                    Apply this job
+                  </Link>
+                ) : (
+                  <div onClick={() => alert("You are not eligible for this job.")} className="w-full text-center">
+                    Apply this job
+                  </div>
+                )}
               </Button>
             </div>
           </div>
@@ -140,10 +155,15 @@ const PageDetails = ({ params }) => {
     return (
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         <div className=" w-full">
-          {challenge?.eligibility?.length > 0 &&
+          {challenge?.eligibility?.length > 0 ? (
             challenge?.eligibility.map((item, index) => {
               return <UserEligibility key={index} item={item} />;
-            })}
+            })
+          ) : (
+            <div className="w-full justify-center items-center flex h-full min-h-[30vh]">
+              <p className="font-bold text-lg">No stars required</p>
+            </div>
+          )}
         </div>
       </div>
     );

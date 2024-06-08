@@ -179,10 +179,10 @@ const LeftSidebar = () => {
                 ) : (
                   <Link
                     href={Navpass}
-                    className="flex gap-2 mt-4 items-center "
+                    className="flex gap-2 mt-4 items-center border-t "
                     key={index}
                   >
-                    <div className="relative w-12 h-12">
+                    <div className="relative w-12 h-12 mt-3">
                       <Image
                         src={baseImgURL + item.image}
                         fill

@@ -33,7 +33,7 @@ const QuizPage = () => {
         `${baseURL}/get-quiz-completed.php?user_id=${user?.id}&task_id=${task_id}`
       );
       if (response.data.success) {
-        router.replace("/buzzwall");
+        router.replace("/home");
       } else {
         console.error("Failed to fetch quiz");
       }
@@ -48,7 +48,7 @@ const QuizPage = () => {
       const serializedQuizDatas = localStorage.getItem("quizDatas");
       const quizDatas2 = JSON.parse(serializedQuizDatas);
       if (!quizDatas2 || !user) {
-        router.replace("/buzzwall");
+        router.replace("/home");
       } else {
         await fetchCompleted(quizDatas2.dataQuiz[0].task_id);
       }
@@ -64,7 +64,7 @@ const QuizPage = () => {
       const serializedQuizDatas = localStorage.getItem("quizDatas");
       const quizDatas2 = JSON.parse(serializedQuizDatas);
       if (!quizDatas2 || !user) {
-        router.replace("/buzzwall");
+        router.replace("/home");
       } else {
         const questions = Object.values(quizDatas2?.dataQuiz).filter(
           (item) => typeof item === "object"

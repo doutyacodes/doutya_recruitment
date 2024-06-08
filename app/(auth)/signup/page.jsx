@@ -71,7 +71,7 @@ const Signup = () => {
         setShowOTP(true);
         setTimer(30);
         setCanResend(false);
-        // setLoading(false);
+        setLoading(false);
 
       })
       .catch((error) => {
@@ -100,7 +100,7 @@ const Signup = () => {
           // console.log(response.data);
           if (response.data.success) {
             dispatch(loginSuccess(response.data.user));
-            router.push("/buzzwall");
+            router.push("/home");
           } else {
             router.push("/register");
           }

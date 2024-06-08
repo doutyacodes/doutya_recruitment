@@ -14,6 +14,36 @@ const BuzzwallPage = () => {
   const [filterChallenges, setFilterChallenges] = useState([]);
   const user = useAppSelector((state) => state.auth.user);
 
+  const visitForm = async () => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("user_id", user ? user.id : null);
+      formData.append("page_name", "buzzwall");
+
+      const response = await axios.post(
+        `${baseURL}/page-visits.php`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      const result = response.data;
+      if (result.success) {
+        console.log("success");
+      } else {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+  useEffect(() => {
+    visitForm();
+  }, []);
+
   const fetchUserBuzzwall = async () => {
     try {
       // Only fetch rewards if user data is available

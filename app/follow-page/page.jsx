@@ -85,7 +85,7 @@ const FollowPage = () => {
         });
         // console.log(response.data)
         dispatch(editUser({ steps: 3 }));
-        router.replace("/buzzwall");
+        router.replace("/home");
       } catch (error) {
         console.error("Error:", error);
         alert("An error occurred. Please try again later.");

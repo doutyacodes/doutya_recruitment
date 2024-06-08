@@ -21,6 +21,37 @@ const RoundScreen = ({ params }) => {
       return redirect("/signup");
     }
   }, [user]);
+  const visitForm = async () => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("user_id", user ? user.id : null);
+      formData.append("page_name", "rounds");
+      formData.append("challenge_id", challenge_id);
+
+      const response = await axios.post(
+        `${baseURL}/page-visits.php`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      const result = response.data;
+      // console.log(result)
+      if (result.success) {
+        console.log("success");
+      } else {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+  useEffect(() => {
+    visitForm();
+  }, []);
   const [dates, setDates] = useState([]);
 
   useEffect(() => {

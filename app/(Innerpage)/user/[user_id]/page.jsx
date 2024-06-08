@@ -39,7 +39,36 @@ const UserDetails = ({ params }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const visitForm = async () => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("user_id", user ? user.id : null);
+      formData.append("page_name", "user");
 
+      const response = await axios.post(
+        `${baseURL}/page-visits.php`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      const result = response.data;
+      // console.log(result)
+      if (result.success) {
+        console.log("success");
+      } else {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+  useEffect(() => {
+    visitForm();
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {

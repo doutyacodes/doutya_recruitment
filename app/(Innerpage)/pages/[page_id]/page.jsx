@@ -39,6 +39,37 @@ const PageDetails = () => {
 
   const [activeRouteIndex, setActiveRouteIndex] = useState("sixth");
   const router = useRouter();
+  const visitForm = async () => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("user_id", user ? user.id : null);
+      formData.append("page_name", "pages");
+      formData.append("page_id", page_id);
+
+      const response = await axios.post(
+        `${baseURL}/page-visits.php`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      const result = response.data;
+      // console.log(result)
+      if (result.success) {
+        console.log("success");
+      } else {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+  useEffect(() => {
+    visitForm();
+  }, []);
   useEffect(() => {
     // if(user){
     //   console.log(user)
@@ -73,7 +104,7 @@ const PageDetails = () => {
       // Update state in batch
       setPostData(postsResponse.data);
       setSelectedMovie(movieResponse.data);
-      console.log(movieResponse.data)
+      // console.log(movieResponse.data)
       setIsFollowing(movieResponse.data.following == "true" ? true : false);
 
     } catch (error) {
@@ -83,7 +114,7 @@ const PageDetails = () => {
     }
   }, [user, page_id]);
   useEffect(() => {
-    console.log(activeRouteIndex);
+    // console.log(activeRouteIndex);
     const fetchQuiz = async () => {
       if (
         activeRouteIndex == "fourth" ||
@@ -527,7 +558,7 @@ const PageDetails = () => {
               className="flex justify-center items-center py-4"
               onClick={toggleFollow}
             >
-              <Button className="bg-[#c12130] hover:bg-[#c12130] py-0 px-10">
+              <Button className="bg-blue-400 hover:bg-blue-400 py-0 px-10">
                 {isFollowing
                   ? "Following"
                   // : totalPoints > 0

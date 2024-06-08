@@ -126,18 +126,23 @@ function ChooseKeyword() {
           const successResponses = responses.filter(
             (response) => response.data.success
           );
+          const errorResponses = responses.filter(
+            (response) => response.data.error
+          );
 
           if (successResponses.length === selectedItems.length) {
             // Update user.steps to 2
             if (user.steps == 2) {
-              router.replace("/buzzwall");
+              router.replace("/home");
             } else {
               dispatch(editUser({ steps: 2 }));
               router.replace("/follow-page");
             }
-          } else {
-            alert("Some tasks failed to submit");
-          }
+          } 
+          if (errorResponses.length === selectedItems.length) {
+            // Update user.steps to 2
+            alert("Sorry you have to wait 1 week before updating the keywords")
+          } 
         } catch (error) {
           console.error("Submission error:", error);
           alert("An error occurred while submitting tasks.");

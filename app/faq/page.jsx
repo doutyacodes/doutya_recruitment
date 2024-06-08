@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import { FaChevronLeft } from "react-icons/fa6";
 import {
   Accordion,
@@ -7,8 +8,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
+import { useAppSelector } from "@/lib/hooks";
+import axios from "axios";
+import { baseURL } from "@/lib/baseData";
 
 const PageFaq = () => {
+  const user = useAppSelector((state) => state.auth.user);
+
   const faqData = [
     {
       id: 1,
@@ -41,10 +47,40 @@ const PageFaq = () => {
         "If you encounter any technical issues, such as app crashes or glitches, please reach out to our support team immediately. We're here to help you resolve any issues so you can continue enjoying the challenge.",
     },
   ];
+  const visitForm = async () => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("user_id", user ? user.id : null);
+      formData.append("page_name", "home");
+
+      const response = await axios.post(
+        `${baseURL}/page-visits.php`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      const result = response.data;
+      // console.log(result)
+      if (result.success) {
+        console.log("success");
+      } else {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+  useEffect(() => {
+    visitForm();
+  }, []);
   return (
     <div className="max-w-[800px]  min-h-screen overflow-x-scroll  w-full mx-auto bg-[#e5e5e5] p-3">
       <div className="flex items-center">
-        <Link href="/buzzwall">
+        <Link href="/home">
         <FaChevronLeft /></Link>
         <div className="flex-1 text-center font-bold">FAQ</div>
       </div>

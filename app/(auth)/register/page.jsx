@@ -106,13 +106,7 @@ const SignUp = () => {
   };
 
   const submitForm = async () => {
-    if (
-      !form.email ||
-      !form.name ||
-      !form.education ||
-      !date ||
-      !form.gender
-    ) {
+    if (!form.email || !form.name || !form.education || !date || !form.gender) {
       return alert("Please fill all fields to continue.");
     }
     const age = calculateAge(date);
@@ -134,10 +128,8 @@ const SignUp = () => {
       formData.append("phone", mobile.phone);
       formData.append("country_id", form.country_id);
       formData.append("state_id", form.state_id);
-      if (form.student === "yes") {
-        formData.append("yearOfPassing", form.yearOfPassing);
-        formData.append("monthOfPassing", form.monthOfPassing);
-      }
+      formData.append("yearOfPassing", form.yearOfPassing);
+      formData.append("monthOfPassing", form.monthOfPassing);
 
       const response = await axios.post(`${baseURL}/sign-up.php`, formData, {
         headers: {
@@ -243,28 +235,6 @@ const SignUp = () => {
               <YearMonthPicker onChange={setDate} />
             </PopoverContent>
           </Popover>
-          <Select
-            onValueChange={(value) => setForm({ ...form, education: value })}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Education" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={"Post Doctoral Fellowship"}>
-                {"Post Doctoral Fellowship"}
-              </SelectItem>
-              <SelectItem value={"PHD"}>{"PHD"}</SelectItem>
-              <SelectItem value={"Masters Degree"}>
-                {"Masters Degree"}
-              </SelectItem>
-              <SelectItem value={"Bachelors Degree"}>
-                {"Bachelors Degree"}
-              </SelectItem>
-              <SelectItem value={"Secondary School"}>
-                {"Secondary School"}
-              </SelectItem>
-            </SelectContent>
-          </Select>
 
           <Select
             onValueChange={(value) => setForm({ ...form, country_id: value })}
@@ -303,23 +273,63 @@ const SignUp = () => {
           )}
           <p>Are you a college student?</p>
           <div className="flex space-x-5">
-            <button className={cn("p-3 rounded-md border px-6",form.student=="yes" && "bg-blue-400")} onClick={() =>
-                  setForm({
-                    ...form,
-                    student: "yes",
-                  })
-                }>
+            <button
+              className={cn(
+                "p-3 rounded-md border px-6",
+                form.student == "yes" && "bg-blue-400"
+              )}
+              onClick={() =>
+                setForm({
+                  ...form,
+                  student: "yes",
+                })
+              }
+            >
               <p>Yes</p>
             </button>
-            <button className={cn("p-3 rounded-md border px-6",form.student=="no" && "bg-blue-400")} onClick={() =>
-                  setForm({
-                    ...form,
-                    student: "no",
-                  })
-                }>
+            <button
+              className={cn(
+                "p-3 rounded-md border px-6",
+                form.student == "no" && "bg-blue-400"
+              )}
+              onClick={() =>
+                setForm({
+                  ...form,
+                  student: "no",
+                })
+              }
+            >
               <p>No</p>
             </button>
           </div>
+          <Select
+            onValueChange={(value) => setForm({ ...form, education: value })}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue
+                placeholder={
+                  form.student == "yes"
+                    ? "Current Enrollment"
+                    : "Highest Degree"
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={"Post Doctoral Fellowship"}>
+                {"Post Doctoral Fellowship"}
+              </SelectItem>
+              <SelectItem value={"PHD"}>{"PHD"}</SelectItem>
+              <SelectItem value={"Masters Degree"}>
+                {"Masters Degree"}
+              </SelectItem>
+              <SelectItem value={"Bachelors Degree"}>
+                {"Bachelors Degree"}
+              </SelectItem>
+              <SelectItem value={"Secondary School"}>
+                {"Secondary School"}
+              </SelectItem>
+            </SelectContent>
+          </Select>
           {form.student == "yes" && (
             <>
               <Input
