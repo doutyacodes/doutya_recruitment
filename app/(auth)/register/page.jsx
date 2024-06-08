@@ -50,6 +50,8 @@ const SignUp = () => {
     country_id: 101,
     state_id: "",
     university: "",
+    yearOfPassing: "",
+    monthOfPassing: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState(null);
@@ -104,7 +106,6 @@ const SignUp = () => {
   };
 
   const submitForm = async () => {
-    // console.log(form)
     if (
       !form.email ||
       !form.name ||
@@ -133,6 +134,10 @@ const SignUp = () => {
       formData.append("phone", mobile.phone);
       formData.append("country_id", form.country_id);
       formData.append("state_id", form.state_id);
+      if (form.student === "yes") {
+        formData.append("yearOfPassing", form.yearOfPassing);
+        formData.append("monthOfPassing", form.monthOfPassing);
+      }
 
       const response = await axios.post(`${baseURL}/sign-up.php`, formData, {
         headers: {
@@ -141,7 +146,6 @@ const SignUp = () => {
       });
 
       const result = response.data;
-      // console.log("result", result);
       if (result.success) {
         dispatch(loginSuccess(result.user));
         router.replace("/choose-keyword");
@@ -297,7 +301,84 @@ const SignUp = () => {
               </SelectContent>
             </Select>
           )}
-          
+          <p>Are you a college student?</p>
+          <div className="flex space-x-5">
+            <button className={cn("p-3 rounded-md border px-6",form.student=="yes" && "bg-blue-400")} onClick={() =>
+                  setForm({
+                    ...form,
+                    student: "yes",
+                  })
+                }>
+              <p>Yes</p>
+            </button>
+            <button className={cn("p-3 rounded-md border px-6",form.student=="no" && "bg-blue-400")} onClick={() =>
+                  setForm({
+                    ...form,
+                    student: "no",
+                  })
+                }>
+              <p>No</p>
+            </button>
+          </div>
+          {form.student == "yes" && (
+            <>
+              <Input
+                value={form.college}
+                placeholder="College"
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    college: e.target.value,
+                  })
+                }
+              />
+              <Input
+                value={form.university}
+                placeholder="University"
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    university: e.target.value,
+                  })
+                }
+              />
+              <div className="flex space-x-4">
+                <Input
+                  value={form.yearOfPassing}
+                  placeholder="Year of Passing"
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      yearOfPassing: e.target.value,
+                    })
+                  }
+                />
+                <Select
+                  onValueChange={(value) =>
+                    setForm({ ...form, monthOfPassing: value })
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Month of Passing" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="January">January</SelectItem>
+                    <SelectItem value="February">February</SelectItem>
+                    <SelectItem value="March">March</SelectItem>
+                    <SelectItem value="April">April</SelectItem>
+                    <SelectItem value="May">May</SelectItem>
+                    <SelectItem value="June">June</SelectItem>
+                    <SelectItem value="July">July</SelectItem>
+                    <SelectItem value="August">August</SelectItem>
+                    <SelectItem value="September">September</SelectItem>
+                    <SelectItem value="October">October</SelectItem>
+                    <SelectItem value="November">November</SelectItem>
+                    <SelectItem value="December">December</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </>
+          )}
           <CustomButton
             isLoading={isLoading}
             handlePress={submitForm}

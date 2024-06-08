@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { IoSettingsSharp } from "react-icons/io5";
-import { AlignJustify, Clipboard, Home, User } from "lucide-react";
+import { AlignJustify, Clipboard, Home, Search, User } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -23,6 +23,7 @@ import {
   RiUser3Line,
   RiUser3Fill,
 } from "react-icons/ri";
+import LeftSidebar from "./LeftSidebar";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -52,6 +53,15 @@ const Navbar = () => {
               <Link href="/signup">Login</Link>
             </Button>
           ) : (
+            <div className="flex gap-5 items-center">
+              <Sheet >
+              <SheetTrigger>
+                <Search size={24} />
+              </SheetTrigger>
+              <SheetContent side={"left"}>
+                <LeftSidebar />
+              </SheetContent>
+            </Sheet>
             <Sheet>
               <SheetTrigger>
                 <AlignJustify size={24} />
@@ -60,6 +70,7 @@ const Navbar = () => {
                 <RightSidebar />
               </SheetContent>
             </Sheet>
+            </div>
           )}
         </li>
       </ul>

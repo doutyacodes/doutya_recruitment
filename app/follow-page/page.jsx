@@ -20,7 +20,7 @@ const FollowPage = () => {
     if (!user) {
         router.replace("/signup");
       }
-  },[])
+  },[user])
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [pages, setPages] = useState([]);
   const [visible, setVisible] = React.useState(false);
@@ -85,7 +85,7 @@ const FollowPage = () => {
         });
         // console.log(response.data)
         dispatch(editUser({ steps: 3 }));
-        router.replace("/home");
+        router.replace("/buzzwall");
       } catch (error) {
         console.error("Error:", error);
         alert("An error occurred. Please try again later.");

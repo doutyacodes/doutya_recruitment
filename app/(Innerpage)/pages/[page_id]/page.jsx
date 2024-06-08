@@ -35,6 +35,7 @@ const PageDetails = () => {
   const [progressDetails, setProgressDetails] = useState([]);
   const [progressDetailspublic, setProgressDetailspublic] = useState([]);
   const [quizData, setQuizData] = useState([]);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const [activeRouteIndex, setActiveRouteIndex] = useState("sixth");
   const router = useRouter();
@@ -72,6 +73,9 @@ const PageDetails = () => {
       // Update state in batch
       setPostData(postsResponse.data);
       setSelectedMovie(movieResponse.data);
+      console.log(movieResponse.data)
+      setIsFollowing(movieResponse.data.following == "true" ? true : false);
+
     } catch (error) {
       console.error("Error while fetching data:", error.message);
     } finally {
@@ -435,6 +439,33 @@ const PageDetails = () => {
         return <SixthRoute />;
     }
   };
+  const toggleFollow = async () => {
+    if (user) {
+      // Toggle the follow status optimistically
+      setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+
+      try {
+        // Make the API request to follow/unfollow
+        const response = await axios.get(
+          `${baseURL}/event-Follow.php?page_id=${page_id}&userId=${user.id}`
+        );
+
+        // Handle the response data
+        console.log("Data:", response.data);
+      } catch (error) {
+        // Revert the follow status if an error occurs
+        setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+
+        // Handle errors
+        console.error("Error while following:", error);
+        throw error; // Throw the error to handle it outside this function if needed
+      }
+    }
+    else
+    {
+      router.push("/signup")
+    }
+  };
   return (
     <div className="max-w-[800px]  min-h-screen bg-white border  w-full mx-auto ">
       <div className="w-full p-1 bg-[#c12130]" />
@@ -467,7 +498,7 @@ const PageDetails = () => {
               src={baseImgURL + selectedMovie?.banner}
               fill
               className=" "
-              objectFit="contain"
+              objectFit="cover"
             />
           </div>
           <div>
@@ -490,6 +521,20 @@ const PageDetails = () => {
                 <div className="flex flex-col justify-center gap-2 py-3 font-bold ">
                   <p>{selectedMovie?.title}</p>
                 </div>
+              </div>
+              <div>
+              <div
+              className="flex justify-center items-center py-4"
+              onClick={toggleFollow}
+            >
+              <Button className="bg-[#c12130] hover:bg-[#c12130] py-0 px-10">
+                {isFollowing
+                  ? "Following"
+                  // : totalPoints > 0
+                  // ? "Follow Again"
+                  : "Follow"}
+              </Button>
+            </div>
               </div>
             </div>
 

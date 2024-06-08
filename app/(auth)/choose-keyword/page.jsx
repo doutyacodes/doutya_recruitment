@@ -229,7 +229,7 @@ function ChooseKeyword() {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                The change is irreversible. Do you want to continue?
+                You can change your choice once in week?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
