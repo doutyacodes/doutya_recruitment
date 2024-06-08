@@ -101,7 +101,7 @@ const Signup = () => {
           // console.log(response.data);
           if (response.data.success) {
             dispatch(loginSuccess(response.data.user));
-            router.push("/home");
+            router.push("/buzzwall");
           } else {
             router.push("/register");
           }

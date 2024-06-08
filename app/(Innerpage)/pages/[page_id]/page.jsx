@@ -11,21 +11,22 @@ import Posts from "@/app/(Innerpage)/(components)/Posts";
 import moment from "moment";
 import ChallengeHomeCard from "@/app/(Innerpage)/(components)/ChallengeHomeCard";
 import { useAppSelector } from "@/lib/hooks";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IoMdInformationCircleOutline } from "react-icons/io";
-import ProgressCard from "../(components)/ProgressCard";
-import ChallengeBuzzWorld from "../(components)/ChallengeBuzzWorld";
+import ProgressCard from "../../(components)/ProgressCard";
 
 const PageDetails = () => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 1 };
 
-  const page_id = 1;
+  const params = useParams()
+  
+  const page_id = params.page_id;
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [postData, setPostData] = useState([]);
@@ -151,7 +152,7 @@ const PageDetails = () => {
         if (activeRouteIndex) {
           try {
             const response = await axios.get(
-              `${baseURL}/get-all-levels.php?userId=${user.id}`
+              `${baseURL}/get-all-levels.php?userId=${user.id}&page_id=${page_id}`
             );
             // console.log(response.data);
             if (response.data) {
@@ -169,7 +170,7 @@ const PageDetails = () => {
         if (activeRouteIndex) {
           try {
             const response = await axios.get(
-              `${baseURL}/get-all-levels-public.php?userId=${user.id}`
+              `${baseURL}/get-all-levels-public.php?userId=${user.id}&page_id=${page_id}`
             );
             // console.log(response.data);
             if (response.data) {
@@ -230,7 +231,7 @@ const PageDetails = () => {
                     }
     
                     return (
-                      <ChallengeBuzzWorld
+                      <ChallengeHomeCard
                         key={itemIndex}
                         item={item}
                         formattedDate={formattedDate}

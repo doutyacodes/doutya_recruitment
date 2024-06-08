@@ -18,7 +18,7 @@ const Success = ({ params }) => {
 
   useEffect(() => {
     if (!user) {
-      router.push("/home");
+      router.push("/buzzwall");
     }
   }, []); // Added task_id to dependency array
 
@@ -73,7 +73,7 @@ const Success = ({ params }) => {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </p>
-        <Link href="/home">
+        <Link href="/buzzwall">
           <Button className="bg-green-600 text-lg">Go to Home</Button>
         </Link>
       </div>

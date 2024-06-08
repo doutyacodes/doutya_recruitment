@@ -34,7 +34,7 @@ const GlobalProvider = ({ children }) => {
   }, []);
 if(pathname=="/")
   {
-    redirect("/home")
+    redirect("/buzzwall")
   }
   return (
     <GlobalContext.Provider

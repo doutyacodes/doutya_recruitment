@@ -130,7 +130,7 @@ function ChooseKeyword() {
           if (successResponses.length === selectedItems.length) {
             // Update user.steps to 2
             dispatch(editUser({ steps: 2 }));
-            router.replace("/home");
+            router.replace("/buzzwall");
           } else {
             alert("Some tasks failed to submit");
           }

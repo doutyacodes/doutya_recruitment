@@ -41,8 +41,8 @@ const Navbar = () => {
           <Image
             src="/assets/images/doutya4.png"
             alt="logo"
-            width={100}
-            height={100}
+            width={150}
+            height={150}
             className=" rounded-md"
           />
         </li>
@@ -64,28 +64,28 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="  fixed py-1 px-3  w-full left-0 bottom-0 z-50 ">
-        <div className=" px-3 py-1 max-w-[800px] rounded-full  bg-[#25955d] border mx-auto relative flex w-full justify-around items-center">
+        <div className=" px-3 py-1 max-w-[800px] rounded-full  bg-[#c12130]/95 border mx-auto relative flex w-full justify-around items-center">
           <Link
-            href={"/home"}
+            href={"/buzzwall"}
             className=" w-1/3 text-sm flex flex-col items-center justify-center"
           >
-            {pathname.includes("home") ? (
+            {pathname.includes("buzzwall") ? (
               <RiHome5Fill
-                color={pathname.includes("home") ? "#fdbd5b" : "white"}
+                color={pathname.includes("buzzwall") ? "#fdbd5b" : "white"}
                 size={24}
               />
             ) : (
               <RiHome5Line
-                color={pathname.includes("home") ? "#fdbd5b" : "white"}
+                color={pathname.includes("buzzwall") ? "#fdbd5b" : "white"}
                 size={24}
               />
             )}
             <p
               className={
-                pathname.includes("home") ? "text-[#fdbd5b]" : "text-white"
+                pathname.includes("buzzwall") ? "text-[#fdbd5b]" : "text-white"
               }
             >
-              Home
+              Buzzwall
             </p>
           </Link>
           <Link
