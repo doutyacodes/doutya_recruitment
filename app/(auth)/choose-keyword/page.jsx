@@ -129,8 +129,12 @@ function ChooseKeyword() {
 
           if (successResponses.length === selectedItems.length) {
             // Update user.steps to 2
-            dispatch(editUser({ steps: 2 }));
-            router.replace("/buzzwall");
+            if (user.steps == 2) {
+              router.replace("/buzzwall");
+            } else {
+              dispatch(editUser({ steps: 2 }));
+              router.replace("/follow-page");
+            }
           } else {
             alert("Some tasks failed to submit");
           }

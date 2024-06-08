@@ -33,7 +33,6 @@ const Signup = () => {
   const [canResend, setCanResend] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     let interval;
@@ -117,32 +116,7 @@ const Signup = () => {
 
   return (
     <div className="relative w-full overflow-hidden h-screen bg-white z-40">
-      <AlertDialog open={open} defaultOpen={open} onOpenChange={setOpen}>
-      {/* The trigger for opening the dialog */}
-     
-      {/* The content of the dialog */}
-      <AlertDialogContent >
-        {/* The header section with title and description */}
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you a student?</AlertDialogTitle>
-          <AlertDialogDescription>
-          If you are a student, you will be redirected to the Doutya-Campus website.
-
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        
-        {/* The footer section with cancel and action buttons */}
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setOpen(false)}>No</AlertDialogCancel>
-          <AlertDialogAction>
-            <Button>
-            <a href="https://doutya-ambition-seven.vercel.app/signup">Yes</a>
-
-            </Button>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      
       <div className="mt-0 w-full flex justify-center">
         <div className="relative w-32 h-24">
           <Image

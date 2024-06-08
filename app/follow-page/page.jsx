@@ -127,7 +127,7 @@ const FollowPage = () => {
                   )}
                   key={index}
                 >
-                  <div className="relative min-h-60 min-w-24 h-full rounded-md w-full">
+                  <div className="relative min-h-60 md:h-96 min-w-24 h-full rounded-md w-full">
                     <Image
                       className="rounded-md"
                       src={`${baseImgURL + item.icon}`}
