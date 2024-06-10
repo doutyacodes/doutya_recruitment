@@ -8,8 +8,8 @@ import { FaStar } from "react-icons/fa";
 
 const ChallengeHomeCard = ({
   item,
-  // formattedDate,
-  // formattedEndDate,
+  formattedDate,
+  formattedEndDate,
   inPage = null,
   inMap = null,
   inTodo = null,
@@ -51,7 +51,7 @@ const ChallengeHomeCard = ({
               <div className="w-full flex items-center justify-between">
                 <div>
                   <p className="text-xs font-light">Deadline</p>
-                  {/* <p className="text-xs font-semibold text-slate-600">{formattedEndDate}</p> */}
+                  <p className="text-xs font-semibold text-slate-600">{formattedEndDate}</p>
                 </div>
                 {item.stars && (
                   <div className="w-26">
