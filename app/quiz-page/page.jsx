@@ -27,6 +27,48 @@ const QuizPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const user = useAppSelector((state) => state.auth.user);
 
+  // Handle browser back and forward navigation
+  useEffect(() => {
+    const handlePopState = (event) => {
+      event.preventDefault();
+      if (confirm("You will lose your progress. Are you sure you want to leave?")) {
+        router.replace("/home");
+      } else {
+        window.history.pushState(null, "", window.location.href);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [router]);
+  useEffect(() => {
+    // Check if the page load is a full reload
+    if (typeof window !== 'undefined' && window.performance) {
+      const navigationType = window.performance.getEntriesByType('navigation')[0].type;
+      if (navigationType === 'reload') {
+        router.push('/');
+      }
+    }
+  }, []);
+
+  // Prevent page unload or refresh
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      const message = "You will lose your progress. Are you sure you want to leave?";
+      event.returnValue = message;
+      return message;
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   const fetchCompleted = async (task_id) => {
     try {
       const response = await axios.get(
@@ -178,7 +220,6 @@ const QuizPage = () => {
         }
       );
 
-      // console.log(response.data);
       if (response.status === 200) {
         if (currentIndex < quizDatas?.dataQuiz[0].count_question - 1) {
           setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -191,6 +232,7 @@ const QuizPage = () => {
       console.error("Error adding marks:", error);
     }
   };
+
   return (
     <div
       className="max-w-[800px]  min-h-screen overflow-x-scroll  w-full mx-auto bg-blue-400 p-4"

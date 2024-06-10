@@ -38,15 +38,7 @@ const Navbar = () => {
   return (
     <nav className="w-full p-4 bg-white">
       <ul className="w-full flex justify-between items-center">
-        <li>
-          <Image
-            src="/assets/images/doutya4.png"
-            alt="logo"
-            width={150}
-            height={150}
-            className=" rounded-md"
-          />
-        </li>
+        
         <li>
         <Sheet >
               <SheetTrigger>
@@ -56,6 +48,15 @@ const Navbar = () => {
                 <LeftSidebar />
               </SheetContent>
             </Sheet>
+        </li>
+        <li>
+          <Image
+            src="/assets/images/doutya4.png"
+            alt="logo"
+            width={150}
+            height={150}
+            className=" rounded-md"
+          />
         </li>
         <li>
           {!user ? (

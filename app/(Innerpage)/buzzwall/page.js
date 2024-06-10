@@ -1,124 +1,40 @@
-"use client";
-import { baseURL } from "@/lib/baseData";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import Posts from "../(components)/Posts";
-import moment from "moment";
-import ChallengeHomeCard from "../(components)/ChallengeHomeCard";
-import ChallengeBuzzWorld from "../(components)/ChallengeBuzzWorld";
-import BuzzPosts from "../(components)/BuzzPosts";
-import { useAppSelector } from "@/lib/hooks";
+"use client"
+import React, { useState, useEffect } from 'react';
 
-const BuzzwallPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [filterChallenges, setFilterChallenges] = useState([]);
-  const user = useAppSelector((state) => state.auth.user);
+const MyComponent = () => {
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
-  const visitForm = async () => {
-    try {
-      const formData = new URLSearchParams();
-      formData.append("user_id", user ? user.id : null);
-      formData.append("page_name", "buzzwall");
-
-      const response = await axios.post(
-        `${baseURL}/page-visits.php`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-
-      const result = response.data;
-      if (result.success) {
-        console.log("success");
-      } else {
-        console.log(result.error);
-      }
-    } catch (error) {
-      console.error("Error submitting data:", error);
-    }
-  };
   useEffect(() => {
-    visitForm();
-  }, []);
-
-  const fetchUserBuzzwall = async () => {
-    try {
-      // Only fetch rewards if user data is available
-      const response = await axios.get(
-        `${baseURL}/getBuzzWall.php?userId=${user ? user.id : null}`
-      );
-
-      // console.log(response.data);
-      if (response.status === 200) {
-        setFilterChallenges(response.data);
-      } else {
-        console.error("Failed to fetch buzzwall");
+    const handleBeforeUnload = (event) => {
+      if (hasUnsavedChanges) {
+        console.log('Before unload event triggered');
+        const message = "You have unsaved changes. Are you sure you want to leave?";
+        event.returnValue = message; // Standard for most browsers
+        return message; // For some older browsers
       }
-    } catch (error) {
-      console.error("Error while fetching buzzwall:", error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    };
+
+    // Add event listener
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [hasUnsavedChanges]);
+
+  // Example function to simulate unsaved changes
+  const simulateChange = () => {
+    setHasUnsavedChanges(true);
   };
-  useEffect(() => {
-    fetchUserBuzzwall();
-  }, []);
+
   return (
-    <div className="max-w-[800px]  min-h-screen bg-white border  w-full mx-auto ">
-      <div className="w-full p-1 bg-[#ec1d28]" />
-      <div className="w-full  p-3">
-        <div className="w-full  grid grid-cols-12 gap-3">
-          {filterChallenges?.length > 0 &&
-            filterChallenges.map((item, index) => {
-              if (item.info_type === "challenge") {
-                let formattedEndDate;
-                let formattedDate;
-                formattedDate = moment(item.start_date).fromNow();
-                const endDate = moment(item.end_date);
-                const now = moment();
-
-                const duration = moment.duration(endDate.diff(now));
-
-                if (duration.asDays() >= 1) {
-                  formattedEndDate = Math.round(duration.asDays()) + " days";
-                } else if (duration.asHours() >= 1) {
-                  formattedEndDate =
-                    Math.floor(duration.asHours()) +
-                    ":" +
-                    (duration.minutes() < 10 ? "0" : "") +
-                    duration.minutes() +
-                    " hrs";
-                } else {
-                  formattedEndDate = duration.minutes() + " minutes";
-                }
-
-                return (
-                  <div className="col-span-12 md:col-span-6">
-                    <ChallengeBuzzWorld
-                      key={index}
-                      item={item}
-                      formattedDate={formattedDate}
-                      formattedEndDate={formattedEndDate}
-                      inPage={true}
-                    />
-                  </div>
-                );
-              } else if (item.info_type === "post") {
-                return (
-                  <div className="col-span-12 md:col-span-6">
-                    <BuzzPosts key={index} item={item} user_id={1} />
-                  </div>
-                );
-              }
-              return null; // This ensures a proper return value if neither condition is met
-            })}
-        </div>
-      </div>
+    <div>
+      <button onClick={simulateChange}>Simulate Change</button>
+      {/* Your component JSX */}
+      {hasUnsavedChanges && <p>You have unsaved changes!</p>}
     </div>
   );
 };
 
-export default BuzzwallPage;
+export default MyComponent;

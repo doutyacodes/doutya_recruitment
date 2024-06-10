@@ -19,11 +19,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function ChooseKeyword() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [data, setData] = useState([]);
   const [itemColors, setItemColors] = useState({});
+  const [showDialog, setShowDialog] = useState(false);
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -39,7 +50,6 @@ function ChooseKeyword() {
   const fetchKeyword = async () => {
     try {
       const response = await axios.get(`${baseURL}/search-keywords.php`);
-      // console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -51,7 +61,6 @@ function ChooseKeyword() {
       const response = await axios.get(
         `${baseURL}/get-user-keywords.php?user_id=${user.id}`
       );
-      // console.log("User keywords:", response.data);
       if (response.data.success) {
         setSelectedItems(response.data.data);
       }
@@ -68,7 +77,6 @@ function ChooseKeyword() {
     if (data.length > 0) {
       const colors = [
         { from: "#D4145A", to: "#FBB03B" },
-        // { from: "#009245", to: "#FCEE21" },
         { from: "#662D8C", to: "#ED1E79" },
         { from: "#614385", to: "#516395" },
       ];
@@ -81,18 +89,6 @@ function ChooseKeyword() {
     }
   }, [data]);
 
-  const handleSelectionChange = (newSelectedItems) => {
-    if (selectedItems.length + newSelectedItems.length <= 2) {
-      setSelectedItems((prevSelectedItems) => [
-        ...prevSelectedItems,
-        ...newSelectedItems.filter(
-          (item) =>
-            !prevSelectedItems.some((prevItem) => prevItem.id === item.id)
-        ),
-      ]);
-    }
-  };
-
   const handleItemClick = (item) => {
     if (selectedItems.some((selectedItem) => selectedItem.id === item.id)) {
       setSelectedItems((prevSelectedItems) =>
@@ -100,6 +96,8 @@ function ChooseKeyword() {
       );
     } else if (selectedItems.length < 2) {
       setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+    } else {
+      setShowDialog(true);
     }
   };
 
@@ -112,7 +110,6 @@ function ChooseKeyword() {
               user_id: user.id,
               keyword_id: item.id,
             };
-            // console.log("Submitting payload: ", payload); // Log the payload
             return axios.post(`${baseURL}/add-keywords.php`, payload, {
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -121,8 +118,6 @@ function ChooseKeyword() {
           });
 
           const responses = await Promise.all(requests);
-          console.log(responses);
-
           const successResponses = responses.filter(
             (response) => response.data.success
           );
@@ -131,18 +126,16 @@ function ChooseKeyword() {
           );
 
           if (successResponses.length === selectedItems.length) {
-            // Update user.steps to 2
-            if (user.steps == 2) {
+            if (user.steps === 2) {
               router.replace("/home");
             } else {
               dispatch(editUser({ steps: 2 }));
               router.replace("/follow-page");
             }
-          } 
+          }
           if (errorResponses.length === selectedItems.length) {
-            // Update user.steps to 2
-            alert("Sorry you have to wait 1 week before updating the keywords")
-          } 
+            alert("Sorry you have to wait 1 week before updating the keywords");
+          }
         } catch (error) {
           console.error("Submission error:", error);
           alert("An error occurred while submitting tasks.");
@@ -169,13 +162,6 @@ function ChooseKeyword() {
           />
         </div>
       </div>
-      {/* <SearchBar
-        data={data}
-        initialSelected={Array.isArray(selectedItems) ? selectedItems : []}
-        setSearchParams={setSearchParams}
-        searchParams={searchParams}
-        onSelectionChange={handleSelectionChange}
-      /> */}
       <div className="w-full p-2">
         <p className="text-center text-lg font-bold">
           Select up to 2 keywords.
@@ -221,8 +207,8 @@ function ChooseKeyword() {
       </div>
 
       <div className="mt-4 flex justify-center">
-        <AlertDialog>
-          <AlertDialogTrigger>
+        <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+          <AlertDialogTrigger asChild>
             <button
               className="bg-[#fdbd5b] text-white py-3 px-6 rounded-md"
               disabled={selectedItems.length < 1 || selectedItems.length > 2}
@@ -232,16 +218,13 @@ function ChooseKeyword() {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogTitle>Limit Exceeded</AlertDialogTitle>
               <AlertDialogDescription>
-                You can change your choice once in week?
+                You can't select more than 2 keywords. Please deselect one before adding a new one.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleSubmit}>
-                Continue
-              </AlertDialogAction>
+              <AlertDialogCancel>Okay</AlertDialogCancel>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
