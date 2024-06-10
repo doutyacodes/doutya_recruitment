@@ -34,6 +34,7 @@ const PageDetails = ({ params }) => {
             user ? user.id : null
           }`
         );
+          // console.log(response.data);
 
         if (response.status === 200) {
           setChallenge(response.data);
@@ -254,7 +255,7 @@ const PageDetails = ({ params }) => {
           <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
             {isEligible ? (
               <Link
-                href={user ? `/rounds/${challenge.challenge_id}` : "/signup"}
+                href={user && challenge.page_type!="tests"? `/rounds/${challenge.challenge_id}` :user && challenge.page_type=="tests" ?  `/quiz-lobby/${challenge.task_id}` : "/signup"}
                 className="w-full"
               >
                 Apply this job
