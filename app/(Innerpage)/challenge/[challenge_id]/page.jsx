@@ -11,10 +11,22 @@ import { useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import UserEligibility from "../../(components)/UserEligibility";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 const PageDetails = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 24 };
+  const [showDialog, setShowDialog] = useState(false);
+
   const [toggleNav, setToggleNav] = useState("Description");
   const [challenge, setChallenge] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState([]);
@@ -253,21 +265,43 @@ const PageDetails = ({ params }) => {
           </div>
           {RenderData()}
           <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
-            {isEligible ? (
-              <Link
-                href={user && challenge.page_type!="tests"? `/rounds/${challenge.challenge_id}` :user && challenge.page_type=="tests" ?  `/quiz-lobby/${challenge.task_id}` : "/signup"}
-                className="w-full"
-              >
-                Apply this job
-              </Link>
-            ) : (
-              <div
-                onClick={() => alert("You are not eligible for this job.")}
-                className="w-full text-center"
-              >
-                Apply this job
-              </div>
-            )}
+          {isEligible ? (
+        <Link
+          href={
+            user && challenge.page_type != "tests"
+              ? `/rounds/${challenge.challenge_id}`
+              : user && challenge.page_type == "tests"
+              ? `/quiz-lobby/${challenge.task_id}`
+              : "/signup"
+          }
+          className="w-full"
+        >
+          Apply this job
+        </Link>
+      ) : (
+        <div
+          onClick={() => setShowDialog(true)}
+          className="w-full text-center cursor-pointer"
+        >
+          Apply this job
+        </div>
+      )}
+      <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+        <AlertDialogTrigger asChild>
+          <div />
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Not Eligible</AlertDialogTitle>
+            <AlertDialogDescription>
+              You are not eligible for this job. Please review the eligibility criteria before proceeding.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>OK</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
           </Button>
         </div>
       )}
