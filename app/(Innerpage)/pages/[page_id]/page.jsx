@@ -257,7 +257,7 @@ const PageDetails = () => {
 
   const ThirdRoute = () => {
     return (
-      <div className="w-full h-full p-1 flex-col flex gap-2">
+      <div className="w-full h-full p-1 space-y-4">
         {quizState?.challenges_by_all_keywords &&
           Object.keys(quizState.challenges_by_all_keywords).length > 0 &&
           Object.keys(quizState.challenges_by_all_keywords).map(
@@ -333,7 +333,7 @@ const PageDetails = () => {
   };
   const TestRoute = () => {
     return (
-      <div className="w-full  h-full  p-1 flex-col flex gap-2">
+      <div className="w-full  h-full  p-1 space-y-4">
         {quizData?.challenges_by_district &&
           Object.keys(quizData.challenges_by_district).length > 0 &&
           Object.keys(quizData.challenges_by_district).map(
@@ -436,7 +436,7 @@ const PageDetails = () => {
   };
   const ProgressRoute = () => {
     return (
-      <div className="w-full  h-full  p-1 flex-col flex gap-2">
+      <div className="w-full  h-full  p-1 space-y-4">
         {user ? (
           <div className="p-3">
             <div className=" flex gap-4 items-center mb-4">
