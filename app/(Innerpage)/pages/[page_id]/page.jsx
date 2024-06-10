@@ -24,8 +24,8 @@ const PageDetails = () => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 1 };
 
-  const params = useParams()
-  
+  const params = useParams();
+
   const page_id = params.page_id;
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -36,8 +36,10 @@ const PageDetails = () => {
   const [progressDetailspublic, setProgressDetailspublic] = useState([]);
   const [quizData, setQuizData] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [keywordsArray, setKeywordsArray] = useState([]);
 
   const [activeRouteIndex, setActiveRouteIndex] = useState("sixth");
+  const [activeSecondRouteIndex, setActiveSecondRouteIndex] = useState(0);
   const router = useRouter();
   const visitForm = async () => {
     try {
@@ -106,7 +108,6 @@ const PageDetails = () => {
       setSelectedMovie(movieResponse.data);
       // console.log(movieResponse.data)
       setIsFollowing(movieResponse.data.following == "true" ? true : false);
-
     } catch (error) {
       console.error("Error while fetching data:", error.message);
     } finally {
@@ -115,33 +116,23 @@ const PageDetails = () => {
   }, [user, page_id]);
   useEffect(() => {
     // console.log(activeRouteIndex);
-    const fetchQuiz = async () => {
-      if (
-        activeRouteIndex == "fourth" ||
-        activeRouteIndex == "third" ||
-        activeRouteIndex == "second"
-      ) {
-        if (activeRouteIndex) {
-          try {
-            let baseApiUrl;
-            if(user)
-              {
-                baseApiUrl = `&userId=${user.id}`;
-              }
-            const response = await axios.get(
-              `${baseURL}/getEachQuiz.php?page_id=${page_id}&page_type=${activeRouteIndex}${baseApiUrl}`
-            );
-            // console.log(response.data);
-            if (response.data) {
-              setQuizState(response.data);
-            }
-          } catch (error) {
-            console.error("Error while fetching quiz");
-          }
+    
+    const fetchKeywords = async () => {
+      try {
+        const response = await axios.get(
+          `${baseURL}/get-user-keywords.php?user_id=${
+            user?.id ? user.id : null
+          }`
+        );
+        // console.log(response.data);
+        if (response.data.success) {
+          setKeywordsArray(response.data.data);
         }
+      } catch (error) {
+        console.error("Error while fetching quiz");
       }
     };
-    fetchQuiz();
+    fetchKeywords();
     const fetchPrivateQuiz = async () => {
       if (activeRouteIndex == "second") {
         if (activeRouteIndex) {
@@ -222,6 +213,34 @@ const PageDetails = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      if (
+        activeRouteIndex == "fourth" ||
+        activeRouteIndex == "third" ||
+        activeRouteIndex == "second"
+      ) {
+        if (activeRouteIndex && activeSecondRouteIndex!=0) {
+          try {
+            let baseApiUrl;
+            if (user) {
+              baseApiUrl = `&userId=${user.id}`;
+            }
+            const response = await axios.get(
+              `${baseURL}/getEachQuiz.php?page_id=${page_id}&page_type=${activeRouteIndex}${baseApiUrl}&id_keyword=${activeSecondRouteIndex}`
+            );
+            // console.log(response.data);
+            if (response.data) {
+              setQuizState(response.data);
+            }
+          } catch (error) {
+            console.error("Error while fetching quiz");
+          }
+        }
+      }
+    };
+    fetchQuiz();
+  }, [activeRouteIndex,activeSecondRouteIndex]);
 
   const [routes] = useState([
     { key: "sixth", title: "Posts" },
@@ -234,54 +253,60 @@ const PageDetails = () => {
   const ThirdRoute = () => {
     return (
       <div className="w-full h-full p-1 flex-col flex gap-2">
-      {quizState?.challenges_by_all_keywords &&
-        Object.keys(quizState.challenges_by_all_keywords).length > 0 &&
-        Object.keys(quizState.challenges_by_all_keywords).map((keywordName, keywordIndex) => (
-          <div className="bg-gray-100 w-full pt-3 mb-3" key={keywordIndex}>
-            <p className="font-bold text-xl mb-4">{keywordName}</p>
-            {Object.keys(quizState.challenges_by_all_keywords[keywordName].districts).map((districtName, districtIndex) => (
-              <div className="bg-white w-full p-2 mb-2" key={districtIndex}>
-                <p className="font-bold mb-2">{districtName}</p>
-                <div className="flex gap-2 w-full overflow-x-scroll">
-                  {quizState.challenges_by_all_keywords[keywordName].districts[districtName].map((item, itemIndex) => {
-                    let formattedEndDate;
-                    let formattedDate;
-                    formattedDate = moment(item.start_date).fromNow();
-                    const endDate = moment(item.end_date);
-                    const now = moment();
-    
-                    const duration = moment.duration(endDate.diff(now));
-    
-                    if (duration.asDays() >= 1) {
-                      formattedEndDate = Math.round(duration.asDays()) + " days";
-                    } else if (duration.asHours() >= 1) {
-                      formattedEndDate =
-                        Math.floor(duration.asHours()) +
-                        ":" +
-                        (duration.minutes() < 10 ? "0" : "") +
-                        duration.minutes() +
-                        " hrs";
-                    } else {
-                      formattedEndDate = duration.minutes() + " minutes";
-                    }
-    
-                    return (
-                      <ChallengeHomeCard
-                        key={itemIndex}
-                        item={item}
-                        formattedDate={formattedDate}
-                        formattedEndDate={formattedEndDate}
-                        inPage={true}
-                      />
-                    );
-                  })}
-                </div>
+        {quizState?.challenges_by_all_keywords &&
+          Object.keys(quizState.challenges_by_all_keywords).length > 0 &&
+          Object.keys(quizState.challenges_by_all_keywords).map(
+            (keywordName, keywordIndex) => (
+              <div className="bg-gray-100 w-full pt-3 mb-3" key={keywordIndex}>
+                {/* <p className="font-bold text-xl mb-4">{keywordName}</p> */}
+                {Object.keys(
+                  quizState.challenges_by_all_keywords[keywordName].districts
+                ).map((districtName, districtIndex) => (
+                  <div className="bg-white w-full p-2 mb-2" key={districtIndex}>
+                    <p className="font-bold mb-2">{districtName}</p>
+                    <div className="flex gap-2 w-full overflow-x-scroll">
+                      {quizState.challenges_by_all_keywords[
+                        keywordName
+                      ].districts[districtName].map((item, itemIndex) => {
+                        let formattedEndDate;
+                        let formattedDate;
+                        formattedDate = moment(item.start_date).fromNow();
+                        const endDate = moment(item.end_date);
+                        const now = moment();
+
+                        const duration = moment.duration(endDate.diff(now));
+
+                        if (duration.asDays() >= 1) {
+                          formattedEndDate =
+                            Math.round(duration.asDays()) + " days";
+                        } else if (duration.asHours() >= 1) {
+                          formattedEndDate =
+                            Math.floor(duration.asHours()) +
+                            ":" +
+                            (duration.minutes() < 10 ? "0" : "") +
+                            duration.minutes() +
+                            " hrs";
+                        } else {
+                          formattedEndDate = duration.minutes() + " minutes";
+                        }
+
+                        return (
+                          <ChallengeHomeCard
+                            key={itemIndex}
+                            item={item}
+                            formattedDate={formattedDate}
+                            formattedEndDate={formattedEndDate}
+                            inPage={true}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ))}
-    </div>
-    
+            )
+          )}
+      </div>
     );
   };
 
@@ -304,7 +329,7 @@ const PageDetails = () => {
   const TestRoute = () => {
     return (
       <div className="w-full  h-full  p-1 flex-col flex gap-2">
-       {quizData?.challenges_by_district &&
+        {quizData?.challenges_by_district &&
           Object.keys(quizData.challenges_by_district).length > 0 &&
           Object.keys(quizData.challenges_by_district).map(
             (districtName, index) => (
@@ -312,8 +337,7 @@ const PageDetails = () => {
                 <p className="font-bold mb-2">{districtName}</p>
                 <div className="flex gap-2 w-full overflow-x-scroll">
                   {quizData.challenges_by_district[districtName] &&
-                    quizData.challenges_by_district[districtName].length >
-                      0 &&
+                    quizData.challenges_by_district[districtName].length > 0 &&
                     quizData.challenges_by_district[districtName].map(
                       (item, itemIndex) => {
                         let formattedEndDate;
@@ -408,47 +432,45 @@ const PageDetails = () => {
   const ProgressRoute = () => {
     return (
       <div className="w-full  h-full  p-1 flex-col flex gap-2">
-        {
-          user ? (
-            <div className="p-3">
-          <div className=" flex gap-4 items-center mb-4">
-            <p className="text-xl font-bold">My Progress</p>
-            <div>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <IoMdInformationCircleOutline color="red" size={23} />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="min-w-72 max-w-96 p-3">
-                  <p class="text-sm text-gray-600 font-bold">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Rerum reiciendis asperiores facilis voluptatum autem
-                    deserunt itaque perferendis optio, esse cumque. Sit nostrum
-                    architecto tenetur non placeat corrupti facere dolorum
-                    assumenda?
-                  </p>
-                </DropdownMenuContent>
-              </DropdownMenu>
+        {user ? (
+          <div className="p-3">
+            <div className=" flex gap-4 items-center mb-4">
+              <p className="text-xl font-bold">My Progress</p>
+              <div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <IoMdInformationCircleOutline color="red" size={23} />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="min-w-72 max-w-96 p-3">
+                    <p class="text-sm text-gray-600 font-bold">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                      Rerum reiciendis asperiores facilis voluptatum autem
+                      deserunt itaque perferendis optio, esse cumque. Sit
+                      nostrum architecto tenetur non placeat corrupti facere
+                      dolorum assumenda?
+                    </p>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+            <div className="w-full space-y-6 pt-3">
+              {progressDetails &&
+                progressDetails.length > 0 &&
+                progressDetails.map((item, index) => {
+                  return <ProgressCard item={item} key={index} />;
+                })}
+              {progressDetailspublic &&
+                progressDetailspublic.length > 0 &&
+                progressDetailspublic.map((item, index) => {
+                  return <ProgressCard item={item} key={index} />;
+                })}
             </div>
           </div>
-          <div className="w-full space-y-6 pt-3">
-            {progressDetails &&
-              progressDetails.length > 0 &&
-              progressDetails.map((item, index) => {
-                return <ProgressCard item={item} key={index} />;
-              })}
-            {progressDetailspublic &&
-              progressDetailspublic.length > 0 &&
-              progressDetailspublic.map((item, index) => {
-                return <ProgressCard item={item} key={index} />;
-              })}
+        ) : (
+          <div className="min-h-72 justify-center items-center w-full flex">
+            <p className="font-bold">No data found</p>
           </div>
-        </div>
-          ): (
-            <div className="min-h-72 justify-center items-center w-full flex">
-              <p className="font-bold">No data found</p>
-            </div>
-          )
-        }
+        )}
       </div>
     );
   };
@@ -491,10 +513,8 @@ const PageDetails = () => {
         console.error("Error while following:", error);
         throw error; // Throw the error to handle it outside this function if needed
       }
-    }
-    else
-    {
-      router.push("/signup")
+    } else {
+      router.push("/signup");
     }
   };
   return (
@@ -549,23 +569,23 @@ const PageDetails = () => {
                     />
                   )}
                 </div>
-                <div className="flex flex-col justify-center gap-2 py-3 font-bold ">
+                <div className="flex flex-col justify-center gap-4 py-3 font-bold ">
                   <p>{selectedMovie?.title}</p>
                 </div>
               </div>
               <div>
-              <div
-              className="flex justify-center items-center py-4"
-              onClick={toggleFollow}
-            >
-              <Button className="bg-blue-400 hover:bg-blue-400 py-0 px-10">
-                {isFollowing
-                  ? "Following"
-                  // : totalPoints > 0
-                  // ? "Follow Again"
-                  : "Follow"}
-              </Button>
-            </div>
+                <div
+                  className="flex justify-center min-w-24 items-center py-4"
+                  onClick={toggleFollow}
+                >
+                  <Button className="bg-blue-400 hover:bg-blue-400 py-0 px-10">
+                    {isFollowing
+                      ? "Following"
+                      : // : totalPoints > 0
+                        // ? "Follow Again"
+                        "Follow"}
+                  </Button>
+                </div>
               </div>
             </div>
 
@@ -573,11 +593,18 @@ const PageDetails = () => {
               {routes.map((route, index) => {
                 return (
                   <div
-                    onClick={() => setActiveRouteIndex(route.key)}
+                    onClick={() => 
+                      {
+                        setActiveRouteIndex(route.key)
+                        setActiveSecondRouteIndex(0)
+                      }
+                    }
                     key={index}
                     className={cn(
                       " cursor-pointer   whitespace-nowrap",
-                      activeRouteIndex === route.key ? "font-bold uppercase text-[#fdbd5b]" : "text-white"
+                      activeRouteIndex === route.key
+                        ? "font-bold uppercase text-[#fdbd5b]"
+                        : "text-white"
                     )}
                   >
                     {route.title}
@@ -585,6 +612,27 @@ const PageDetails = () => {
                 );
               })}
             </div>
+            {(activeRouteIndex == "third" || activeRouteIndex == "fourth") && (
+              <div className=" flex justify-around w-full overflow-x-scroll space-x-5 p-3 bg-[#c12130] items-center mt-3">
+                {keywordsArray?.length > 0 &&
+                  keywordsArray.map((item, index) => {
+                    return (
+                      <div
+                        onClick={() => setActiveSecondRouteIndex(item.id)}
+                        key={index}
+                        className={cn(
+                          " cursor-pointer   whitespace-nowrap min-w-20 flex justify-center items-center px-3",
+                          activeSecondRouteIndex === item.id
+                            ? "font-bold uppercase text-[#fdbd5b]"
+                            : "text-white"
+                        )}
+                      >
+                        {item.name}
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
           </div>
           {renderContent()}
           <div className="mb-14" />

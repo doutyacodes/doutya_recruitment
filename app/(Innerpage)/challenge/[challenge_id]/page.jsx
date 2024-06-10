@@ -91,24 +91,6 @@ const PageDetails = ({ params }) => {
             <p className="text-base text-slate-500 italic">
               {challenge.description}
             </p>
-            <div className="flex-1 w-full justify-end h-full">
-            <Button className="bg-[#0d988c] px-3 w-full">
-                {isEligible ? (
-                  <Link
-                    href={
-                      user ? `/rounds/${challenge.challenge_id}` : "/signup"
-                    }
-                    className="w-full"
-                  >
-                    Apply this job
-                  </Link>
-                ) : (
-                  <div onClick={() => alert("You are not eligible for this job.")} className="w-full text-center">
-                    Apply this job
-                  </div>
-                )}
-              </Button>
-            </div>
           </div>
         </div>
       </div>
@@ -236,7 +218,7 @@ const PageDetails = ({ params }) => {
             >
               Description
             </p>
-            {user && (
+            {user && challenge.page_type!="tests" &&(
               <>
                 <p
                   className={cn(
@@ -269,6 +251,23 @@ const PageDetails = ({ params }) => {
             )}
           </div>
           {RenderData()}
+          <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
+            {isEligible ? (
+              <Link
+                href={user ? `/rounds/${challenge.challenge_id}` : "/signup"}
+                className="w-full"
+              >
+                Apply this job
+              </Link>
+            ) : (
+              <div
+                onClick={() => alert("You are not eligible for this job.")}
+                className="w-full text-center"
+              >
+                Apply this job
+              </div>
+            )}
+          </Button>
         </div>
       )}
     </>

@@ -120,18 +120,19 @@ const FollowPage = () => {
                 <div
                   onClick={() => handleMovieSelection(item.id)}
                   className={cn(
-                    "relative col-span-6 shadow-md flex-col items-center rounded-md shadow-slate-100 gap-3 flex justify-center p-2 w-full h-full",
+                    "relative md:col-span-4 col-span-6 shadow-md flex-col items-center rounded-md shadow-slate-100 gap-3 flex justify-center p-2 w-full h-full",
                     selectedEvents.includes(item.id)
                       ? "bg-blue-300"
                       : "bg-white "
                   )}
                   key={index}
                 >
-                  <div className="relative min-h-60 md:h-96 min-w-24 h-full rounded-md w-full">
+                  <div className="relative min-h-40 md:h-40 md:min-w-20 h-full rounded-md w-full">
                     <Image
                       className="rounded-md"
                       src={`${baseImgURL + item.icon}`}
                       fill
+                      objectFit="contain"
                     />
                   </div>
                   <p className="font-extrabold text-sm">{item.title}</p>
