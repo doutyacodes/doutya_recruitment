@@ -94,12 +94,12 @@ const PageDetails = ({ params }) => {
         <div className="w-full h-full  space-y-5 mt-3">
           <div className="mt-4 justify-center flex flex-col gap-3 items-center w-full p-3">
             <div className=" w-24 h-24  rounded-md relative">
-              <Image
+             {challenge.image &&( <Image
                 src={baseImgURL + challenge.image}
                 fill
                 alt="image"
                 objectFit="cover"
-              />
+              />)}
             </div>
             <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
             <p className="text-base text-slate-500 italic">
@@ -210,12 +210,12 @@ const PageDetails = ({ params }) => {
           <div className="w-full bg-white shadow-lg border border-muted p-3 rounded-md flex justify-between items-center">
             <div className="w-fit border rounded-full">
               <div className=" w-20 h-20  rounded-md relative">
-                <Image
+                {selectedMovie.image &&(<Image
                   src={baseImgURL + selectedMovie.image}
                   fill
                   alt="image"
                   objectFit="cover"
-                />
+                />)}
               </div>
             </div>
             <div>

@@ -128,13 +128,13 @@ const FollowPage = () => {
                   key={index}
                 >
                   <div className="relative min-h-40 md:h-40 md:min-w-20 h-full rounded-md w-full">
-                    <Image
+                   {item.icon &&( <Image
                       className="rounded-md"
                       src={`${baseImgURL + item.icon}`}
                       fill
                       alt="image"
                       objectFit="contain"
-                    />
+                    />)}
                   </div>
                   <p className="font-extrabold text-sm">{item.title}</p>
                 </div>

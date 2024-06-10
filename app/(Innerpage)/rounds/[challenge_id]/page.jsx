@@ -149,12 +149,12 @@ const RoundScreen = ({ params }) => {
         <div className="w-full p-3 flex justify-between items-center">
           <div className="w-fit">
             <div className=" w-20 h-20  rounded-full relative">
-              <Image
+            {challenge.image && (  <Image
                 src={baseImgURL + challenge.image}
                 fill
                 alt="image"
                 objectFit="cover"
-              />
+              />)}
             </div>
           </div>
           <div>

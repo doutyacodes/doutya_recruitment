@@ -550,13 +550,13 @@ const PageDetails = () => {
       ) : (
         <>
           <div className=" relative w-full md:h-40 h-28 ">
-            <Image
+            {selectedMovie?.banner &&(<Image
               src={baseImgURL + selectedMovie?.banner}
               fill
               alt="image"
               className=" "
               objectFit="cover"
-            />
+            />)}
           </div>
           <div>
             <div className="flex justify-between w-full p-3 bg-white border border-black/5 ">
