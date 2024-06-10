@@ -637,7 +637,10 @@ const PageDetails = () => {
                   })}
               </div>
             )}
+          </div>
+          <div className="w-full h-full overflow-y-scroll">
           {renderContent()}
+
           </div>
           <div className="mb-14" />
         </>
