@@ -637,8 +637,8 @@ const PageDetails = () => {
                   })}
               </div>
             )}
-          </div>
           {renderContent()}
+          </div>
           <div className="mb-14" />
         </>
       )}
