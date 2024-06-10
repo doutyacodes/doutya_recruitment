@@ -273,34 +273,34 @@ const PageDetails = () => {
                       {quizState.challenges_by_all_keywords[
                         keywordName
                       ].districts[districtName].map((item, itemIndex) => {
-                        let formattedEndDate;
-                        let formattedDate;
-                        formattedDate = moment(item.start_date).fromNow();
-                        const endDate = moment(item.end_date);
-                        const now = moment();
+                        // let formattedEndDate;
+                        // let formattedDate;
+                        // formattedDate = moment(item.start_date).fromNow();
+                        // const endDate = moment(item.end_date);
+                        // const now = moment();
 
-                        const duration = moment.duration(endDate.diff(now));
+                        // const duration = moment.duration(endDate.diff(now));
 
-                        if (duration.asDays() >= 1) {
-                          formattedEndDate =
-                            Math.round(duration.asDays()) + " days";
-                        } else if (duration.asHours() >= 1) {
-                          formattedEndDate =
-                            Math.floor(duration.asHours()) +
-                            ":" +
-                            (duration.minutes() < 10 ? "0" : "") +
-                            duration.minutes() +
-                            " hrs";
-                        } else {
-                          formattedEndDate = duration.minutes() + " minutes";
-                        }
+                        // if (duration.asDays() >= 1) {
+                        //   formattedEndDate =
+                        //     Math.round(duration.asDays()) + " days";
+                        // } else if (duration.asHours() >= 1) {
+                        //   formattedEndDate =
+                        //     Math.floor(duration.asHours()) +
+                        //     ":" +
+                        //     (duration.minutes() < 10 ? "0" : "") +
+                        //     duration.minutes() +
+                        //     " hrs";
+                        // } else {
+                        //   formattedEndDate = duration.minutes() + " minutes";
+                        // }
 
                         return (
                           <ChallengeHomeCard
                             key={item.challenge_id} // Assuming challenge_id is unique
                             item={item}
-                            formattedDate={formattedDate}
-                            formattedEndDate={formattedEndDate}
+                            // formattedDate={formattedDate}
+                            // formattedEndDate={formattedEndDate}
                             inPage={true}
                           />
                         );
@@ -345,34 +345,34 @@ const PageDetails = () => {
                     quizData.challenges_by_district[districtName].length > 0 &&
                     quizData.challenges_by_district[districtName].map(
                       (item, itemIndex) => {
-                        let formattedEndDate;
-                        let formattedDate;
-                        formattedDate = moment(item.start_date).fromNow();
-                        const endDate = moment(item.end_date);
-                        const now = moment();
+                        // let formattedEndDate;
+                        // let formattedDate;
+                        // formattedDate = moment(item.start_date).fromNow();
+                        // const endDate = moment(item.end_date);
+                        // const now = moment();
 
-                        const duration = moment.duration(endDate.diff(now));
+                        // const duration = moment.duration(endDate.diff(now));
 
-                        if (duration.asDays() >= 1) {
-                          formattedEndDate =
-                            Math.round(duration.asDays()) + " days";
-                        } else if (duration.asHours() >= 1) {
-                          formattedEndDate =
-                            Math.floor(duration.asHours()) +
-                            ":" +
-                            (duration.minutes() < 10 ? "0" : "") +
-                            duration.minutes() +
-                            " hrs";
-                        } else {
-                          formattedEndDate = duration.minutes() + " minutes";
-                        }
+                        // if (duration.asDays() >= 1) {
+                        //   formattedEndDate =
+                        //     Math.round(duration.asDays()) + " days";
+                        // } else if (duration.asHours() >= 1) {
+                        //   formattedEndDate =
+                        //     Math.floor(duration.asHours()) +
+                        //     ":" +
+                        //     (duration.minutes() < 10 ? "0" : "") +
+                        //     duration.minutes() +
+                        //     " hrs";
+                        // } else {
+                        //   formattedEndDate = duration.minutes() + " minutes";
+                        // }
 
                         return (
                           <ChallengeHomeCard
                             key={itemIndex}
                             item={item}
-                            formattedDate={formattedDate}
-                            formattedEndDate={formattedEndDate}
+                            // formattedDate={formattedDate}
+                            // formattedEndDate={formattedEndDate}
                             inPage={true}
                           />
                         );
@@ -394,34 +394,34 @@ const PageDetails = () => {
                       0 &&
                     privateQuiz.challenges_by_district[districtName].map(
                       (item, itemIndex) => {
-                        let formattedEndDate;
-                        let formattedDate;
-                        formattedDate = moment(item.start_date).fromNow();
-                        const endDate = moment(item.end_date);
-                        const now = moment();
+                        // let formattedEndDate;
+                        // let formattedDate;
+                        // formattedDate = moment(item.start_date).fromNow();
+                        // const endDate = moment(item.end_date);
+                        // const now = moment();
 
-                        const duration = moment.duration(endDate.diff(now));
+                        // const duration = moment.duration(endDate.diff(now));
 
-                        if (duration.asDays() >= 1) {
-                          formattedEndDate =
-                            Math.round(duration.asDays()) + " days";
-                        } else if (duration.asHours() >= 1) {
-                          formattedEndDate =
-                            Math.floor(duration.asHours()) +
-                            ":" +
-                            (duration.minutes() < 10 ? "0" : "") +
-                            duration.minutes() +
-                            " hrs";
-                        } else {
-                          formattedEndDate = duration.minutes() + " minutes";
-                        }
+                        // if (duration.asDays() >= 1) {
+                        //   formattedEndDate =
+                        //     Math.round(duration.asDays()) + " days";
+                        // } else if (duration.asHours() >= 1) {
+                        //   formattedEndDate =
+                        //     Math.floor(duration.asHours()) +
+                        //     ":" +
+                        //     (duration.minutes() < 10 ? "0" : "") +
+                        //     duration.minutes() +
+                        //     " hrs";
+                        // } else {
+                        //   formattedEndDate = duration.minutes() + " minutes";
+                        // }
 
                         return (
                           <ChallengeHomeCard
                             key={itemIndex}
                             item={item}
-                            formattedDate={formattedDate}
-                            formattedEndDate={formattedEndDate}
+                            // formattedDate={formattedDate}
+                            // formattedEndDate={formattedEndDate}
                             inPage={true}
                           />
                         );

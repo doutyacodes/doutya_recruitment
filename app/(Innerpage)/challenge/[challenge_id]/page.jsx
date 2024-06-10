@@ -233,7 +233,7 @@ const PageDetails = ({ params }) => {
             >
               Description
             </p>
-            {user && challenge.page_type!="tests" &&(
+            { challenge.page_type!="tests" &&(
               <>
                 <p
                   className={cn(
