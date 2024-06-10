@@ -44,15 +44,15 @@ const QuizPage = () => {
       window.removeEventListener("popstate", handlePopState);
     };
   }, [router]);
-  useEffect(() => {
-    // Check if the page load is a full reload
-    if (typeof window !== 'undefined' && window.performance) {
-      const navigationType = window.performance.getEntriesByType('navigation')[0].type;
-      if (navigationType === 'reload') {
-        router.push('/');
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Check if the page load is a full reload
+  //   if (typeof window !== 'undefined' && window.performance) {
+  //     const navigationType = window.performance.getEntriesByType('navigation')[0].type;
+  //     if (navigationType === 'reload') {
+  //       router.push('/');
+  //     }
+  //   }
+  // }, []);
 
   // Prevent page unload or refresh
   useEffect(() => {
