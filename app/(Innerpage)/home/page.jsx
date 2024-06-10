@@ -95,7 +95,7 @@ const BuzzwallPage = () => {
                 }
 
                 return (
-                  <div className="col-span-12 md:col-span-6">
+                  <div className="col-span-12 ">
                     <ChallengeBuzzWorld
                       key={index}
                       item={item}
@@ -107,7 +107,7 @@ const BuzzwallPage = () => {
                 );
               } else if (item.info_type === "post") {
                 return (
-                  <div className="col-span-12 md:col-span-6">
+                  <div className="col-span-12 ">
                     <BuzzPosts key={index} item={item} user_id={1} />
                   </div>
                 );
