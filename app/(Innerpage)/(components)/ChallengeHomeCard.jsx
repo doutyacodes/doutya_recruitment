@@ -35,7 +35,7 @@ const ChallengeHomeCard = ({
               : `/challenge/${item.challenge_id}`
             : `/challenge/${item.challenge_id}`
         }
-        className="p-3 space-y-3 flex rounded border items-center  px-3 gap-3  min-w-72 "
+        className="p-3 space-y-3 flex rounded border items-center  px-3 gap-3  min-w-72 w-full"
       >
         <div
           className={" relative md:h-24 md:w-32 w-20 h-16 border rounded-md"}
