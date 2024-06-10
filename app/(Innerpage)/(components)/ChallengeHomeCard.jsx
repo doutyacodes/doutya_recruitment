@@ -28,14 +28,14 @@ const ChallengeHomeCard = ({
       <div>
         <div className="block">
           <div className="p-3 space-y-3 flex rounded border items-center px-3 gap-3 min-w-72 w-full">
-            <div className="relative md:h-24 md:w-32 w-20 h-16 border rounded-md">
+            {/* <div className="relative md:h-24 md:w-32 w-20 h-16 border rounded-md">
               <Image
                 src={baseImgURL + item.image}
                 fill
                 alt="Profile Image"
                 className="rounded-lg object-cover"
               />
-            </div>
+            </div> */}
             <div className="w-full">
               <div className="w-full flex justify-between items-center">
                 <p className={cn("font-bold whitespace-nowrap truncate")}>{slicedTitle}</p>
