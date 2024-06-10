@@ -35,6 +35,7 @@ function ChooseKeyword() {
   const [data, setData] = useState([]);
   const [itemColors, setItemColors] = useState({});
   const [showDialog, setShowDialog] = useState(false);
+  const [showDialog2, setShowDialog2] = useState(false);
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -97,7 +98,7 @@ function ChooseKeyword() {
     } else if (selectedItems.length < 2) {
       setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
     } else {
-      setShowDialog(true);
+      setShowDialog2(true);
     }
   };
 
@@ -205,10 +206,25 @@ function ChooseKeyword() {
             );
           })}
       </div>
-
       <div className="mt-4 flex justify-center">
-        <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
-          <AlertDialogTrigger asChild>
+        <AlertDialog open={showDialog2} onOpenChange={setShowDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Limit Exceeded</AlertDialogTitle>
+              <AlertDialogDescription>
+                You can't select more than 2 keywords. Please deselect one
+                before adding a new one.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={()=>setShowDialog2(false)}>Okay</AlertDialogCancel>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+      <div className="mt-4 flex justify-center">
+        <AlertDialog>
+          <AlertDialogTrigger>
             <button
               className="bg-[#fdbd5b] text-white py-3 px-6 rounded-md"
               disabled={selectedItems.length < 1 || selectedItems.length > 2}
@@ -218,13 +234,16 @@ function ChooseKeyword() {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Limit Exceeded</AlertDialogTitle>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                You can't select more than 2 keywords. Please deselect one before adding a new one.
+                You can change your choice once in week?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Okay</AlertDialogCancel>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleSubmit}>
+                Continue
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
