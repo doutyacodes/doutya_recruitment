@@ -154,10 +154,10 @@ const UserDetails = ({ params }) => {
           />
         </div>
         <div className="w-full flex items-center gap-3">
-          <div className="p-2 rounded-full border border-black/5 my-3">
+          <div className=" rounded-full border border-black/5 my-3">
             <div className=" relative  w-10 h-10 ">
               <Image
-                src={"/assets/images/logo.png"}
+                src={"/assets/images/person.png"}
                 fill
                 alt="image"
                 className=" "

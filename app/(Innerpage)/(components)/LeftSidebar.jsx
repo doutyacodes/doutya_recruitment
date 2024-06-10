@@ -204,7 +204,7 @@ const LeftSidebar = () => {
               <QRCodeCanvas
                 value={`https://wowfy.com/?user_id=${user.username}`}
                 imageSettings={{
-                  src: "/assets/images/wowcoin.png",
+                  src: "/assets/images/logo.png",
                   height: 35,
                   width: 35,
                 }}
