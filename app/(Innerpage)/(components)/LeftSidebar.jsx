@@ -185,6 +185,7 @@ const LeftSidebar = () => {
                     <div className="relative w-12 h-12 mt-3">
                       <Image
                         src={baseImgURL + item.image}
+                        alt="logo"
                         fill
                         className="object-cover  rounded-md"
                       />
@@ -234,6 +235,7 @@ const LeftSidebar = () => {
                           <div className="relative w-12 h-12 mt-3">
                             <Image
                               src={baseImgURL + item.icon}
+                              alt="icon"
                               fill
                               className="object-cover  rounded-md"
                             />

@@ -152,6 +152,7 @@ const RoundScreen = ({ params }) => {
               <Image
                 src={baseImgURL + challenge.image}
                 fill
+                alt="image"
                 objectFit="cover"
               />
             </div>
@@ -182,6 +183,7 @@ const RoundScreen = ({ params }) => {
                 <div className="w-full flex items-center gap-3">
                   <div className="w-24 h-24 relative  border rounded-md">
                     <Image
+                    alt="image"
                       fill
                       src={baseImgURL + item.image}
                       className="rounded-md object-cover "
@@ -226,6 +228,7 @@ const RoundScreen = ({ params }) => {
                 <div className="w-24 h-24 relative border rounded-md">
                   <Image
                     fill
+                    alt="image"
                     src={baseImgURL + "coming.jpg"}
                     className="rounded-md object-cover"
                   />

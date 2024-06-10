@@ -104,7 +104,7 @@ const FollowPage = () => {
     <div className="max-w-[800px]  min-h-screen overflow-y-scroll w-full mx-auto bg-gray-100 border p-3 relative flex flex-col gap-4">
       <div className="flex flex-col gap-3 justify-center items-center">
         <div className="relative w-32 h-20">
-          <Image src={"/assets/images/doutya4.png"} fill />
+          <Image src={"/assets/images/doutya4.png"} alt="image" fill />
         </div>
         <div className="">
           <p className="font-bold">Follow atleast 2 pages to continue</p>
@@ -132,6 +132,7 @@ const FollowPage = () => {
                       className="rounded-md"
                       src={`${baseImgURL + item.icon}`}
                       fill
+                      alt="image"
                       objectFit="contain"
                     />
                   </div>

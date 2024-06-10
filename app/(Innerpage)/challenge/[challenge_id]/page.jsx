@@ -97,6 +97,7 @@ const PageDetails = ({ params }) => {
               <Image
                 src={baseImgURL + challenge.image}
                 fill
+                alt="image"
                 objectFit="cover"
               />
             </div>
@@ -212,6 +213,7 @@ const PageDetails = ({ params }) => {
                 <Image
                   src={baseImgURL + selectedMovie.image}
                   fill
+                  alt="image"
                   objectFit="cover"
                 />
               </div>

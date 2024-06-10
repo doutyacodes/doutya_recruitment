@@ -69,9 +69,7 @@ const PageDetails = () => {
       console.error("Error submitting data:", error);
     }
   };
-  useEffect(() => {
-    visitForm();
-  }, []);
+  
   useEffect(() => {
     // if(user){
     //   console.log(user)
@@ -211,8 +209,9 @@ const PageDetails = () => {
     fetchProgresspublic();
   }, [activeRouteIndex]);
   useEffect(() => {
+    visitForm();
     fetchData();
-  }, []);
+  }, [page_id,user]);
   useEffect(() => {
     const fetchQuiz = async () => {
       if (
@@ -548,6 +547,7 @@ const PageDetails = () => {
             <Image
               src={baseImgURL + selectedMovie?.banner}
               fill
+              alt="image"
               className=" "
               objectFit="cover"
             />

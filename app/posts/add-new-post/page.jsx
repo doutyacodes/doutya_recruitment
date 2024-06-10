@@ -112,7 +112,7 @@ const AddNewPost = () => {
           onChange={(e) => setTextData(e.target.value)}
         ></textarea>
         <div className="flex flex-col gap-3 ">
-          {image && <Image src={image} width={150} height={150} />}
+          {image && <Image src={image} alt="image" width={150} height={150} />}
           {video && (
             <video width="200" height="200" controls>
               <source src={video} type="video/mp4" />

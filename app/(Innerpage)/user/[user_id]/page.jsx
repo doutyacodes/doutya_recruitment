@@ -148,6 +148,7 @@ const UserDetails = ({ params }) => {
           <Image
             src={"/assets/images/bgImg.png"}
             fill
+            alt="image"
             className=" "
             objectFit="contain"
           />
@@ -158,6 +159,7 @@ const UserDetails = ({ params }) => {
               <Image
                 src={"/assets/images/logo.png"}
                 fill
+                alt="image"
                 className=" "
                 objectFit="contain"
               />
