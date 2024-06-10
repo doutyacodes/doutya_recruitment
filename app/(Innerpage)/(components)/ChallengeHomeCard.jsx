@@ -23,18 +23,12 @@ const ChallengeHomeCard = ({
   const user = useAppSelector((state) => state.auth.user);
 
   return (
-    <div
+    <Link
+    href={`/challenge/${item.challenge_id}`}
+
       className={cn("shadow-xl  rounded-md max-md:w-76 md:min-w-96 bg-white")}
     >
-      
-      <Link
-        href={
-          inTodo
-            ? user
-              ? `/rounds/${item.challenge_id}`
-              : `/challenge/${item.challenge_id}`
-            : `/challenge/${item.challenge_id}`
-        }
+      <div
         className="p-3 space-y-3 flex rounded border items-center  px-3 gap-3  min-w-72 w-full"
       >
         <div
@@ -87,8 +81,8 @@ const ChallengeHomeCard = ({
             )}
           </div>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 
