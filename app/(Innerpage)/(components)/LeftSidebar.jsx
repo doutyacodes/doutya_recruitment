@@ -107,10 +107,9 @@ const LeftSidebar = () => {
   }, [user]);
   useEffect(() => {
     const fetchSearch = async () => {
-      if (user) {
         try {
           const response = await axios.get(
-            `${baseURL}/getSearchUser.php?q=${searchQuery}&user_id=${user.id}`
+            `${baseURL}/getSearchUser.php?q=${searchQuery}&user_id=${user ? user.id : null}`
           );
           if (response.status === 200) {
             setSearchData(response.data);
@@ -121,7 +120,7 @@ const LeftSidebar = () => {
         } catch (error) {
           console.error("Error while fetching friends:", error.message);
         }
-      }
+      
     };
 
     fetchSearch();
@@ -196,7 +195,10 @@ const LeftSidebar = () => {
           </div>
         )}
       </div>
-      <div className="flex justify-center mt-7">
+      {
+        user && (
+          <>
+          <div className="flex justify-center mt-7">
         <div className="p-3 bg-white rounded-lg">
           <QRCodeCanvas
             value={`https://wowfy.com/?user_id=${user.username}`}
@@ -241,6 +243,9 @@ const LeftSidebar = () => {
           </AccordionItem>
         </Accordion>
       </div>
+          </>
+        )
+      }
     </div>
   );
 };

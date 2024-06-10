@@ -48,13 +48,7 @@ const Navbar = () => {
           />
         </li>
         <li>
-          {!user ? (
-            <Button>
-              <Link href="/signup">Login</Link>
-            </Button>
-          ) : (
-            <div className="flex gap-5 items-center">
-              <Sheet >
+        <Sheet >
               <SheetTrigger>
                 <Search size={24} />
               </SheetTrigger>
@@ -62,6 +56,15 @@ const Navbar = () => {
                 <LeftSidebar />
               </SheetContent>
             </Sheet>
+        </li>
+        <li>
+          {!user ? (
+            <Button>
+              <Link href="/signup">Login</Link>
+            </Button>
+          ) : (
+            <div className="flex gap-5 items-center">
+              
             <Sheet>
               <SheetTrigger>
                 <AlignJustify size={24} />
