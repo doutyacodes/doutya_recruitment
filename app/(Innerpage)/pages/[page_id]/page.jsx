@@ -174,7 +174,7 @@ const PageDetails = () => {
     };
     fetchQuizTest();
     const fetchProgress = async () => {
-      if (user) {
+      if (user && page_id) {
         if (activeRouteIndex) {
           try {
             const response = await axios.get(
@@ -185,7 +185,7 @@ const PageDetails = () => {
               setProgressDetails(response.data);
             }
           } catch (error) {
-            console.error("Error while fetching quiz");
+            console.error("Error while fetching levels");
           }
         }
       }
