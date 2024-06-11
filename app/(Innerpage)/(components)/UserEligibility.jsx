@@ -40,8 +40,8 @@ const UserEligibility = ({ item }) => {
           {item.type == "keyword" && (
             <>
               {" "}
+              {user && star_user}{"/"}
               {item.stars}
-              {user && "/" + star_user}{" "}
               <span>
                 {" "}
                 <FaStar size={"14"} color="gold" />{" "}
