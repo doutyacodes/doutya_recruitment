@@ -225,14 +225,20 @@ const PageDetails = () => {
         activeRouteIndex == "third" ||
         activeRouteIndex == "second"
       ) {
-        if (activeRouteIndex && activeSecondRouteIndex != 0) {
+        if (activeRouteIndex) {
           try {
             let baseApiUrl;
+            let navUrl="getEachQuiz.php"
+            if(activeSecondRouteIndex==0)
+              {
+                 navUrl="getEachQuizEveryone.php"
+
+              }
             if (user) {
               baseApiUrl = `&userId=${user.id}`;
             }
             const response = await axios.get(
-              `${baseURL}/getEachQuiz.php?page_id=${page_id}&page_type=${activeRouteIndex}${baseApiUrl}&id_keyword=${activeSecondRouteIndex}`
+              `${baseURL}/${navUrl}?page_id=${page_id}&page_type=${activeRouteIndex}${baseApiUrl}&id_keyword=${activeSecondRouteIndex}`
             );
             // console.log(response.data);
             if (response.data) {
