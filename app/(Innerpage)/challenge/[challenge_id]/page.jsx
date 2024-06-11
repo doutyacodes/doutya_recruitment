@@ -46,7 +46,7 @@ const PageDetails = ({ params }) => {
             user ? user.id : null
           }`
         );
-          // console.log(response.data);
+          console.log(response.data);
 
         if (response.status === 200) {
           setChallenge(response.data);
