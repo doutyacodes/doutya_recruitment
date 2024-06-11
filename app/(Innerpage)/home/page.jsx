@@ -86,13 +86,12 @@ const BuzzwallPage = () => {
       <div className="w-full  p-3">
         {adDetails && (
           <Link prefetch={false} href={adDetails.link} className="w-full">
-            <div className="w-full relative h-40 my-4 rounded-md">
+            <div className="w-full relative object-contain md:object-cover min-h-24 md:h-40 my-4 rounded-md">
               {adDetails.image && (
                 <Image
                   alt="ad-banner"
                   src={baseImgURL + adDetails.image}
                   fill
-                  objectFit="cover"
                   className="rounded-md"
                 />
               )}
