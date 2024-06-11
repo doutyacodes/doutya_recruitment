@@ -276,7 +276,7 @@ const Results = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex w-full justify-center my-4">
-                          {item.stars && (
+                          {item.stars && item.stars !== 0 && (
                             <div className="flex">
                               {Array(convertStarsToNumber(item.stars))
                                 .fill(0)
@@ -285,7 +285,7 @@ const Results = () => {
                                 ))}
                             </div>
                           )}
-                          {item.stars_left && (
+                          {item.stars_left && item.stars_left !== 0 && (
                             <div className="flex">
                               {Array(convertStarsToNumber(item.stars_left))
                                 .fill(0)
