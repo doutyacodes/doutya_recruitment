@@ -12,7 +12,7 @@ import { FaStar } from "react-icons/fa";
 const Success = ({ params }) => {
   const task_id = params.task_id;
   const user = useAppSelector((state) => state.auth.user);
-  const [starsDetails, setStarsDetails] = useState([]);
+  const [starsDetails, setStarsDetails] = useState(0);
 
   const router = useRouter();
 
@@ -20,22 +20,18 @@ const Success = ({ params }) => {
     if (!user) {
       router.push("/home");
     }
-  }, []); // Added task_id to dependency array
+  }, [user, router]);
 
   useEffect(() => {
     const getStars = async () => {
       try {
         const response = await axios.get(
-          `${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
+         ` ${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
         );
-        // console.log(response.data)
-        if (response.data.stars);
-        {
-          // console.log(response.data.stars);
-          setStarsDetails(response.data.stars); // Assuming you want to set the data here
-
+        console.log(response.data);
+        if (response.data.stars) {
+          setStarsDetails(response.data.stars);
         }
-        setStarsDetails(response.data); // Assuming you want to set the data here
       } catch (error) {
         console.error(error);
       }
@@ -43,25 +39,23 @@ const Success = ({ params }) => {
     if (user) {
       getStars();
     }
-  }, [user, task_id]); // Added task_id to dependency array
+  }, [user, task_id]);
 
   return (
     <div className="w-full p-3 h-full">
       <div className="w-full h-full bg-white flex flex-col min-h-[60vh] md:min-h-[80vh] rounded-md justify-center items-center">
         <IoIosCheckmarkCircle size={90} color="green" />
         <p className="text-3xl font-bold text-green-700">Success</p>
-        {
-            starsDetails && (
-                <div>
-                    <p className="text-lg text-center my-5 space-y-5 font-bold">Star Achieved</p>
-                    <div className="flex gap-3 w-full justify-center my-4">
-                    {Array(starsDetails).fill(0).map((_, index) => (
-                    <FaStar key={index} color="gold" size={20} />
-                  ))}
-                    </div>
-                </div>
-            )
-        }
+        {starsDetails > 0 && (
+          <div>
+            <p className="text-lg text-center my-5 space-y-5 font-bold">Star Achieved</p>
+            <div className="flex gap-3 w-full justify-center my-4">
+              {Array.from({ length: starsDetails }).map((_, index) => (
+                <FaStar key={index} color="gold" size={20} />
+              ))}
+            </div>
+          </div>
+        )}
         <p className="text-sm text-black/40 p-3">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -73,7 +67,7 @@ const Success = ({ params }) => {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </p>
-        <Link prefetch={false}  href="/home">
+        <Link prefetch={false} href="/home">
           <Button className="bg-green-600 text-lg">Go to Home</Button>
         </Link>
       </div>
