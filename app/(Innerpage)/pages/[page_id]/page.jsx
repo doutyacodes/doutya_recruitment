@@ -127,9 +127,9 @@ const PageDetails = () => {
           setKeywordsArray(keywords);
 
           // Set the first keyword as active when in the "second" route
-          if (activeRouteIndex != "second" && keywords.length > 0) {
-            setActiveSecondRouteIndex(keywords[0].id);
-          }
+          // if (activeRouteIndex != "second" && keywords.length > 0) {
+          //   setActiveSecondRouteIndex(keywords[0].id);
+          // }
         }
       } catch (error) {
         console.error("Error while fetching quiz");
@@ -618,6 +618,17 @@ const PageDetails = () => {
             </div>
             {(activeRouteIndex == "third" || activeRouteIndex == "fourth") && (
               <div className=" flex justify-around w-full overflow-x-scroll space-x-5 p-3 bg-[#c12130] items-center mt-3">
+                <div
+                        onClick={() => setActiveSecondRouteIndex(0)}
+                        className={cn(
+                          " cursor-pointer   whitespace-nowrap min-w-20 flex justify-center items-center px-3",
+                          activeSecondRouteIndex === 0
+                            ? "font-bold uppercase text-[#fdbd5b]"
+                            : "text-white"
+                        )}
+                      >
+                        Special
+                      </div>
                 {keywordsArray?.length > 0 &&
                   keywordsArray.map((item, index) => {
                     return (

@@ -134,7 +134,7 @@ const PageDetails = ({ params }) => {
           <h6 className="text-lg"> Salary :</h6>
           <h3 className="text-2xl md:text-4xl font-bold">
             ₹{" "}
-            {challenge?.salary ? challenge.salary.toLocaleString("en-IN") : ""}
+            {challenge?.salary ? challenge.salary.toLocaleString("en-IN") : ""} Per month
           </h3>
         </div>
         {challenge?.salary_desc && (
