@@ -146,7 +146,7 @@ const LeftSidebar = () => {
                   : (Navpass = `/pages/${item.id}`);
                 // console.log(item)
                 return item.type == "user" ? (
-                  <Link
+                  <Link prefetch={false} 
                     href={Navpass}
                     className="flex gap-2 mt-4 items-center "
                     key={index}
@@ -177,7 +177,7 @@ const LeftSidebar = () => {
                     </div>
                   </Link>
                 ) : (
-                  <Link
+                  <Link prefetch={false} 
                     href={Navpass}
                     className="flex gap-2 mt-4 items-center border-t "
                     key={index}
@@ -227,7 +227,7 @@ const LeftSidebar = () => {
                   {userPages?.length > 0 &&
                     userPages?.map((item, index) => {
                       return (
-                        <Link
+                        <Link prefetch={false} 
                           href={`/pages/${item.id}`}
                           className="flex gap-2 mt-4 items-center border-t"
                           key={index}

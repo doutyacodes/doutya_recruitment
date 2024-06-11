@@ -91,7 +91,7 @@ const AddNewPost = () => {
   return (
     <div className="max-w-[800px]  min-h-screen w-full mx-auto bg-[#e5e5e5] relative">
       <div className="flex p-3 justify-between items-center">
-        <Link href={"/home"}>
+        <Link prefetch={false}  href={"/home"}>
           <IoMdClose color="gray" size={24} />
         </Link>
         <div className="font-bold text-gray-600">Post</div>

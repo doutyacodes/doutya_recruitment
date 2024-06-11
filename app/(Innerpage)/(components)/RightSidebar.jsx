@@ -48,14 +48,14 @@ const RightSidebar = () => {
   return (
     <div className="h-full w-full">
       <div className="flex-1 w-full h-full flex flex-col gap-4">
-        <Link
+        <Link prefetch={false} 
           href={`/user/${user.id}`}
           className="flex gap-3 w-full p-3 items-center bg-white border-b"
         >
           <PiUserCircleFill color="black" size={24} /> <p>My Profile</p>
         </Link>
 
-        <Link
+        <Link prefetch={false} 
           href={`/faq`}
           className="flex gap-3 w-full p-3 items-center bg-white border-b"
         >

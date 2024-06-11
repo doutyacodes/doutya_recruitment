@@ -24,7 +24,7 @@ const HomeNavbar = () => {
         </li>
         {!user && (
           <li>
-            <Link href="/login">
+            <Link prefetch={false}  href="/login">
               <Button variant={"ghost"} className=" text-white">
                 Login/Signup
               </Button>

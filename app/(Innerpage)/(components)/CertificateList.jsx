@@ -96,7 +96,7 @@ const CertificateList = ({ item, user_id }) => {
     <div className="p-3 shadow-lg rounded-md">
       <div>
         <div className=" gap-2">
-          <Link
+          <Link prefetch={false} 
             href={`/user/${item.user_id}`}
             className="flex gap-2 mt-4 items-center "
           >
@@ -164,7 +164,7 @@ const CertificateList = ({ item, user_id }) => {
           </p>
         </div>
         <div className="flex gap-2 items-center">
-          <Link href={`/community/comments/${item.people_data_id}`}>
+          <Link prefetch={false}  href={`/community/comments/${item.people_data_id}`}>
             <FaComment size={20} color="black" />
           </Link>
           <p>

@@ -268,7 +268,7 @@ const PageDetails = ({ params }) => {
           {RenderData()}
           <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
           {isEligible ? (
-        <Link
+        <Link prefetch={false} 
           href={
             user && challenge.page_type != "tests"
               ? `/rounds/${challenge.challenge_id}`

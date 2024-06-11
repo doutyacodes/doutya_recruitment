@@ -24,7 +24,7 @@ const ChallengeHomeCard = ({
   const user = useAppSelector((state) => state.auth.user);
 
   return (
-    <Link prefetch={false} href={`/challenge/${item.challenge_id}`} className={cn("shadow-xl rounded-md max-md:w-76 md:min-w-96 bg-white ")}>
+    <Link prefetch={false}  href={`/challenge/${item.challenge_id}`} className={cn("shadow-xl rounded-md max-md:w-76 md:min-w-96 bg-white ")}>
       <div>
         <div className="block">
           <div className="p-3 space-y-3 flex rounded border items-center px-3 gap-3 min-w-72 w-full">

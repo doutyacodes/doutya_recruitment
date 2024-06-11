@@ -33,7 +33,7 @@ const TaskHomeCard = ({item}) => {
           <p className="text-sm"> {formattedDate}</p>
         </div>
       </div>
-      <Link href={`/challenge/${item.challenge_id}`} className="p-3 space-y-5">
+      <Link prefetch={false}  href={`/challenge/${item.challenge_id}`} className="p-3 space-y-5">
         <div className=" relative h-72">
           <Image
             src={baseImgURL + item.image}

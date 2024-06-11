@@ -61,7 +61,7 @@ const Navbar = () => {
         <li>
           {!user ? (
             <Button>
-              <Link href="/signup">Login</Link>
+              <Link prefetch={false}  href="/signup">Login</Link>
             </Button>
           ) : (
             <div className="flex gap-5 items-center">
@@ -80,7 +80,7 @@ const Navbar = () => {
       </ul>
       <div className="  fixed py-1 px-3  w-full left-0 bottom-0 z-50 ">
         <div className=" px-3 py-1 max-w-[800px] rounded-full  bg-[#c12130]/95 border mx-auto relative flex w-full justify-around items-center">
-          <Link
+          <Link prefetch={false} 
             href={"/home"}
             className=" w-1/3 text-sm flex flex-col items-center justify-center"
           >
@@ -103,7 +103,7 @@ const Navbar = () => {
               Home
             </p>
           </Link>
-          <Link
+          <Link prefetch={false} 
             href={"/results"}
             className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
           >
@@ -157,7 +157,7 @@ const Navbar = () => {
               </Sheet>
             </div>
           ) : (
-            <Link
+            <Link prefetch={false} 
               href={"/signup"}
               className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
             >

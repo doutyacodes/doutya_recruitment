@@ -44,7 +44,7 @@ const FollowRequest = ({ item, index }) => {
   return (
     <div className="flex-1 border-b pb-2">
       <div className="flex flex-1 justify-between items-center">
-        <Link
+        <Link prefetch={false} 
           href={`/user/${item.user_id}`}
           className="flex gap-2 mt-4 items-center "
         >

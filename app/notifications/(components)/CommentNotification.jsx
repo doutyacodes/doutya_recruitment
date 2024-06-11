@@ -8,7 +8,7 @@ const CommentNotification = ({ item, index }) => {
   return (
     <div className="flex-1 border-b pb-2">
       <div className="flex flex-1 justify-between items-center">
-        <Link
+        <Link prefetch={false} 
           href={`/user/${item.user_id}`}
           className="flex gap-2 mt-4 items-center "
         >
@@ -35,7 +35,7 @@ const CommentNotification = ({ item, index }) => {
           </div>
           <span className="font-bold">{item.name}</span>
 
-          <Link href={`/user-posts/comments/${item.post_id}`} className="flex flex-col gap-1">
+          <Link prefetch={false}  href={`/user-posts/comments/${item.post_id}`} className="flex flex-col gap-1">
             <p>
               <span>
                 {item.info_type == "user_replied" &&

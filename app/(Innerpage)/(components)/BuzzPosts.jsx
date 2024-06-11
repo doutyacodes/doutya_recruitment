@@ -48,7 +48,7 @@ const BuzzPosts = ({ item, user_id }) => {
   encryptId = CryptoJS.AES.encrypt(item.post_id, key).toString();
   return (
     <div className="col-span-12 shadow-lg border border-black/5 rounded-lg">
-      <Link
+      <Link prefetch={false} 
         href={`/pages/${item.page_id}`}
         className="p-3 flex gap-2 items-center"
       >

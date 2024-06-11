@@ -70,7 +70,7 @@ const page = () => {
   {
     searchData?.map((item,index)=>{
       return(
-        <Link href={`user/${item.id}`} key={index} >
+        <Link prefetch={false}  href={`user/${item.id}`} key={index} >
          <p className='bg-white border p-2 rounded-md'>
           {item.name}
           </p> 

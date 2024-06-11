@@ -171,7 +171,7 @@ const RoundScreen = ({ params }) => {
                 : item.description
               : "";
             return (
-              <Link
+              <Link prefetch={false} 
                 href={
                   item.completed == "yes" ? "#" : `/quiz-lobby/${item.task_id}`
                 }

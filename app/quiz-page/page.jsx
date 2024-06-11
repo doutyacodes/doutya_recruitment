@@ -29,21 +29,17 @@ const QuizPage = () => {
 
   // Handle browser back and forward navigation
   useEffect(() => {
-    const handlePopState = (event) => {
+    const handleBeforeUnload = (event) => {
       event.preventDefault();
-      if (confirm("You will lose your progress. Are you sure you want to leave?")) {
-        router.replace("/home");
-      } else {
-        window.history.pushState(null, "", window.location.href);
-      }
+      event.returnValue = "You will lose your progress. Are you sure you want to leave?";
     };
 
-    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [router]);
+  }, []);
   // useEffect(() => {
   //   // Check if the page load is a full reload
   //   if (typeof window !== 'undefined' && window.performance) {

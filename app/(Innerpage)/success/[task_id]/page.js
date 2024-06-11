@@ -73,7 +73,7 @@ const Success = ({ params }) => {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </p>
-        <Link href="/home">
+        <Link prefetch={false}  href="/home">
           <Button className="bg-green-600 text-lg">Go to Home</Button>
         </Link>
       </div>

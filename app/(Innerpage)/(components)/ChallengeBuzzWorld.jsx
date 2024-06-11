@@ -26,7 +26,7 @@ const ChallengeBuzzWorld = ({
     <div
       className={cn("shadow-xl border rounded-md max-md:w-76 md:min-w-96 bg-white h-full")}
     >
-      <Link
+      <Link prefetch={false} 
         href={`/pages/${item.page_id}`}
         className="p-3 flex gap-2 items-center"
       >
@@ -47,7 +47,7 @@ const ChallengeBuzzWorld = ({
           <p className="text-sm"> {formattedDate}</p>
         </div>
       </Link>
-      <Link
+      <Link prefetch={false} 
         href={
           inTodo
             ? user

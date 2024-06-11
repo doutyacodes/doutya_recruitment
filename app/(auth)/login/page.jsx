@@ -122,7 +122,7 @@ await handleLogin()
             </Button>
             <p className="text-sm text-slate-500">
               Don't have an account?{" "}
-              <Link href={"/signup"}>
+              <Link prefetch={false}  href={"/signup"}>
                 <text className="text-[#20bb59]">Register</text>
               </Link>
             </p>
