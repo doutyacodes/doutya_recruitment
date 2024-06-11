@@ -17,10 +17,10 @@ const ChallengeHomeCard = ({
   const encodedId = btoa(item.challenge_id);
   const maxLength = 12;
   const slicedTitle = item?.title
-    ? item.title.length > maxLength
-      ? item.title.slice(0, maxLength) + "..."
-      : item.title
-    : "";
+    // ? item.title.length > maxLength
+    //   ? item.title.slice(0, maxLength) + "..."
+    //   : item.title
+    // : "";
   const user = useAppSelector((state) => state.auth.user);
 
   return (

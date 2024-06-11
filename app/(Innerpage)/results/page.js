@@ -150,11 +150,11 @@ const Results = () => {
                     formattedEndDate = duration.minutes() + " minutes";
                   }
                   const maxLength = 12;
-                  const slicedTitle = item?.title
-                    ? item.title.length > maxLength
-                      ? item.title.slice(0, maxLength) + "..."
-                      : item.title
-                    : "";
+                  // const slicedTitle = item?.title
+                  //   ? item.title.length > maxLength
+                  //     ? item.title.slice(0, maxLength) + "..."
+                  //     : item.title
+                  //   : "";
                   return (
                     <TableRow key={itemIndex}>
                       <TableCell>

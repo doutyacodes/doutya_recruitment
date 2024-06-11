@@ -46,7 +46,7 @@ const PageDetails = ({ params }) => {
             user ? user.id : null
           }`
         );
-          console.log(response.data);
+        console.log(response.data);
 
         if (response.status === 200) {
           setChallenge(response.data);
@@ -94,15 +94,18 @@ const PageDetails = ({ params }) => {
         <div className="w-full h-full  space-y-5 mt-3">
           <div className="mt-4 justify-center flex flex-col gap-3 items-center w-full p-3">
             <div className=" w-24 h-24  rounded-md relative">
-             {challenge.image &&( <Image
-                src={baseImgURL + challenge.image}
-                fill
-                alt="image"
-                objectFit="cover"
-              />)}
+              {challenge.image && (
+                <Image
+                  src={baseImgURL + challenge.image}
+                  fill
+                  alt="image"
+                  objectFit="cover"
+                  className="rounded-md"
+                />
+              )}
             </div>
             <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
-            <p className="text-base text-slate-500 italic">
+            <p className="text-base text-slate-500 italic leading-7">
               {challenge.description}
             </p>
           </div>
@@ -115,7 +118,7 @@ const PageDetails = ({ params }) => {
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         {challenge?.salary_desc ? (
           <div className="mt-4">
-            <p className="text-base text-slate-500 italic">
+            <p className="text-base text-slate-500 italic leading-7">
               {challenge.salary_desc}
             </p>
           </div>
@@ -131,15 +134,19 @@ const PageDetails = ({ params }) => {
     return (
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         <div className="flex gap-4 items-center">
-          <h6 className="text-lg"> Salary :</h6>
+          <h6 className="text-lg">
+            {" "}
+            {challenge.page_type == "job" ? "Salary" : "Stipend"} :
+          </h6>
           <h3 className="text-2xl md:text-4xl font-bold">
             ₹{" "}
-            {challenge?.salary ? challenge.salary.toLocaleString("en-IN") : ""} Per month
+            {challenge?.salary ? challenge.salary.toLocaleString("en-IN") : ""}{" "}
+            Per month
           </h3>
         </div>
         {challenge?.salary_desc && (
           <div className="mt-4">
-            <p className="text-base text-slate-500 italic">
+            <p className="text-base text-slate-500 italic leading-7">
               {challenge.salary_desc}
             </p>
           </div>
@@ -210,12 +217,14 @@ const PageDetails = ({ params }) => {
           <div className="w-full bg-white shadow-lg border border-muted p-3 rounded-md flex justify-between items-center">
             <div className="w-fit border rounded-full">
               <div className=" w-20 h-20  rounded-md relative">
-                {selectedMovie.image &&(<Image
-                  src={baseImgURL + selectedMovie.image}
-                  fill
-                  alt="image"
-                  objectFit="cover"
-                />)}
+                {selectedMovie.image && (
+                  <Image
+                    src={baseImgURL + selectedMovie.image}
+                    fill
+                    alt="image"
+                    objectFit="cover"
+                  />
+                )}
               </div>
             </div>
             <div>
@@ -233,7 +242,7 @@ const PageDetails = ({ params }) => {
             >
               Description
             </p>
-            { challenge.page_type!="tests" &&(
+            {challenge.page_type != "tests" && (
               <>
                 <p
                   className={cn(
@@ -251,7 +260,7 @@ const PageDetails = ({ params }) => {
                   )}
                   onClick={() => handleToggle("Salary")}
                 >
-                  Salary
+                  {challenge.page_type == "job" ? "Salary" : "Stipend"}{" "}
                 </p>
                 <p
                   className={cn(
@@ -267,43 +276,45 @@ const PageDetails = ({ params }) => {
           </div>
           {RenderData()}
           <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
-          {isEligible ? (
-        <Link prefetch={false} 
-          href={
-            user && challenge.page_type != "tests"
-              ? `/rounds/${challenge.challenge_id}`
-              : user && challenge.page_type == "tests"
-              ? `/quiz-lobby/${challenge.task_id}`
-              : "/signup"
-          }
-          className="w-full"
-        >
-          Apply
-        </Link>
-      ) : (
-        <div
-          onClick={() => setShowDialog(true)}
-          className="w-full text-center cursor-pointer"
-        >
-          Apply
-        </div>
-      )}
-      <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
-        <AlertDialogTrigger asChild>
-          <div />
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Not Eligible</AlertDialogTitle>
-            <AlertDialogDescription>
-              You are not eligible for this job. Please review the eligibility criteria before proceeding.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>OK</AlertDialogCancel>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+            {isEligible ? (
+              <Link
+                prefetch={false}
+                href={
+                  user && challenge.page_type != "tests"
+                    ? `/rounds/${challenge.challenge_id}`
+                    : user && challenge.page_type == "tests"
+                    ? `/quiz-lobby/${challenge.task_id}`
+                    : "/signup"
+                }
+                className="w-full"
+              >
+                Apply
+              </Link>
+            ) : (
+              <div
+                onClick={() => setShowDialog(true)}
+                className="w-full text-center cursor-pointer"
+              >
+                Apply
+              </div>
+            )}
+            <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+              <AlertDialogTrigger asChild>
+                <div />
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Not Eligible</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    You are not eligible for this job. Please review the
+                    eligibility criteria before proceeding.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>OK</AlertDialogCancel>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </Button>
         </div>
       )}
