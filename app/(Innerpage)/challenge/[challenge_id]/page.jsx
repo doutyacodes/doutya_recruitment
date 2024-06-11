@@ -278,14 +278,14 @@ const PageDetails = ({ params }) => {
           }
           className="w-full"
         >
-          Apply this job
+          Apply
         </Link>
       ) : (
         <div
           onClick={() => setShowDialog(true)}
           className="w-full text-center cursor-pointer"
         >
-          Apply this job
+          Apply
         </div>
       )}
       <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
