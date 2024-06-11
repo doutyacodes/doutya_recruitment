@@ -264,59 +264,60 @@ const PageDetails = () => {
   const ThirdRoute = () => {
     return (
       <div className="w-full h-full p-1 space-y-4">
-        {quizState?.challenges_by_all_keywords &&
-          Object.keys(quizState.challenges_by_all_keywords).length > 0 &&
-          Object.keys(quizState.challenges_by_all_keywords).map(
-            (keywordName, keywordIndex) => (
-              <div className="bg-gray-100 w-full pt-3 mb-3" key={keywordName}>
-                {/* <p className="font-bold text-xl mb-4">{keywordName}</p> */}
-                {Object.keys(
-                  quizState.challenges_by_all_keywords[keywordName].districts
-                ).map((districtName, districtIndex) => (
-                  <div className="bg-white w-full p-2 mb-2" key={districtName}>
-                    <p className="font-bold mb-2">{districtName}</p>
-                    <div className="flex gap-2 w-full overflow-x-scroll">
-                      {quizState.challenges_by_all_keywords[
-                        keywordName
-                      ].districts[districtName].map((item, itemIndex) => {
-                        let formattedEndDate;
-                        let formattedDate;
-                        formattedDate = moment(item.start_date).fromNow();
-                        const endDate = moment(item.end_date);
-                        const now = moment();
+       {quizState?.challenges_by_all_keywords &&
+  Object.keys(quizState.challenges_by_all_keywords).length > 0 ? (
+  Object.keys(quizState.challenges_by_all_keywords).map(
+    (keywordName, keywordIndex) => (
+      <div className="bg-gray-100 w-full pt-3 mb-3" key={keywordName}>
+        {/* <p className="font-bold text-xl mb-4">{keywordName}</p> */}
+        {Object.keys(
+          quizState.challenges_by_all_keywords[keywordName].districts
+        ).map((districtName, districtIndex) => (
+          <div className="bg-white w-full p-2 mb-2" key={districtName}>
+            <p className="font-bold mb-2">{districtName}</p>
+            <div className="flex gap-2 w-full overflow-x-scroll">
+              {quizState.challenges_by_all_keywords[keywordName].districts[
+                districtName
+              ].map((item, itemIndex) => {
+                let formattedEndDate;
+                let formattedDate = moment(item.start_date).fromNow();
+                const endDate = moment(item.end_date);
+                const now = moment();
 
-                        const duration = moment.duration(endDate.diff(now));
+                const duration = moment.duration(endDate.diff(now));
 
-                        if (duration.asDays() >= 1) {
-                          formattedEndDate =
-                            Math.round(duration.asDays()) + " days";
-                        } else if (duration.asHours() >= 1) {
-                          formattedEndDate =
-                            Math.floor(duration.asHours()) +
-                            ":" +
-                            (duration.minutes() < 10 ? "0" : "") +
-                            duration.minutes() +
-                            " hrs";
-                        } else {
-                          formattedEndDate = duration.minutes() + " minutes";
-                        }
+                if (duration.asDays() >= 1) {
+                  formattedEndDate = `${Math.round(duration.asDays())} days`;
+                } else if (duration.asHours() >= 1) {
+                  formattedEndDate = `${Math.floor(duration.asHours())}:${
+                    duration.minutes() < 10 ? "0" : ""
+                  }${duration.minutes()} hrs`;
+                } else {
+                  formattedEndDate = `${duration.minutes()} minutes`;
+                }
 
-                        return (
-                          <ChallengeHomeCard
-                            key={item.challenge_id} // Assuming challenge_id is unique
-                            item={item}
-                            formattedDate={formattedDate}
-                            formattedEndDate={formattedEndDate}
-                            inPage={true}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )
-          )}
+                return (
+                  <ChallengeHomeCard
+                    key={item.challenge_id} // Assuming challenge_id is unique
+                    item={item}
+                    formattedDate={formattedDate}
+                    formattedEndDate={formattedEndDate}
+                    inPage={true}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  )
+) : (
+  <div className="w-full flex justify-center items-center h-full mt-3">
+    <p className="text-ellipsis font-bold">No data available right now.</p>
+  </div>
+)}
+
       </div>
     );
   };

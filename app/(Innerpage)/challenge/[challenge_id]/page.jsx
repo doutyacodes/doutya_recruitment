@@ -116,10 +116,10 @@ const PageDetails = ({ params }) => {
   const RulesRoute = () => {
     return (
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
-        {challenge?.salary_desc ? (
+        {challenge?.rules ? (
           <div className="mt-4">
             <p className="text-base text-slate-500 italic leading-7">
-              {challenge.salary_desc}
+              {challenge.rules}
             </p>
           </div>
         ) : (
@@ -134,14 +134,14 @@ const PageDetails = ({ params }) => {
     return (
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         <div className="flex gap-4 items-center">
-          <h6 className="text-lg">
+          <h6 className="text-lg font-semibold">
             {" "}
             {challenge.page_type == "job" ? "Salary" : "Stipend"} :
           </h6>
-          <h3 className="text-2xl md:text-4xl font-bold">
+          <h3 className="text-2xl md:text-2xl font-bold">
             ₹{" "}
             {challenge?.salary ? challenge.salary.toLocaleString("en-IN") : ""}{" "}
-            Per month
+            / month
           </h3>
         </div>
         {challenge?.salary_desc && (
