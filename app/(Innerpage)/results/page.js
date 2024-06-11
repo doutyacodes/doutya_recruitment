@@ -277,9 +277,9 @@ const Results = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        <div className="flex gap-3 w-full justify-center my-4">
+                        <div className="flex w-full justify-center my-4">
                           {item.stars && (
-                            <div>
+                            <div className="flex">
                               {Array(item.stars)
                                 .fill(0)
                                 .map((_, index) => (
@@ -288,7 +288,7 @@ const Results = () => {
                             </div>
                           )}
                           {item.stars_left && (
-                            <div>
+                            <div className="flex">
                               {Array(item.stars_left)
                                 .fill(0)
                                 .map((_, index) => (
