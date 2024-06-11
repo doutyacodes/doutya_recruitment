@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { logout } from "@/lib/features/authSlice";
 import { SheetClose } from "@/components/ui/sheet";
 
-const RightSidebar = () => {
+const RightSidebar = ({setSheetOpen2}) => {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const [userData, setUserData] = useState([]);
@@ -45,22 +45,26 @@ const RightSidebar = () => {
     dispatch(logout());
     router.replace("/signup");
   };
+  const handleNav = (Navpass) =>{
+    setSheetOpen2(false)
+    router.push(Navpass)
+  }
   return (
     <div className="h-full w-full">
       <div className="flex-1 w-full h-full flex flex-col gap-4">
-        <Link prefetch={false} 
-          href={`/user/${user.id}`}
-          className="flex gap-3 w-full p-3 items-center bg-white border-b"
+        <div 
+        onClick={()=>handleNav(`/user/${user.id}`)} 
+          className="flex gap-3 w-full p-3 items-center bg-white border-b cursor-pointer"
         >
           <PiUserCircleFill color="black" size={24} /> <p>My Profile</p>
-        </Link>
+        </div>
 
-        <Link prefetch={false} 
-          href={`/faq`}
-          className="flex gap-3 w-full p-3 items-center bg-white border-b"
+        <div 
+          onClick={()=>handleNav(`/faq`)} 
+          className="flex gap-3 w-full p-3 items-center bg-white border-b cursor-pointer"
         >
           <FaQuestionCircle color="black" size={24} /> <p>FAQ</p>
-        </Link>
+        </div>
         <div
           onClick={handleLogout}
           className=" cursor-pointer flex gap-3 w-full p-3 items-center bg-white border-b"

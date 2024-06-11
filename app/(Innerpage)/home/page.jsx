@@ -1,5 +1,5 @@
 "use client";
-import { baseURL } from "@/lib/baseData";
+import { baseImgURL, baseURL } from "@/lib/baseData";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Posts from "../(components)/Posts";
@@ -8,10 +8,13 @@ import ChallengeHomeCard from "../(components)/ChallengeHomeCard";
 import ChallengeBuzzWorld from "../(components)/ChallengeBuzzWorld";
 import BuzzPosts from "../(components)/BuzzPosts";
 import { useAppSelector } from "@/lib/hooks";
+import Image from "next/image";
+import Link from "next/link";
 
 const BuzzwallPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [filterChallenges, setFilterChallenges] = useState([]);
+  const [adDetails, setAdDetails] = useState(null);
   const user = useAppSelector((state) => state.auth.user);
   const visitForm = async () => {
     try {
@@ -62,13 +65,40 @@ const BuzzwallPage = () => {
       setIsLoading(false);
     }
   };
+  const fetchAdd = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/get-ad.php`);
+      console.log(response.data.data);
+      if (response.data.data) {
+        setAdDetails(response.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     fetchUserBuzzwall();
+    fetchAdd();
   }, []);
   return (
     <div className="max-w-[800px]  min-h-screen bg-white border  w-full mx-auto ">
       <div className="w-full p-1 bg-[#ec1d28]" />
       <div className="w-full  p-3">
+        {adDetails && (
+          <Link prefetch={false} href={adDetails.link} className="w-full">
+            <div className="w-full relative h-40 my-4 rounded-md">
+              {adDetails.image && (
+                <Image
+                  alt="ad-banner"
+                  src={baseImgURL + adDetails.image}
+                  fill
+                  objectFit="cover"
+                  className="rounded-md"
+                />
+              )}
+            </div>
+          </Link>
+        )}
         <div className="w-full  grid grid-cols-12 gap-3">
           {filterChallenges?.length > 0 &&
             filterChallenges.map((item, index) => {

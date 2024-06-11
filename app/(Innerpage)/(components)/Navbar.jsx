@@ -24,11 +24,14 @@ import {
   RiUser3Fill,
 } from "react-icons/ri";
 import LeftSidebar from "./LeftSidebar";
+import { useState } from "react";
 
 const Navbar = () => {
   const pathname = usePathname();
   const user = useAppSelector((state) => state.auth.user);
   const router = useRouter();
+  const [sheetOpen,setSheetOpen] = useState(false)
+  const [sheetOpen2,setSheetOpen2] = useState(false)
   // useEffect(() => {
   //   if (!user && !pathname.includes("login") && !pathname.includes("signup")) {
   //     router.replace("/login");
@@ -40,12 +43,12 @@ const Navbar = () => {
       <ul className="w-full flex justify-between items-center">
         
         <li>
-        <Sheet >
+        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger>
                 <Search size={24} />
               </SheetTrigger>
               <SheetContent side={"left"}>
-                <LeftSidebar />
+                <LeftSidebar setSheetOpen={setSheetOpen} />
               </SheetContent>
             </Sheet>
         </li>
@@ -66,12 +69,12 @@ const Navbar = () => {
           ) : (
             <div className="flex gap-5 items-center">
               
-            <Sheet>
+            <Sheet open={sheetOpen2} onOpenChange={setSheetOpen2}>
               <SheetTrigger>
                 <AlignJustify size={24} />
               </SheetTrigger>
               <SheetContent side={"right"}>
-                <RightSidebar />
+                <RightSidebar setSheetOpen2={setSheetOpen2} />
               </SheetContent>
             </Sheet>
             </div>
@@ -128,7 +131,7 @@ const Navbar = () => {
           </Link>
           {user ? (
             <div className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center">
-              <Sheet>
+              <Sheet open={sheetOpen2} onOpenChange={setSheetOpen2}>
                 <SheetTrigger>
                   {pathname.includes("user") ? (
                     <RiUser3Fill
@@ -152,7 +155,7 @@ const Navbar = () => {
                   </p>
                 </SheetTrigger>
                 <SheetContent side={"right"}>
-                  <RightSidebar />
+                  <RightSidebar setSheetOpen2={setSheetOpen2} />
                 </SheetContent>
               </Sheet>
             </div>

@@ -16,8 +16,9 @@ import {
 import { FaPeopleGroup, FaPeoplePulling } from "react-icons/fa6";
 import { cn } from "@/lib/utils";
 import { useAppSelector } from "@/lib/hooks";
+import { useRouter } from "next/navigation";
 
-const LeftSidebar = () => {
+const LeftSidebar = ({setSheetOpen}) => {
   const user = useAppSelector((state) => state.auth.user);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +27,8 @@ const LeftSidebar = () => {
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [friends, setFriends] = useState([]);
+
+  const router = useRouter()
 
   useEffect(() => {
     const fetchPages = async () => {
@@ -126,6 +129,10 @@ const LeftSidebar = () => {
 
     fetchSearch();
   }, [user, searchQuery]);
+  const handleNav = (Navpass) =>{
+    setSheetOpen(false)
+    router.push(Navpass)
+  }
   return (
     <div className=" w-full h-full  overflow-scroll">
       <div className="flex mt-5 gap-3 bg-white border border-black/5 items-center rounded-md relative">
@@ -227,9 +234,9 @@ const LeftSidebar = () => {
                   {userPages?.length > 0 &&
                     userPages?.map((item, index) => {
                       return (
-                        <Link prefetch={false} 
-                          href={`/pages/${item.id}`}
-                          className="flex gap-2 mt-4 items-center border-t"
+                        <div
+                        onClick={()=>handleNav(`/pages/${item.id}`)}
+                          className="flex gap-2 mt-4 items-center border-t cursor-pointer"
                           key={index}
                         >
                           <div className="relative w-12 h-12 mt-3">
@@ -241,7 +248,7 @@ const LeftSidebar = () => {
                             />
                           </div>
                           <p className=" text-base font-bold">{item.title}</p>
-                        </Link>
+                        </div>
                       );
                     })}
                 </AccordionContent>

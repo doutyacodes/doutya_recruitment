@@ -95,16 +95,14 @@ function ChooseKeyword() {
       setSelectedItems((prevSelectedItems) =>
         prevSelectedItems.filter((selectedItem) => selectedItem.id !== item.id)
       );
-    } else if (selectedItems.length < 2) {
-      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
     } else {
-      setShowDialog2(true);
-    }
+      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+    } 
   };
 
   const handleSubmit = async () => {
     if (user) {
-      if (selectedItems.length > 0 && selectedItems.length <= 2) {
+      if (selectedItems.length > 0 ) {
         try {
           const requests = selectedItems.map((item) => {
             const payload = {
@@ -143,7 +141,7 @@ function ChooseKeyword() {
         }
       } else {
         alert(
-          "You must select at least one item and can't select more than two items."
+          "You must select at least one item to continue."
         );
       }
     } else {
@@ -165,7 +163,7 @@ function ChooseKeyword() {
       </div>
       <div className="w-full p-2">
         <p className="text-center text-lg font-bold">
-          Select up to 2 keywords.
+          Select the keywords you prefer.
         </p>
       </div>
       <div className="w-full max-h-[60vh] overflow-y-scroll grid grid-cols-12 rounded-md gap-3 py-4">
@@ -227,7 +225,7 @@ function ChooseKeyword() {
           <AlertDialogTrigger>
             <button
               className="bg-[#fdbd5b] text-white py-3 px-6 rounded-md"
-              disabled={selectedItems.length < 1 || selectedItems.length > 2}
+              disabled={selectedItems.length < 1 }
             >
               Submit
             </button>
@@ -236,7 +234,7 @@ function ChooseKeyword() {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                You can change your choice once in week?
+                You can change your choice on profile section.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
