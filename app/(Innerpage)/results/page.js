@@ -276,18 +276,28 @@ const Results = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex w-full justify-center my-4">
-                          {item.stars && item.stars !== 0 && (
+   
+{item.stars && item.stars !== 0 && (
                             <div className="flex">
-                              {Array(convertStarsToNumber(item.stars))
-                                .fill(0)
-                                .map((_, index) => (
-                                  <FaStar key={index} color="gold" size={20} />
-                                ))}
+                                                    {/* Check if item.stars is a number */}
+{console.log(item.stars)}
+{isNaN(item.stars)
+  ? console.log("item.stars is not a number")
+  : console.log("item.stars is a number")}
+{Array(parseFloat(item.stars))
+  .fill(0)
+  .map((_, index) => (
+    <FaStar key={index} color="gold" size={20} />
+  ))}
                             </div>
                           )}
                           {item.stars_left && item.stars_left !== 0 && (
                             <div className="flex">
-                              {Array(convertStarsToNumber(item.stars_left))
+                              {/* Check if item.stars_left is a number */}
+                              {isNaN(item.stars_left)
+                                ? console.log("item.stars_left is not a number")
+                                : console.log("item.stars_left is a number")}
+                              {Array(parseFloat(item.stars_left))
                                 .fill(0)
                                 .map((_, index) => (
                                   <FaStar key={index} color="gray" size={20} />
