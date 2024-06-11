@@ -25,7 +25,9 @@ const Results = () => {
   const [toggleNav, setToggleNav] = useState("Jobs & Internships");
 
   const user = useAppSelector((state) => state.auth.user);
-
+  const convertStarsToNumber = (stars) => {
+    return parseInt(stars);
+  };
   useEffect(() => {
     if (!user && !user?.id) {
       return redirect("/signup");
@@ -157,9 +159,7 @@ const Results = () => {
                     <TableRow key={itemIndex}>
                       <TableCell>
                         <div
-                          className={
-                            " relative  w-20 h-16 border rounded-lg"
-                          }
+                          className={" relative  w-20 h-16 border rounded-lg"}
                         >
                           <Image
                             src={baseImgURL + item.image}
@@ -246,9 +246,7 @@ const Results = () => {
                     <TableRow key={itemIndex}>
                       <TableCell>
                         <div
-                          className={
-                            " relative  w-20 h-16 border rounded-lg"
-                          }
+                          className={" relative  w-20 h-16 border rounded-lg"}
                         >
                           <Image
                             src={baseImgURL + item.image}
@@ -280,7 +278,7 @@ const Results = () => {
                         <div className="flex w-full justify-center my-4">
                           {item.stars && (
                             <div className="flex">
-                              {Array(item.stars)
+                              {Array(convertStarsToNumber(item.stars))
                                 .fill(0)
                                 .map((_, index) => (
                                   <FaStar key={index} color="gold" size={20} />
@@ -289,7 +287,7 @@ const Results = () => {
                           )}
                           {item.stars_left && (
                             <div className="flex">
-                              {Array(item.stars_left)
+                              {Array(convertStarsToNumber(item.stars_left))
                                 .fill(0)
                                 .map((_, index) => (
                                   <FaStar key={index} color="gray" size={20} />
