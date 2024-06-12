@@ -82,7 +82,7 @@ const renderStars = () => {
             <p className="w-full text-center mt-3">{starsDetails.total_percent?.toFixed(2)}%</p>
           </div>
         )}
-        <p className="text-sm text-black/40 p-3">
+        {/* <p className="text-sm text-black/40 p-3">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and
@@ -92,7 +92,7 @@ const renderStars = () => {
           the release of Letraset sheets containing Lorem Ipsum passages, and
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
-        </p>
+        </p> */}
         <Link prefetch={false} href={`/${routes}`}>
           <Button className="bg-green-600 text-lg">Go to Home</Button>
         </Link>
