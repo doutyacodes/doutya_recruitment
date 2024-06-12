@@ -13,7 +13,7 @@ const Success = ({ params }) => {
   const task_id = params.task_id;
   const user = useAppSelector((state) => state.auth.user);
   const [starsDetails, setStarsDetails] = useState(0);
-
+const [routes,setRoutes] = useState("home")
   const router = useRouter();
 
   useEffect(() => {
@@ -28,9 +28,12 @@ const Success = ({ params }) => {
         const response = await axios.get(
          ` ${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
         );
-        console.log(response.data);
-        if (response.data.stars) {
-          setStarsDetails(response.data.stars);
+        // console.log(response.data.data);
+        if (response.data.data.stars) {
+          setStarsDetails(response.data.data.stars);
+        }
+        if (response.data.data.page_id) {
+          setRoutes("pages/"+response.data.data.page_id);
         }
       } catch (error) {
         console.error(error);
@@ -67,7 +70,7 @@ const Success = ({ params }) => {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
         </p>
-        <Link prefetch={false} href="/home">
+        <Link prefetch={false} href={`/${routes}`}>
           <Button className="bg-green-600 text-lg">Go to Home</Button>
         </Link>
       </div>
