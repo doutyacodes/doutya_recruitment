@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import DescriptionText from "../../(components)/DescriptionText";
 const PageDetails = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 24 };
@@ -105,8 +106,8 @@ const PageDetails = ({ params }) => {
               )}
             </div>
             <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
-            <p className="text-base text-slate-500 italic leading-7">
-              {challenge.description}
+            <p>
+            <DescriptionText rules={challenge.description} />
             </p>
           </div>
         </div>
@@ -118,8 +119,8 @@ const PageDetails = ({ params }) => {
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         {challenge?.rules ? (
           <div className="mt-4">
-            <p className="text-base text-slate-500 italic leading-7">
-              {challenge.rules}
+            <p>
+              <DescriptionText rules={challenge.rules} />
             </p>
           </div>
         ) : (
@@ -146,9 +147,8 @@ const PageDetails = ({ params }) => {
         </div>
         {challenge?.salary_desc && (
           <div className="mt-4">
-            <p className="text-base text-slate-500 italic leading-7">
-              {challenge.salary_desc}
-            </p>
+                          <DescriptionText rules={challenge.salary_desc} />
+
           </div>
         )}
       </div>

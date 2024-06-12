@@ -5,6 +5,7 @@ import { baseURL } from "@/lib/baseData";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/app/QuizProvider";
 import { useAppSelector } from "@/lib/hooks";
+import { Button } from "@/components/ui/button";
 
 const LobbyScreen = ({ params }) => {
   const [quizData, setQuizData] = useState(null);
@@ -104,10 +105,17 @@ const LobbyScreen = ({ params }) => {
 
   useEffect(() => {
     if (quizData) {
-      const [datePart, timePart] = quizData.start_time.split(' ');
-      const [day, month, year] = datePart.split('-').map(Number);
-      const [hours, minutes, seconds] = timePart.split(':').map(Number);
-      const quizStartTime = new Date(year, month - 1, day, hours, minutes, seconds);
+      const [datePart, timePart] = quizData.start_time.split(" ");
+      const [day, month, year] = datePart.split("-").map(Number);
+      const [hours, minutes, seconds] = timePart.split(":").map(Number);
+      const quizStartTime = new Date(
+        year,
+        month - 1,
+        day,
+        hours,
+        minutes,
+        seconds
+      );
 
       console.log("Current time", currentTime);
       console.log("Start time", quizStartTime);
@@ -158,7 +166,11 @@ const LobbyScreen = ({ params }) => {
 
   const handleQuiz = () => {
     if (quizData) {
-      gotoQuiz(quizData.challenge_id);
+      if (quizData.completed == "true") {
+        alert("You can't attempt a quiz again.");
+      } else {
+        gotoQuiz(quizData.challenge_id);
+      }
     } else {
       alert("Quiz data is not available.");
     }
@@ -171,7 +183,7 @@ const LobbyScreen = ({ params }) => {
         {
           user_id: user.id,
           challenge_id: challenge_id,
-          task_id: task_id
+          task_id: task_id,
         },
         {
           headers: {
@@ -242,12 +254,13 @@ const LobbyScreen = ({ params }) => {
             </div>
           )}
           {quizData.live === "no" && (
-            <button
+            <Button
               onClick={handleQuiz}
+              disabled={quizData.completed == "true" ? true : false}
               className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold"
             >
               Start
-            </button>
+            </Button>
           )}
         </button>
       ) : (
