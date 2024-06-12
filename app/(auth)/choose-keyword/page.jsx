@@ -97,12 +97,12 @@ function ChooseKeyword() {
       );
     } else {
       setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
-    } 
+    }
   };
 
   const handleSubmit = async () => {
     if (user) {
-      if (selectedItems.length > 0 ) {
+      if (selectedItems.length > 0) {
         try {
           const requests = selectedItems.map((item) => {
             const payload = {
@@ -140,9 +140,7 @@ function ChooseKeyword() {
           alert("An error occurred while submitting tasks.");
         }
       } else {
-        alert(
-          "You must select at least one item to continue."
-        );
+        alert("You must select at least one item to continue.");
       }
     } else {
       router.replace("/signup");
@@ -215,7 +213,9 @@ function ChooseKeyword() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel onClick={()=>setShowDialog2(false)}>Okay</AlertDialogCancel>
+              <AlertDialogCancel onClick={() => setShowDialog2(false)}>
+                Okay
+              </AlertDialogCancel>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
@@ -225,7 +225,7 @@ function ChooseKeyword() {
           <AlertDialogTrigger>
             <button
               className="bg-[#fdbd5b] text-white py-3 px-6 rounded-md"
-              disabled={selectedItems.length < 1 }
+              disabled={selectedItems.length < 1}
             >
               Submit
             </button>
@@ -234,7 +234,7 @@ function ChooseKeyword() {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                You can change your choice on profile section.
+                You can change your selection in your profile section.{" "}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

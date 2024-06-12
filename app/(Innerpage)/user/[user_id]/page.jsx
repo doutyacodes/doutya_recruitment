@@ -203,7 +203,6 @@ const UserDetails = ({ params }) => {
                 </div>
               );
             })}
-          {selectedItems.length < 2 && (
             <Link prefetch={false} 
               href={"/choose-keyword"}
               className="col-span-6 md:col-span-4  shadow-md rounded-full bg-gradient-to-tr from-[#614385] to-[#516395] text-white p-3 w-full text-center font-bold flex justify-center items-center"
@@ -212,7 +211,6 @@ const UserDetails = ({ params }) => {
                 <FaPlusCircle />
               </p>
             </Link>
-          )}
         </div>
       </div>
       <div className="p-3">

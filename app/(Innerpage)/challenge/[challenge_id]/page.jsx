@@ -46,7 +46,7 @@ const PageDetails = ({ params }) => {
             user ? user.id : null
           }`
         );
-        console.log(response.data);
+        // console.log(response.data);
 
         if (response.status === 200) {
           setChallenge(response.data);
@@ -171,6 +171,29 @@ const PageDetails = ({ params }) => {
       </div>
     );
   };
+  const StarsRoute = () => {
+    return (
+      <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
+        <div className=" w-full">
+        {challenge.stars && (
+      <div className="w-full flex flex-col space-y-5 justify-center items-center">
+        {/* <p className="text-xs font-light text-center">Stars</p> */}
+        <div className="flex gap-1">
+          {Array(parseInt(challenge.stars, 10))
+            .fill(0)
+            .map((_, index) => (
+              <FaStar key={index} color="gold" size={40} />
+            ))}
+        </div>
+        <p className="text-center text-slate-400">
+          You can gain upto {challenge.stars} stars.
+        </p>
+      </div>
+    )}
+        </div>
+      </div>
+    );
+  };
   const RenderData = () => {
     switch (toggleNav) {
       case "Description":
@@ -181,6 +204,8 @@ const PageDetails = ({ params }) => {
         return <SalaryRoute />;
       case "Eligibility":
         return <EligibilityRoute />;
+      case "Stars":
+        return <StarsRoute />;
       default:
         return <DescriptionRoute />;
     }
@@ -242,17 +267,17 @@ const PageDetails = ({ params }) => {
             >
               Description
             </p>
+            <p
+              className={cn(
+                "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+                toggleNav == "Rules" && "border-b border-black"
+              )}
+              onClick={() => handleToggle("Rules")}
+            >
+              Rules
+            </p>
             {challenge.page_type != "tests" && (
               <>
-                <p
-                  className={cn(
-                    "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
-                    toggleNav == "Rules" && "border-b border-black"
-                  )}
-                  onClick={() => handleToggle("Rules")}
-                >
-                  Rules
-                </p>
                 <p
                   className={cn(
                     "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
@@ -270,6 +295,20 @@ const PageDetails = ({ params }) => {
                   onClick={() => handleToggle("Eligibility")}
                 >
                   Eligibility
+                </p>
+              </>
+            )}
+            {challenge.page_type == "tests" && (
+              <>
+                
+                <p
+                  className={cn(
+                    "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+                    toggleNav == "Stars" && "border-b border-black"
+                  )}
+                  onClick={() => handleToggle("Stars")}
+                >
+                  Stars
                 </p>
               </>
             )}

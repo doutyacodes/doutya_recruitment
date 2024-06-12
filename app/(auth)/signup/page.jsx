@@ -100,9 +100,9 @@ const Signup = () => {
           // console.log(response.data);
           if (response.data.success) {
             dispatch(loginSuccess(response.data.user));
-            router.push("/home");
+            router.replace("/home");
           } else {
-            router.push("/register");
+            router.replace("/register");
           }
         } catch (error) {
           console.error("error", error);

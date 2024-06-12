@@ -314,7 +314,7 @@ const PageDetails = () => {
   )
 ) : (
   <div className="w-full flex justify-center items-center h-full mt-3">
-    <p className="text-ellipsis font-bold">No data available right now.</p>
+    <p className="text-ellipsis font-bold">No {activeRouteIndex=="third" ? "job" : "internship"} in this category now.</p>
   </div>
 )}
 
