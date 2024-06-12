@@ -118,7 +118,7 @@ const PageDetails = ({ params }) => {
     return (
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         {challenge?.rules ? (
-          <div className="mt-4">
+          <div className="mt-4 mb-6">
             <p>
               <DescriptionText rules={challenge.rules} />
             </p>
@@ -146,7 +146,7 @@ const PageDetails = ({ params }) => {
           </h3>
         </div>
         {challenge?.salary_desc && (
-          <div className="mt-4">
+          <div className="mt-4 mb-6">
             <DescriptionText rules={challenge.salary_desc} />
           </div>
         )}
@@ -188,7 +188,7 @@ const PageDetails = ({ params }) => {
                 You can gain upto {challenge.stars} stars.
               </p>
               {challenge?.star_description && (
-                <div className="mt-4">
+                <div className="mt-4 mb-6">
                   <DescriptionText rules={challenge.star_description} />
                 </div>
               )}

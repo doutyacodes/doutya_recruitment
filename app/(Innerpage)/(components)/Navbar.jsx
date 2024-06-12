@@ -64,7 +64,7 @@ const Navbar = () => {
         <li>
           {!user ? (
             <Button>
-              <Link prefetch={false}  href="/signup">Login</Link>
+              <Link prefetch={false}  href="/signup" className="w-full">Login</Link>
             </Button>
           ) : (
             <div className="flex gap-5 items-center">
