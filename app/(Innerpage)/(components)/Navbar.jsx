@@ -126,7 +126,7 @@ const Navbar = () => {
                 pathname.includes("results") ? "text-[#fdbd5b]" : "text-white"
               }
             >
-              Result
+              Results
             </p>
           </Link>
           {user ? (
