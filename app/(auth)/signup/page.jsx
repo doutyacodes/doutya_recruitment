@@ -4,8 +4,8 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { auth } from "../(components)/firebase";
-import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
+import { redirect, useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { loginSuccess, storeMobile } from "@/lib/features/authSlice";
 import axios from "axios";
 import { baseURL } from "@/lib/baseData";
@@ -33,7 +33,13 @@ const Signup = () => {
   const [canResend, setCanResend] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user2 = useAppSelector((state) => state.auth.user);
 
+  useEffect(() => {
+    if (user2 && user2?.id) {
+      return redirect("/home");
+    }
+  }, [user2]);
   useEffect(() => {
     let interval;
     if (showOTP && timer > 0) {

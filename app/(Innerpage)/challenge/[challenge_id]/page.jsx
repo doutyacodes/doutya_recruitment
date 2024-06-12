@@ -175,21 +175,21 @@ const PageDetails = ({ params }) => {
     return (
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         <div className=" w-full">
-        {challenge.stars && (
-      <div className="w-full flex flex-col space-y-5 justify-center items-center">
-        {/* <p className="text-xs font-light text-center">Stars</p> */}
-        <div className="flex gap-1">
-          {Array(parseInt(challenge.stars, 10))
-            .fill(0)
-            .map((_, index) => (
-              <FaStar key={index} color="gold" size={40} />
-            ))}
-        </div>
-        <p className="text-center text-slate-400">
-          You can gain upto {challenge.stars} stars.
-        </p>
-      </div>
-    )}
+          {challenge.stars && (
+            <div className="w-full flex flex-col space-y-5 justify-center items-center">
+              {/* <p className="text-xs font-light text-center">Stars</p> */}
+              <div className="flex gap-1">
+                {Array(parseInt(challenge.stars, 10))
+                  .fill(0)
+                  .map((_, index) => (
+                    <FaStar key={index} color="gold" size={40} />
+                  ))}
+              </div>
+              <p className="text-center text-slate-400">
+                You can gain upto {challenge.stars} stars.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -300,7 +300,6 @@ const PageDetails = ({ params }) => {
             )}
             {challenge.page_type == "tests" && (
               <>
-                
                 <p
                   className={cn(
                     "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
@@ -325,9 +324,9 @@ const PageDetails = ({ params }) => {
                     ? `/quiz-lobby/${challenge.task_id}`
                     : "/signup"
                 }
-                className="w-full"
+                className="w-full text-lg"
               >
-                Apply
+                {challenge.page_type == "tests" ? "Start" : "Apply"}
               </Link>
             ) : (
               <div
