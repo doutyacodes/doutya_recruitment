@@ -107,7 +107,7 @@ const PageDetails = ({ params }) => {
             </div>
             <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
             <p>
-            <DescriptionText rules={challenge.description} />
+              <DescriptionText rules={challenge.description} />
             </p>
           </div>
         </div>
@@ -147,8 +147,7 @@ const PageDetails = ({ params }) => {
         </div>
         {challenge?.salary_desc && (
           <div className="mt-4">
-                          <DescriptionText rules={challenge.salary_desc} />
-
+            <DescriptionText rules={challenge.salary_desc} />
           </div>
         )}
       </div>
@@ -188,6 +187,11 @@ const PageDetails = ({ params }) => {
               <p className="text-center text-slate-400">
                 You can gain upto {challenge.stars} stars.
               </p>
+              {challenge?.star_description && (
+                <div className="mt-4">
+                  <DescriptionText rules={challenge.star_description} />
+                </div>
+              )}
             </div>
           )}
         </div>

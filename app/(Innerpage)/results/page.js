@@ -276,7 +276,7 @@ const Results = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex w-full justify-center my-4">
-                          {item.stars && item.stars !== 0 && (
+                          {item.stars && item.stars != 0 &&   item.stars != "0" && (
                             <div className="flex">
                               {/* Check if item.stars is a number */}
                               {console.log(item.stars)}
@@ -290,9 +290,9 @@ const Results = () => {
                                 ))}
                             </div>
                           )}
-                          {item.stars_left && item.stars_left !== 0 && (
+                          {item.stars_left && item.stars_left != 0 && item.stars_left != "0" && (
                             <div className="flex">
-                              {console.log(item.stars)}
+                              {console.log(item.stars_left)}
                               {isNaN(item.stars_left)
                                 ? console.log("item.stars_left is not a number")
                                 : console.log("item.stars_left is a number")}

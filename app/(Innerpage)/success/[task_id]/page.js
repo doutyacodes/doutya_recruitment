@@ -28,9 +28,9 @@ const [routes,setRoutes] = useState("home")
         const response = await axios.get(
          ` ${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
         );
-        // console.log(response.data.data);
+        console.log(response.data);
         if (response.data.data.stars) {
-          setStarsDetails(response.data.data.stars);
+          setStarsDetails(response.data.data);
         }
         if (response.data.data.page_id) {
           setRoutes("pages/"+response.data.data.page_id);
@@ -43,20 +43,43 @@ const [routes,setRoutes] = useState("home")
       getStars();
     }
   }, [user, task_id]);
+const total_stars = 3;
+// Function to render stars
+const renderStars = () => {
+  const goldStars = starsDetails && starsDetails.stars > 0 ? starsDetails.stars : 0; // Number of gold stars
+  const grayStars = total_stars - goldStars; // Number of gray stars
+  const stars = [];
+
+  // Render gold stars
+  for (let i = 0; i < goldStars; i++) {
+    stars.push(<FaStar key={i} color="gold" size={20} />);
+  }
+
+  // Render gray stars
+  for (let i = 0; i < grayStars; i++) {
+    stars.push(<FaStar key={i + goldStars} color="gray" size={20} />);
+  }
+
+  return stars;
+};
 
   return (
     <div className="w-full p-3 h-full">
       <div className="w-full h-full bg-white flex flex-col min-h-[60vh] md:min-h-[80vh] rounded-md justify-center items-center">
         <IoIosCheckmarkCircle size={90} color="green" />
         <p className="text-3xl font-bold text-green-700">Success</p>
-        {starsDetails > 0 && (
+        {starsDetails.stars > 0 && (
           <div>
-            <p className="text-lg text-center my-5 space-y-5 font-bold">Star Achieved</p>
+            <p className="text-lg text-center my-5 space-y-5 font-bold">Stars Achieved</p>
             <div className="flex gap-3 w-full justify-center my-4">
-              {Array.from({ length: starsDetails }).map((_, index) => (
-                <FaStar key={index} color="gold" size={20} />
-              ))}
+              {renderStars()}
             </div>
+          </div>
+        )}
+        {starsDetails.stars > 0 && (
+          <div>
+            <p className="text-lg text-center space-y-5 font-bold">Your Perfomance</p>
+            <p className="w-full text-center mt-3">{starsDetails.total_percent?.toFixed(2)}%</p>
           </div>
         )}
         <p className="text-sm text-black/40 p-3">
