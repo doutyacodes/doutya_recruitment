@@ -110,6 +110,23 @@ const Results = () => {
 
     fetchTodoQuiz();
   }, []);
+  const renderStars = (stars) => {
+    const numStars = parseFloat(stars);
+    const totalStars = 3; // Default number of total stars
+    const numGoldStars = isNaN(numStars) || numStars < 0 ? 0 : numStars;
+    const numGrayStars = totalStars - numGoldStars;
+
+    return (
+      <div className="flex">
+        {Array.from({ length: numGoldStars }).map((_, index) => (
+          <FaStar key={`gold-${index}`} color="gold" size={20} />
+        ))}
+        {Array.from({ length: numGrayStars }).map((_, index) => (
+          <FaStar key={`gray-${index}`} color="gray" size={20} />
+        ))}
+      </div>
+    );
+  };
   const JobsRoute = () => {
     return (
       <div className="flex flex-col gap-2 bg-white px-1">
@@ -276,33 +293,7 @@ const Results = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex w-full justify-center my-4">
-                          {item.stars && item.stars != 0 &&   item.stars != "0" && (
-                            <div className="flex">
-                              {/* Check if item.stars is a number */}
-                              {console.log(item.stars)}
-                              {isNaN(item.stars)
-                                ? console.log("item.stars is not a number")
-                                : console.log("item.stars is a number")}
-                              {Array(parseFloat(item.stars))
-                                .fill(0)
-                                .map((_, index) => (
-                                  <FaStar key={index} color="gold" size={20} />
-                                ))}
-                            </div>
-                          )}
-                          {item.stars_left && item.stars_left != 0 && item.stars_left != "0" && (
-                            <div className="flex">
-                              {console.log(item.stars_left)}
-                              {isNaN(item.stars_left)
-                                ? console.log("item.stars_left is not a number")
-                                : console.log("item.stars_left is a number")}
-                              {Array(parseFloat(item.stars_left))
-                                .fill(0)
-                                .map((_, index) => (
-                                  <FaStar key={index} color="gray" size={20} />
-                                ))}
-                            </div>
-                          )}
+                          {renderStars(item.stars)}
                         </div>
                       </TableCell>
                     </TableRow>
