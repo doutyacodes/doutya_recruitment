@@ -115,7 +115,7 @@ const Results = () => {
       <div className="flex flex-col gap-2 bg-white px-1">
         {todoData?.length > 0 && (
           <Table>
-            <TableCaption>Results.</TableCaption>
+            {/* <TableCaption>Results.</TableCaption> */}
             <TableHeader>
               <TableRow>
                 <TableHead className="min-w-[100px]"></TableHead>
@@ -201,7 +201,7 @@ const Results = () => {
       <div className="flex flex-col gap-2 bg-white px-1">
         {todoQuizData?.length > 0 && (
           <Table>
-            <TableCaption>Results.</TableCaption>
+            {/* <TableCaption>Results.</TableCaption> */}
             <TableHeader>
               <TableRow>
                 <TableHead className="min-w-[100px]"></TableHead>
