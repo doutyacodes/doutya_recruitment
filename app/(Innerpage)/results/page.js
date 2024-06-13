@@ -189,8 +189,8 @@ const Results = () => {
                         </div>
                       </TableCell>
                       <TableCell className="text-center">{item?.selectedMovie.title}</TableCell>
-                      <TableCell className="font-bold">{item?.title}</TableCell>
-                      <TableCell className="min-w-32">
+                      <TableCell className="font-bold text-center">{item?.title}</TableCell>
+                      <TableCell className="min-w-32 text-center">
                         {item?.order_id}- {item?.task_title}
                       </TableCell>
                       <TableCell className="text-center font-bold">
@@ -252,7 +252,7 @@ const Results = () => {
                       </div>
                     </TableCell>
                     <TableCell className="text-center">{item?.selectedMovie.title}</TableCell>
-                    <TableCell className="font-bold">{item?.title}</TableCell>
+                    <TableCell className="font-bold text-center">{item?.title}</TableCell>
                     <TableCell className="text-center font-bold">
                       {item?.total_percent.toFixed(2)}%
                     </TableCell>
