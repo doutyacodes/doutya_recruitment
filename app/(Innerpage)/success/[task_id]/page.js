@@ -87,7 +87,7 @@ const Success = ({ params }) => {
             </div>
           </div>
         )}
-        {starsDetails.stars > 0 && (
+        {percentageDetails > 0 && (
           <div>
             <p className="text-lg text-center space-y-5 font-bold">
               Your Perfomance

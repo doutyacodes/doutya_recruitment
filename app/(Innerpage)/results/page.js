@@ -95,7 +95,7 @@ const Results = () => {
           const response = await axios.get(
             `${baseURL}/getAlltodoTasksQuiz.php?user_id=${user.id}`
           );
-          // console.log(response.data);
+          // console.log(response.data.tasks);
           if (response.status === 200) {
             setTodoQuizData(response.data.tasks);
             // console.log(response.data);
@@ -137,8 +137,10 @@ const Results = () => {
               <TableRow>
                 <TableHead className="min-w-[100px]"></TableHead>
                 <TableHead className="text-center">Company</TableHead>
-                <TableHead className="text-center">Title</TableHead>
-                <TableHead className="text-center">Rounds</TableHead>
+                <TableHead className="text-center">Job Title</TableHead>
+                <TableHead className="text-center">Round</TableHead>
+                <TableHead className="text-center">Status</TableHead>
+                <TableHead className="text-center">Percentage</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -188,6 +190,9 @@ const Results = () => {
                       </TableCell>
                       <TableCell>{item.selectedMovie.title}</TableCell>
                       <TableCell className="font-bold">{item.title}</TableCell>
+                      <TableCell className="min-w-32">
+                        {item.order_id}- {item.task_title}
+                      </TableCell>
                       <TableCell>
                         {item?.success && (
                           <div
@@ -203,6 +208,9 @@ const Results = () => {
                             </p>
                           </div>
                         )}
+                      </TableCell>
+                      <TableCell className="text-center font-bold">
+                        {item.total_percent.toFixed(2)}%
                       </TableCell>
                     </TableRow>
                   );
@@ -223,8 +231,8 @@ const Results = () => {
               <TableRow>
                 <TableHead className="min-w-[100px]"></TableHead>
                 <TableHead className="text-center">Company</TableHead>
-                <TableHead className="text-center">Title</TableHead>
-                <TableHead className="text-center">Rounds</TableHead>
+                <TableHead className="text-center">Quiz</TableHead>
+                <TableHead className="text-center">Percentage</TableHead>
                 <TableHead className="text-center">Stars</TableHead>
               </TableRow>
             </TableHeader>
@@ -275,21 +283,8 @@ const Results = () => {
                       </TableCell>
                       <TableCell>{item.selectedMovie.title}</TableCell>
                       <TableCell className="font-bold">{item.title}</TableCell>
-                      <TableCell>
-                        {item?.success && (
-                          <div
-                            className={cn(
-                              " rounded-full ",
-                              item.success == "yes"
-                                ? "bg-green-600"
-                                : "bg-red-600"
-                            )}
-                          >
-                            <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                              {item.success == "yes" ? "Success" : "Failed"}
-                            </p>
-                          </div>
-                        )}
+                      <TableCell className="text-center font-bold">
+                        {item.total_percent.toFixed(2)}%
                       </TableCell>
                       <TableCell>
                         <div className="flex w-full justify-center my-4">
