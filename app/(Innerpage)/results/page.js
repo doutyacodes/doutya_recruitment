@@ -179,7 +179,7 @@ const Results = () => {
                           className={" relative  w-20 h-16 border rounded-lg"}
                         >
                           <Image
-                            src={baseImgURL + item.image}
+                            src={baseImgURL + item.selectedMovie.image}
                             fill
                             alt="Profile Image"
                             className="rounded-lg object-cover"
@@ -266,7 +266,7 @@ const Results = () => {
                           className={" relative  w-20 h-16 border rounded-lg"}
                         >
                           <Image
-                            src={baseImgURL + item.image}
+                            src={baseImgURL + item.selectedMovie.image}
                             fill
                             alt="Profile Image"
                             className="rounded-lg object-cover"
