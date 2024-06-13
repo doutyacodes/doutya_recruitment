@@ -91,14 +91,12 @@ const Results = () => {
     const fetchTodoQuiz = async () => {
       if (user) {
         try {
-          // Only fetch rewards if user data is available
           const response = await axios.get(
             `${baseURL}/getAlltodoTasksQuiz.php?user_id=${user.id}`
           );
-          // console.log(response.data.tasks);
+          console.log(response.data.tasks); // Log response data
           if (response.status === 200) {
             setTodoQuizData(response.data.tasks);
-            // console.log(response.data);
           } else {
             console.error("Failed to fetch progress");
           }
@@ -107,6 +105,7 @@ const Results = () => {
         }
       }
     };
+    
 
     fetchTodoQuiz();
   }, []);
@@ -127,6 +126,7 @@ const Results = () => {
       </div>
     );
   };
+  // console.log(todoQuizData)
   const JobsRoute = () => {
     return (
       <div className="flex flex-col gap-2 bg-white px-1">
@@ -139,8 +139,8 @@ const Results = () => {
                 <TableHead className="text-center">Company</TableHead>
                 <TableHead className="text-center">Job Title</TableHead>
                 <TableHead className="text-center">Round</TableHead>
-                <TableHead className="text-center">Status</TableHead>
                 <TableHead className="text-center">Percentage</TableHead>
+                <TableHead className="text-center">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -150,8 +150,8 @@ const Results = () => {
                   // console.log(item);
                   let formattedEndDate;
                   let formattedDate;
-                  formattedDate = moment(item.start_date).fromNow();
-                  const endDate = moment(item.end_date);
+                  formattedDate = moment(item?.start_date).fromNow();
+                  const endDate = moment(item?.end_date);
                   const now = moment();
 
                   const duration = moment.duration(endDate.diff(now));
@@ -170,9 +170,9 @@ const Results = () => {
                   }
                   const maxLength = 12;
                   // const slicedTitle = item?.title
-                  //   ? item.title.length > maxLength
-                  //     ? item.title.slice(0, maxLength) + "..."
-                  //     : item.title
+                  //   ? item?.title.length > maxLength
+                  //     ? item?.title.slice(0, maxLength) + "..."
+                  //     : item?.title
                   //   : "";
                   return (
                     <TableRow key={itemIndex}>
@@ -181,37 +181,38 @@ const Results = () => {
                           className={" relative  w-20 h-16 border rounded-lg"}
                         >
                           <Image
-                            src={baseImgURL + item.selectedMovie.image}
+                            src={baseImgURL + item?.selectedMovie.image}
                             fill
                             alt="Profile Image"
                             className="rounded-lg object-cover"
                           />
                         </div>
                       </TableCell>
-                      <TableCell>{item.selectedMovie.title}</TableCell>
-                      <TableCell className="font-bold">{item.title}</TableCell>
+                      <TableCell>{item?.selectedMovie.title}</TableCell>
+                      <TableCell className="font-bold">{item?.title}</TableCell>
                       <TableCell className="min-w-32">
-                        {item.order_id}- {item.task_title}
+                        {item?.order_id}- {item?.task_title}
+                      </TableCell>
+                      <TableCell className="text-center font-bold">
+                        {item?.total_percent.toFixed(2)}%
                       </TableCell>
                       <TableCell>
                         {item?.success && (
                           <div
                             className={cn(
                               " rounded-full ",
-                              item.success == "yes"
+                              item?.success == "yes"
                                 ? "bg-green-600"
                                 : "bg-red-600"
                             )}
                           >
                             <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                              {item.success == "yes" ? "Success" : "Failed"}
+                              {item?.success == "yes" ? "Success" : "Failed"}
                             </p>
                           </div>
                         )}
                       </TableCell>
-                      <TableCell className="text-center font-bold">
-                        {item.total_percent.toFixed(2)}%
-                      </TableCell>
+                      
                     </TableRow>
                   );
                 })}
@@ -222,11 +223,11 @@ const Results = () => {
     );
   };
   const QuizRoute = () => {
+    console.log(todoQuizData.length); // Log data to debug
     return (
       <div className="flex flex-col gap-2 bg-white px-1">
         {todoQuizData?.length > 0 && (
           <Table>
-            {/* <TableCaption>Results.</TableCaption> */}
             <TableHeader>
               <TableRow>
                 <TableHead className="min-w-[100px]"></TableHead>
@@ -237,69 +238,39 @@ const Results = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {todoQuizData &&
-                todoQuizData?.length > 0 &&
-                todoQuizData.map((item, itemIndex) => {
-                  // console.log(item);
-                  let formattedEndDate;
-                  let formattedDate;
-                  formattedDate = moment(item.start_date).fromNow();
-                  const endDate = moment(item.end_date);
-                  const now = moment();
-
-                  const duration = moment.duration(endDate.diff(now));
-
-                  if (duration.asDays() >= 1) {
-                    formattedEndDate = Math.round(duration.asDays()) + " days";
-                  } else if (duration.asHours() >= 1) {
-                    formattedEndDate =
-                      Math.floor(duration.asHours()) +
-                      ":" +
-                      (duration.minutes() < 10 ? "0" : "") +
-                      duration.minutes() +
-                      " hrs";
-                  } else {
-                    formattedEndDate = duration.minutes() + " minutes";
-                  }
-                  const maxLength = 12;
-                  const slicedTitle = item?.title
-                    ? item.title.length > maxLength
-                      ? item.title.slice(0, maxLength) + "..."
-                      : item.title
-                    : "";
-                  return (
-                    <TableRow key={itemIndex}>
-                      <TableCell>
-                        <div
-                          className={" relative  w-20 h-16 border rounded-lg"}
-                        >
-                          <Image
-                            src={baseImgURL + item.selectedMovie.image}
-                            fill
-                            alt="Profile Image"
-                            className="rounded-lg object-cover"
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell>{item.selectedMovie.title}</TableCell>
-                      <TableCell className="font-bold">{item.title}</TableCell>
-                      <TableCell className="text-center font-bold">
-                        {item.total_percent.toFixed(2)}%
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex w-full justify-center my-4">
-                          {renderStars(item.stars)}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+              {todoQuizData.map((item, itemIndex) => {
+                return (
+                  <TableRow key={itemIndex}>
+                    <TableCell>
+                      <div className={"relative w-20 h-16 border rounded-lg"}>
+                        <Image
+                          src={baseImgURL + item?.selectedMovie.image}
+                          fill
+                          alt="Profile Image"
+                          className="rounded-lg object-cover"
+                        />
+                      </div>
+                    </TableCell>
+                    <TableCell>{item?.selectedMovie.title}</TableCell>
+                    <TableCell className="font-bold">{item?.title}</TableCell>
+                    <TableCell className="text-center font-bold">
+                      {item?.total_percent.toFixed(2)}%
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex w-full justify-center my-4">
+                        {renderStars(item?.stars)}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         )}
       </div>
     );
   };
+  
   const RenderData = () => {
     switch (toggleNav) {
       case "Jobs & Internships":
