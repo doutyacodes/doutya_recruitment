@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const LobbyScreen = ({ params }) => {
   const [quizData, setQuizData] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const router = useRouter();
@@ -178,6 +179,7 @@ const LobbyScreen = ({ params }) => {
 
   const gotoQuiz = async (challenge_id) => {
     try {
+      setisLoading(true);
       const response2 = await axios.post(
         `${baseURL}/createUserQuiz.php`,
         {
@@ -206,6 +208,8 @@ const LobbyScreen = ({ params }) => {
       }
     } catch (error) {
       console.error("Error2:", error);
+    } finally {
+      setisLoading(false);
     }
   };
 
@@ -256,7 +260,7 @@ const LobbyScreen = ({ params }) => {
           {quizData.live === "no" && (
             <Button
               onClick={handleQuiz}
-              disabled={quizData.completed == "true" ? true : false}
+              disabled={quizData.completed == "true" || isLoading}
               className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold"
             >
               Start
