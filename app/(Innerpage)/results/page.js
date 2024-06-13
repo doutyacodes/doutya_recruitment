@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { FaStar } from "react-icons/fa";
+import Link from "next/link";
 
 const Results = () => {
   const [todoData, setTodoData] = useState([]);
@@ -105,7 +106,6 @@ const Results = () => {
         }
       }
     };
-    
 
     fetchTodoQuiz();
   }, []);
@@ -177,42 +177,59 @@ const Results = () => {
                   return (
                     <TableRow key={itemIndex}>
                       <TableCell className="text-center">
-                        <div
-                          className={" relative  w-20 h-16 border rounded-lg"}
-                        >
-                          <Image
-                            src={baseImgURL + item?.selectedMovie.image}
-                            fill
-                            alt="Profile Image"
-                            className="rounded-lg object-cover"
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center">{item?.selectedMovie.title}</TableCell>
-                      <TableCell className="font-bold text-center">{item?.title}</TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item?.order_id}- {item?.task_title}
-                      </TableCell>
-                      <TableCell className="text-center font-bold">
-                        {item?.total_percent.toFixed(2)}%
+                        <Link href={`/rounds/${item.challenge_id}`}>
+                          <div
+                            className={" relative  w-20 h-16 border rounded-lg"}
+                          >
+                            <Image
+                              src={baseImgURL + item?.selectedMovie.image}
+                              fill
+                              alt="Profile Image"
+                              className="rounded-lg object-cover"
+                            />
+                          </div>
+                        </Link>
                       </TableCell>
                       <TableCell className="text-center">
-                        {item?.success && (
-                          <div
-                            className={cn(
-                              " rounded-full ",
-                              item?.success == "yes"
-                                ? "bg-green-600"
-                                : "bg-red-600"
-                            )}
-                          >
-                            <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                              {item?.success == "yes" ? "Success" : "Failed"}
-                            </p>
-                          </div>
-                        )}
+                        {" "}
+                        <Link href={`/rounds/${item.challenge_id}`}>
+                          {item?.selectedMovie.title}
+                        </Link>
                       </TableCell>
-                      
+                      <TableCell className="font-bold text-center">
+                        {" "}
+                        <Link href={`/rounds/${item.challenge_id}`}>
+                          {item?.title}
+                        </Link>
+                      </TableCell>
+                      <TableCell className="min-w-32 text-center">
+                        <Link href={`/rounds/${item.challenge_id}`}>
+                          {item?.order_id}- {item?.task_title}
+                        </Link>
+                      </TableCell>
+                      <TableCell className="text-center font-bold">
+                        <Link href={`/rounds/${item.challenge_id}`}>
+                          {item?.total_percent.toFixed(2)}%
+                        </Link>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Link href={`/rounds/${item.challenge_id}`}>
+                          {item?.success && (
+                            <div
+                              className={cn(
+                                " rounded-full ",
+                                item?.success == "yes"
+                                  ? "bg-green-600"
+                                  : "bg-red-600"
+                              )}
+                            >
+                              <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+                                {item?.success == "yes" ? "Success" : "Failed"}
+                              </p>
+                            </div>
+                          )}
+                        </Link>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -251,8 +268,12 @@ const Results = () => {
                         />
                       </div>
                     </TableCell>
-                    <TableCell className="text-center">{item?.selectedMovie.title}</TableCell>
-                    <TableCell className="font-bold text-center">{item?.title}</TableCell>
+                    <TableCell className="text-center">
+                      {item?.selectedMovie.title}
+                    </TableCell>
+                    <TableCell className="font-bold text-center">
+                      {item?.title}
+                    </TableCell>
                     <TableCell className="text-center font-bold">
                       {item?.total_percent.toFixed(2)}%
                     </TableCell>
@@ -270,7 +291,7 @@ const Results = () => {
       </div>
     );
   };
-  
+
   const RenderData = () => {
     switch (toggleNav) {
       case "Jobs & Internships":
