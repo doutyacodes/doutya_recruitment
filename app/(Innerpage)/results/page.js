@@ -176,7 +176,7 @@ const Results = () => {
                   //   : "";
                   return (
                     <TableRow key={itemIndex}>
-                      <TableCell>
+                      <TableCell className="text-center">
                         <div
                           className={" relative  w-20 h-16 border rounded-lg"}
                         >
@@ -188,7 +188,7 @@ const Results = () => {
                           />
                         </div>
                       </TableCell>
-                      <TableCell>{item?.selectedMovie.title}</TableCell>
+                      <TableCell className="text-center">{item?.selectedMovie.title}</TableCell>
                       <TableCell className="font-bold">{item?.title}</TableCell>
                       <TableCell className="min-w-32">
                         {item?.order_id}- {item?.task_title}
@@ -196,7 +196,7 @@ const Results = () => {
                       <TableCell className="text-center font-bold">
                         {item?.total_percent.toFixed(2)}%
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-center">
                         {item?.success && (
                           <div
                             className={cn(
@@ -241,7 +241,7 @@ const Results = () => {
               {todoQuizData.map((item, itemIndex) => {
                 return (
                   <TableRow key={itemIndex}>
-                    <TableCell>
+                    <TableCell className="text-center">
                       <div className={"relative w-20 h-16 border rounded-lg"}>
                         <Image
                           src={baseImgURL + item?.selectedMovie.image}
@@ -251,12 +251,12 @@ const Results = () => {
                         />
                       </div>
                     </TableCell>
-                    <TableCell>{item?.selectedMovie.title}</TableCell>
+                    <TableCell className="text-center">{item?.selectedMovie.title}</TableCell>
                     <TableCell className="font-bold">{item?.title}</TableCell>
                     <TableCell className="text-center font-bold">
                       {item?.total_percent.toFixed(2)}%
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-center">
                       <div className="flex w-full justify-center my-4">
                         {renderStars(item?.stars)}
                       </div>
