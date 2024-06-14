@@ -76,7 +76,7 @@ const PageDetails = () => {
     // }
     if (user && user?.steps) {
       if (user.steps == 1) {
-        router.replace("/choose-keyword");
+        router.replace("/choose-keyword/1");
       }
     }
   }, [user]);

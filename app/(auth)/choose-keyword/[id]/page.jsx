@@ -5,7 +5,7 @@ import { editUser } from "@/lib/features/authSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import axios from "axios";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import {
@@ -39,6 +39,7 @@ function ChooseKeyword() {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const params = useParams();
 
   useEffect(() => {
     if (!user) {
@@ -129,7 +130,11 @@ function ChooseKeyword() {
               router.replace("/home");
             } else {
               dispatch(editUser({ steps: 2 }));
-              router.replace("/follow-page");
+              if (params.id == 2) {
+                router.replace("/home");
+              } else {
+                router.replace("/follow-page");
+              }
             }
           }
           if (errorResponses.length === selectedItems.length) {
