@@ -111,7 +111,7 @@ const QuizPage = () => {
         const newDataQuestion = questions[currentIndex];
         setDataQuestion(newDataQuestion);
         setCount_question(quizDatas2.dataQuiz.count_question);
-        if (newDataQuestion.quiz_type !== "psychological") {
+        if (newDataQuestion.quiz_type !== "psychological" || dataQuestion?.page_type != "language") {
           setTimer(newDataQuestion.timer);
         }
       }
@@ -270,7 +270,7 @@ const QuizPage = () => {
       )}
       <div style={{ margin: "0 auto", width: "80%", textAlign: "center" }}>
         <div className="w-full justify-center items-center flex">
-          {dataQuestion?.quiz_type !== "psychological" && (
+          {(dataQuestion?.quiz_type !== "psychological" || dataQuestion?.page_type != "language") && (
             <div
               style={{ position: "relative", marginBottom: "20px" }}
               className="w-16 h-16"

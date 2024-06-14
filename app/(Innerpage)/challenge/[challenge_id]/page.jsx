@@ -280,7 +280,7 @@ const PageDetails = ({ params }) => {
             >
               Rules
             </p>
-            {challenge.page_type != "tests" && (
+            {(challenge.page_type != "tests" && challenge.page_type != "language") && (
               <>
                 <p
                   className={cn(
@@ -302,7 +302,7 @@ const PageDetails = ({ params }) => {
                 </p>
               </>
             )}
-            {challenge.page_type == "tests" && (
+            {(challenge.page_type == "tests" || challenge.page_type == "language") && (
               <>
                 <p
                   className={cn(
@@ -322,15 +322,15 @@ const PageDetails = ({ params }) => {
               <Link
                 prefetch={false}
                 href={
-                  user && challenge.page_type != "tests"
+                  user && (challenge.page_type != "tests" ||challenge.page_type != "language")
                     ? `/rounds/${challenge.challenge_id}`
-                    : user && challenge.page_type == "tests"
+                    : user && (challenge.page_type != "tests" ||challenge.page_type != "language")
                     ? `/quiz-lobby/${challenge.task_id}`
                     : "/signup"
                 }
                 className="w-full text-lg"
               >
-                {challenge.page_type == "tests" ? "Start" : "Apply"}
+                {(challenge.page_type != "tests" ||challenge.page_type != "language")  ? "Start" : "Apply"}
               </Link>
             ) : (
               <div

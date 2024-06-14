@@ -5,7 +5,7 @@ import { AlignJustify, Clipboard, Home, Search, User } from "lucide-react";
 import {
   Sheet,
   SheetContent,
- SheetClose,
+  SheetClose,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import RightSidebar from "./RightSidebar";
@@ -23,6 +23,9 @@ import {
   RiUser3Line,
   RiUser3Fill,
 } from "react-icons/ri";
+import { IoMdAnalytics } from "react-icons/io";
+import { IoAnalytics } from "react-icons/io5";
+
 import LeftSidebar from "./LeftSidebar";
 import { useState } from "react";
 
@@ -30,8 +33,8 @@ const Navbar = () => {
   const pathname = usePathname();
   const user = useAppSelector((state) => state.auth.user);
   const router = useRouter();
-  const [sheetOpen,setSheetOpen] = useState(false)
-  const [sheetOpen2,setSheetOpen2] = useState(false)
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetOpen2, setSheetOpen2] = useState(false);
   // useEffect(() => {
   //   if (!user && !pathname.includes("login") && !pathname.includes("signup")) {
   //     router.replace("/login");
@@ -41,16 +44,15 @@ const Navbar = () => {
   return (
     <nav className="w-full p-4 bg-white">
       <ul className="w-full flex justify-between items-center">
-        
         <li>
-        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-              <SheetTrigger>
-                <Search size={24} />
-              </SheetTrigger>
-              <SheetContent side={"left"}>
-                <LeftSidebar setSheetOpen={setSheetOpen} />
-              </SheetContent>
-            </Sheet>
+          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+            <SheetTrigger>
+              <Search size={24} />
+            </SheetTrigger>
+            <SheetContent side={"left"}>
+              <LeftSidebar setSheetOpen={setSheetOpen} />
+            </SheetContent>
+          </Sheet>
         </li>
         <li>
           <Image
@@ -64,26 +66,28 @@ const Navbar = () => {
         <li>
           {!user ? (
             <Button>
-              <Link prefetch={false}  href="/signup" className="w-full">Login</Link>
+              <Link prefetch={false} href="/signup" className="w-full">
+                Login
+              </Link>
             </Button>
           ) : (
             <div className="flex gap-5 items-center">
-              
-            <Sheet open={sheetOpen2} onOpenChange={setSheetOpen2}>
-              <SheetTrigger>
-                <AlignJustify size={24} />
-              </SheetTrigger>
-              <SheetContent side={"right"}>
-                <RightSidebar setSheetOpen2={setSheetOpen2} />
-              </SheetContent>
-            </Sheet>
+              <Sheet open={sheetOpen2} onOpenChange={setSheetOpen2}>
+                <SheetTrigger>
+                  <AlignJustify size={24} />
+                </SheetTrigger>
+                <SheetContent side={"right"}>
+                  <RightSidebar setSheetOpen2={setSheetOpen2} />
+                </SheetContent>
+              </Sheet>
             </div>
           )}
         </li>
       </ul>
       <div className="  fixed py-1 px-3  w-full left-0 bottom-0 z-50 ">
         <div className=" px-3 py-1 max-w-[800px] rounded-full  bg-[#c12130]/95 border mx-auto relative flex w-full justify-around items-center">
-          <Link prefetch={false} 
+          <Link
+            prefetch={false}
             href={"/home"}
             className=" w-1/3 text-sm flex flex-col items-center justify-center"
           >
@@ -106,7 +110,32 @@ const Navbar = () => {
               Home
             </p>
           </Link>
-          <Link prefetch={false} 
+          <Link
+            prefetch={false}
+            href={"/analytics"}
+            className=" w-1/3 text-sm flex flex-col items-center justify-center"
+          >
+            {pathname.includes("analytics") ? (
+              <IoMdAnalytics
+                color={pathname.includes("analytics") ? "#fdbd5b" : "white"}
+                size={24}
+              />
+            ) : (
+              <IoAnalytics
+                color={pathname.includes("analytics") ? "#fdbd5b" : "white"}
+                size={24}
+              />
+            )}
+            <p
+              className={
+                pathname.includes("analytics") ? "text-[#fdbd5b]" : "text-white"
+              }
+            >
+              Analytics
+            </p>
+          </Link>
+          <Link
+            prefetch={false}
             href={"/results"}
             className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
           >
@@ -148,7 +177,9 @@ const Navbar = () => {
                   )}
                   <p
                     className={
-                      pathname.includes("user") ? "text-[#fdbd5b]" : "text-white"
+                      pathname.includes("user")
+                        ? "text-[#fdbd5b]"
+                        : "text-white"
                     }
                   >
                     Profile
@@ -160,7 +191,8 @@ const Navbar = () => {
               </Sheet>
             </div>
           ) : (
-            <Link prefetch={false} 
+            <Link
+              prefetch={false}
               href={"/signup"}
               className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
             >
