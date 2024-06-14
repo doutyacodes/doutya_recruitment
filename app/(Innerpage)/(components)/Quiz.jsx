@@ -18,7 +18,7 @@ const Quiz = ({ userId }) => {
           `${baseURL}/get-user-quiz.php?userId=${userId}`
         );
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         if (data.challenges.completed === "true") {
           setFeedback(data.challenges.feedback);
           setCompleted(true);
