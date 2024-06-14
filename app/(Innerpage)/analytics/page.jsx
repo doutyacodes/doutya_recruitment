@@ -165,7 +165,7 @@ const AnalyticsPage = () => {
   const AnalyticsRoute = () => {
     return (
       <div className="flex h-full min-h-screen flex-col gap-2 bg-white px-3 py-4">
-        <Quiz userId={user.id} />
+        <Quiz userId={user?.id} />
       </div>
     );
   };
