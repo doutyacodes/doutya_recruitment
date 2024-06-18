@@ -27,7 +27,7 @@ import { IoMdAnalytics } from "react-icons/io";
 import { IoAnalytics } from "react-icons/io5";
 
 import LeftSidebar from "./LeftSidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -35,11 +35,11 @@ const Navbar = () => {
   const router = useRouter();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetOpen2, setSheetOpen2] = useState(false);
-  // useEffect(() => {
-  //   if (!user && !pathname.includes("login") && !pathname.includes("signup")) {
-  //     router.replace("/login");
-  //   }
-  // }, [user, pathname, router]);
+  useEffect(() => {
+    if ( !pathname.includes("coming-soon") && !pathname.includes("coming-soon")) {
+      router.replace("/coming-soon");
+    }
+  }, [user, pathname, router]);
 
   return (
     <nav className="w-full p-4 bg-white">
