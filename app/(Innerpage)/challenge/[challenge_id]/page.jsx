@@ -91,7 +91,7 @@ const PageDetails = ({ params }) => {
   };
   const DescriptionRoute = () => {
     return (
-      <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh]">
+      <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] mb-7">
         <div className="w-full h-full  space-y-5 mt-3">
           <div className="mt-4 justify-center flex flex-col gap-3 items-center w-full p-3">
             <div className=" w-24 h-24  rounded-md relative">
