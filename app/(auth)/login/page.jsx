@@ -43,7 +43,7 @@ const Login = () => {
         // } else if (response.data.data.steps == 1) {
         //   navigation.replace("DetailSignup");
         // }
-        console.log(userData)
+        // console.log(userData)
         router.push("/home")
       } else {
         toast({

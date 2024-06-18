@@ -67,7 +67,7 @@ const AnalyticsPage = () => {
           user?.id ? user.id : null
         }`
       );
-        console.log(response.data);
+        // console.log(response.data);
       if (response.data) {
         setQuizData(response.data);
       }

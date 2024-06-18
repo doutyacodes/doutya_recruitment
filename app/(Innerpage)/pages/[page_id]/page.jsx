@@ -516,7 +516,7 @@ const PageDetails = () => {
         );
 
         // Handle the response data
-        console.log("Data:", response.data);
+        // console.log("Data:", response.data);
       } catch (error) {
         // Revert the follow status if an error occurs
         setIsFollowing((prevIsFollowing) => !prevIsFollowing);

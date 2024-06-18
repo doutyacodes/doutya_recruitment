@@ -31,7 +31,7 @@ const Quiz = ({ userId }) => {
         `${baseURL}/get-user-quiz.php?userId=${userId}`
       );
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       if (data.challenges.completed === "true") {
         setFeedback(data.challenges);
         setCompleted(true);
@@ -88,7 +88,7 @@ const Quiz = ({ userId }) => {
 
   const submitMarks = async (answer, finalValue) => {
     try {
-      console.log(finalValue);
+      // console.log(finalValue);
 
       const formData = new URLSearchParams();
       formData.append("user_id", userId);
@@ -105,7 +105,7 @@ const Quiz = ({ userId }) => {
           },
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.success) {
         if (finalValue === "yes") {
           setCompleted(true);
