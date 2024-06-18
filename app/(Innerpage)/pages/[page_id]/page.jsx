@@ -38,7 +38,7 @@ const PageDetails = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [keywordsArray, setKeywordsArray] = useState([]);
 
-  const [activeRouteIndex, setActiveRouteIndex] = useState("sixth");
+  const [activeRouteIndex, setActiveRouteIndex] = useState("second");
   const [activeSecondRouteIndex, setActiveSecondRouteIndex] = useState(0);
   const router = useRouter();
   const visitForm = async () => {
@@ -254,7 +254,7 @@ const PageDetails = () => {
   }, [activeRouteIndex, activeSecondRouteIndex]);
 
   const [routes] = useState([
-    { key: "sixth", title: "Posts" },
+    // { key: "sixth", title: "Posts" },
     { key: "second", title: "Quiz" },
     { key: "third", title: "Jobs" },
     { key: "fourth", title: "Internship" },
@@ -501,7 +501,7 @@ const PageDetails = () => {
         return <TestRoute />;
 
       default:
-        return <SixthRoute />;
+        return <TestRoute />;
     }
   };
   const toggleFollow = async () => {
