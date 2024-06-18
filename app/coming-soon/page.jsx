@@ -92,7 +92,7 @@ const ComingSoon = () => {
       {/* Content */}
       <div className="relative flex flex-col items-center">
          <div className='relative h-32 min-w-24'>
-         <Image src={"/assets/images/doutya4.png"} alt="Logo" fill className="mb-4" objectFit='contain' />
+         <Image src={"/assets/images/dou2.png"} alt="Logo" fill className="mb-4" objectFit='contain' />
          </div>
         <h2 className="text-white text-4xl md:text-8xl font-bold flex flex-row items-center">
           Coming
