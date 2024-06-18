@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'wowfy.in',
+        hostname: 'persanalytics.com',
         port: '',
         pathname: '**',
       },
@@ -26,7 +26,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*', // Specify the source path pattern
-        destination: 'https://wowfy.in/doutya_recruit/api/:path*', // Corrected the destination to include /api/
+        destination: 'https://persanalytics.com/doutya/api/:path*', // Corrected the destination to include /api/
       },
     ];
   },

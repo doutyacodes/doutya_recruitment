@@ -49,7 +49,7 @@ const AnalyticsPage = () => {
         `${baseURL}/get-user-count.php?id=${user?.id}`
       );
 
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.data.success) {
         setUserData(response.data.user);
@@ -67,7 +67,7 @@ const AnalyticsPage = () => {
           user?.id ? user.id : null
         }`
       );
-      //   console.log(response.data);
+        console.log(response.data);
       if (response.data) {
         setQuizData(response.data);
       }

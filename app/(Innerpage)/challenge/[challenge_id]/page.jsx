@@ -172,7 +172,7 @@ const PageDetails = ({ params }) => {
   };
   const StarsRoute = () => {
     return (
-      <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
+      <div className=" mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         <div className=" w-full">
           {challenge.stars && (
             <div className="w-full flex flex-col space-y-5 justify-center items-center">
