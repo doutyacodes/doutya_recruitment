@@ -119,7 +119,7 @@ const Quiz = ({ userId }) => {
 
   if (completed) {
     return (
-      <div className="w-full flex justify-center flex-col space-y-4 items-center">
+      <div className="w-full flex justify-center flex-col space-y-4 items-center mb-6">
         <h1 className="text-3xl font-bold">Personality Type</h1>
         {feedback ? (
           <div className=" shadow-lg bg-[#d1cef2]  rounded-lg flex flex-col justify-center items-center gap-4 p-6 w-full border">
@@ -148,9 +148,9 @@ const Quiz = ({ userId }) => {
             <div className="flex flex-col  gap-3">
               <p className=" font-semibold">Weaknesses</p>
               <div className=" text-sm font-light flex-wrap flex  w-full ">
-                {feedback.weaknesses.map((strength, index) => (
+                {feedback.weaknesses.map((weakness, index) => (
                   <p key={index} className="">
-                    {strength}
+                    {weakness}
                     {index !== feedback.weaknesses.length - 1 && ","}
                   </p>
                 ))}
@@ -159,9 +159,9 @@ const Quiz = ({ userId }) => {
             <div className="flex flex-col  gap-3">
               <p className=" font-semibold">Opportunities</p>
               <div className=" text-sm font-light flex-wrap flex  w-full ">
-                {feedback.opportunities.map((strength, index) => (
+                {feedback.opportunities.map((opprtunity, index) => (
                   <p key={index} className="">
-                    {strength}
+                    {opprtunity}
                     {index !== feedback.opportunities.length - 1 && ","}
                   </p>
                 ))}
@@ -170,9 +170,9 @@ const Quiz = ({ userId }) => {
             <div className="flex flex-col  gap-3">
               <p className=" font-semibold">Threats</p>
               <div className=" text-sm font-light flex-wrap flex  w-full ">
-                {feedback.threats.map((strength, index) => (
+                {feedback.threats.map((threat, index) => (
                   <p key={index} className="">
-                    {strength}
+                    {threat}
                     {index !== feedback.threats.length - 1 && ","}
                   </p>
                 ))}

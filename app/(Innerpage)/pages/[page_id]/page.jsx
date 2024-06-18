@@ -556,7 +556,7 @@ const PageDetails = () => {
         </div>
       ) : (
         <>
-          <div className=" relative w-full md:h-40 h-28 ">
+          <div className=" relative w-full md:h-40 h-28 mb-6">
             {selectedMovie?.banner &&(<Image
               src={baseImgURL + selectedMovie?.banner}
               fill

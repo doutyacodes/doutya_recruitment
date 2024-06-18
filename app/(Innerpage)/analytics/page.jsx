@@ -271,7 +271,7 @@ const AnalyticsPage = () => {
 
   return (
     <div className="w-full min-h-screen p-3">
-      <div className="flex justify-between items-center shadow border-b">
+      <div className="flex justify-between items-center shadow border-b mb-6">
         <p
           className={cn(
             "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
