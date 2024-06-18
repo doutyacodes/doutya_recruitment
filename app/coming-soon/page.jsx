@@ -106,8 +106,10 @@ const ComingSoon = () => {
           </div>
           Soon
         </h2>
-        <div className="text-white text-2xl mt-4">
+        <div className="text-white text-2xl mt-4 mx-auto">
+          <div className='mx-auto w-full'>
           {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+          </div>
         </div>
       </div>
     </div>
