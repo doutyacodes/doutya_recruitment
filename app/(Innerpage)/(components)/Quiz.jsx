@@ -123,24 +123,24 @@ const Quiz = ({ userId }) => {
         <h1 className="text-3xl font-bold">Personality Type</h1>
         {feedback ? (
           <div className=" shadow-lg bg-[#d1cef2]  rounded-lg flex flex-col justify-center items-center gap-4 p-6 w-full border">
-            <h1 className="text-2xl font-bold">{feedback.name}</h1>
+            <h1 className="text-2xl font-bold">{feedback?.name}</h1>
             <div className="relative h-52 w-40">
-              <Image src={baseImgURL + feedback.image} fill objectFit="cover" />
+              <Image src={baseImgURL + feedback?.image} fill objectFit="cover" />
             </div>
             <p className="text-sm font-light">
-              {feedback.type}
+              {feedback?.type}
               {" ("}
-              {feedback.type2}
+              {feedback?.type2}
               {")"}
             </p>
 
             <div className="flex flex-col  gap-3">
               <p className=" font-semibold">Strengths</p>
               <div className=" text-sm font-light flex-wrap flex  w-full ">
-                {feedback.strengths.map((strength, index) => (
+                {feedback?.strengths?.map((strength, index) => (
                   <p key={index} className="">
                     {strength}
-                    {index !== feedback.strengths.length - 1 && ","}
+                    {index !== feedback?.strengths.length - 1 && ","}
                   </p>
                 ))}
               </div>
@@ -148,10 +148,10 @@ const Quiz = ({ userId }) => {
             <div className="flex flex-col  gap-3">
               <p className=" font-semibold">Weaknesses</p>
               <div className=" text-sm font-light flex-wrap flex  w-full ">
-                {feedback.weaknesses.map((weakness, index) => (
+                {feedback?.weaknesses?.map((weakness, index) => (
                   <p key={index} className="">
                     {weakness}
-                    {index !== feedback.weaknesses.length - 1 && ","}
+                    {index !== feedback?.weaknesses.length - 1 && ","}
                   </p>
                 ))}
               </div>
@@ -159,10 +159,10 @@ const Quiz = ({ userId }) => {
             <div className="flex flex-col  gap-3">
               <p className=" font-semibold">Opportunities</p>
               <div className=" text-sm font-light flex-wrap flex  w-full ">
-                {feedback.opportunities.map((opprtunity, index) => (
+                {feedback?.opportunities?.map((opprtunity, index) => (
                   <p key={index} className="">
                     {opprtunity}
-                    {index !== feedback.opportunities.length - 1 && ","}
+                    {index !== feedback?.opportunities.length - 1 && ","}
                   </p>
                 ))}
               </div>
@@ -170,10 +170,10 @@ const Quiz = ({ userId }) => {
             <div className="flex flex-col  gap-3">
               <p className=" font-semibold">Threats</p>
               <div className=" text-sm font-light flex-wrap flex  w-full ">
-                {feedback.threats.map((threat, index) => (
+                {feedback?.threats?.map((threat, index) => (
                   <p key={index} className="">
                     {threat}
-                    {index !== feedback.threats.length - 1 && ","}
+                    {index !== feedback?.threats.length - 1 && ","}
                   </p>
                 ))}
               </div>
@@ -205,14 +205,14 @@ const Quiz = ({ userId }) => {
         <div className="">
           <div className="min-h-96 justify-center items-center flex bg-[#d1cef2] shadow-lg rounded-3xl p-6 border w-full">
             {!completed && (
-              <div className="w-full">
+              <div className="w-full justify-between h-full flex flex-col gap-5">
                 <h1 className="text-2xl font-bold text-black mb-4 text-center">
                   Question {currentQuestion?.question_id}
                 </h1>
                 <h2 className="text-xl mb-4 text-black text-center">
                   {currentQuestion.question_text}
                 </h2>
-                <div className="grid grid-cols-12 space-y-2 w-full items-center justify-center">
+                <div className="grid grid-cols-12 gap-5 w-full items-center justify-between">
                   {currentQuestion?.options?.length > 0 &&
                     currentQuestion.options.map((option) => (
                       <button
