@@ -91,10 +91,10 @@ const ComingSoon = () => {
 
       {/* Content */}
       <div className="relative flex flex-col items-center">
-         <div className='relative h-32 min-w-24'>
+         <div className='relative h-56 min-w-56'>
          <Image src={"/assets/images/dou2.png"} alt="Logo" fill className="mb-4" objectFit='contain' />
          </div>
-        <h2 className="text-white text-4xl md:text-8xl font-bold flex flex-row items-center">
+        <h2 className="text-white text-4xl md:text-8xl font-bold flex flex-row items-center mb-3">
           Coming
           <div className="relative text-sm mx-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-caret-up-fill text-blue-500" viewBox="0 0 16 16">
@@ -106,7 +106,7 @@ const ComingSoon = () => {
           </div>
           Soon
         </h2>
-        <div className="text-white text-2xl mt-4 mx-auto">
+        <div className="text-white text-2xl mt-4 mx-auto ">
           <div className='mx-auto w-full'>
           {timerComponents.length ? timerComponents : <span>Time's up!</span>}
           </div>
