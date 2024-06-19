@@ -109,6 +109,7 @@ const QuizPage = () => {
         );
         setQuizDatas(quizDatas2);
         const newDataQuestion = questions[currentIndex];
+        // console.log(newDataQuestion)
         setDataQuestion(newDataQuestion);
         setCount_question(quizDatas2.dataQuiz.count_question);
         if (newDataQuestion.quiz_type !== "psychological" || dataQuestion?.page_type != "language") {
@@ -174,11 +175,14 @@ const QuizPage = () => {
     return array;
   };
 
-  const handleAnswer = async (data, answer_id, question_id) => {
+  const handleAnswer = async (data, answer_ids, question_ids) => {
+    // console.log(data)
+    // console.log(answer_ids)
+    // console.log(question_ids)
     if (isSelected) return;
     setOptionSend(data);
-    setQuestion_id(question_id);
-    setAnswer_id(answer_id);
+    setQuestion_id(question_ids);
+    setAnswer_id(answer_ids);
     setIsSelected(data);
     let earnedMarks = 0;
 
@@ -215,6 +219,8 @@ const QuizPage = () => {
           },
         }
       );
+      // console.log(response.data)
+      // console.log(question_id)
 
       if (response.status === 200) {
         if (currentIndex < quizDatas?.dataQuiz[0].count_question - 1) {
@@ -318,6 +324,7 @@ const QuizPage = () => {
       </div>
       <div style={{ marginTop: "20px" }}>
         {shuffledOptions.map((item, index) => (
+          
           <button
             key={index}
             style={{

@@ -244,7 +244,7 @@ const PageDetails = () => {
               user?.id ? user.id : null
             }&page_id=${page_id}`
           );
-          // console.log(response.data);
+          console.log(response.data);
           if (response.data.success) {
             setCompatibiltyTest(response.data.data);
           }
@@ -268,7 +268,7 @@ const PageDetails = () => {
             const response = await axios.get(
               `${baseURL}/getEachQuiz.php?userId=${
                 user?.id ? user.id : null
-              }&page_id=${page_id}&page_type=${activeRouteIndex}&type_check=${activeThirdIndex}`
+              }&page_id=${page_id}&page_type=${activeRouteIndex}`
             );
             // console.log(response.data);
             if (response.data) {
@@ -296,62 +296,8 @@ const PageDetails = () => {
   const ThirdRoute = () => {
     return (
       <div className="w-full h-full p-1 space-y-4">
-        <div className="w-full p-3 space-y-5">
-          <div className="w-full grid-cols-12 gap-3 grid text-black">
-            {activeThirdIndex && (
-              <div className="col-span-12 ">
-                <div
-                  onClick={() => setActiveThirdIndex(null)}
-                  className=" flex gap-3 items-center cursor-pointer w-fit"
-                >
-                  <FaAngleLeft size={24} color="black" />
-                  <p className="font-bold">Back</p>
-                </div>
-              </div>
-            )}
-            {!activeThirdIndex && (
-              <>
-                <div
-                  onClick={() => setActiveThirdIndex("software")}
-                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative  cursor-pointer"
-                >
-                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
-                    <Image
-                      src={baseImgURL + "ui.png"}
-                      fill
-                      objectFit="cover"
-                      className="rounded-md opacity-100"
-                    />
-                  </div>
-                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-green-900/50  z-20 flex justify-center items-center">
-                    <p className="text-2xl font-bold text-white text-center">
-                      Software
-                    </p>
-                  </div>
-                </div>
-                <div
-                  onClick={() => setActiveThirdIndex("management")}
-                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative cursor-pointer"
-                >
-                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
-                    <Image
-                      src={baseImgURL + "sales.png"}
-                      fill
-                      objectFit="cover"
-                      className="rounded-md opacity-100"
-                    />
-                  </div>
-                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-blue-900/50  z-20 flex justify-center items-center">
-                    <p className="text-2xl font-bold text-white text-center">
-                      Management
-                    </p>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-        {activeThirdIndex &&
+        
+        {
           quizState?.challenges_by_district &&
           Object.keys(quizState.challenges_by_district).length > 0 &&
           Object.keys(quizState.challenges_by_district).map(
@@ -426,10 +372,14 @@ const PageDetails = () => {
         <div className="w-full p-3 space-y-5">
           {compatibiltyTest && (
             <div
-              onClick={()=>router.push(`/quiz-lobby/${compatibiltyTest.task_id}`)}
+              onClick={()=>{
+                compatibiltyTest.completed && router.push(`/quiz-lobby/${compatibiltyTest.task_id}`)
+              }}
               className="text-white text-center font-bold text-xl bg-gradient-to-r from-[#0a4baf] to-[#c46ae4] py-5 shadow-md rounded-lg cursor-pointer"
             >
-              <h5>TAKE THE COMPATIBILITY TEST</h5>
+             {compatibiltyTest.completed ? (
+              <h4>Compatibility : {compatibiltyTest.compatibility}</h4>
+             ):( <h5>TAKE THE COMPATIBILITY TEST</h5>)}
             </div>
           )}
           <div className="w-full grid-cols-12 gap-3 grid text-black">
