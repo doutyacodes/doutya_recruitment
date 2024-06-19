@@ -140,7 +140,7 @@ const SignUp = () => {
       const result = response.data;
       if (result.success) {
         dispatch(loginSuccess(result.user));
-        router.replace("/choose-keyword/1");
+        router.replace("/follow-page");
       } else {
         console.log(result.error);
         alert(result.error[0] || "Something went wrong.");

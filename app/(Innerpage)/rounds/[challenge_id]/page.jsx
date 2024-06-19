@@ -109,6 +109,9 @@ const RoundScreen = ({ params }) => {
           }`
         );
 
+                  console.log(response.data);
+
+
         if (response.status === 200) {
           setChallenge(response.data);
           // console.log(response.data);

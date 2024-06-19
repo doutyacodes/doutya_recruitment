@@ -54,7 +54,7 @@ const ProgressCard = ({ item }) => {
       <div className="col-span-2">
         <p className="font-bold flex gap-1 items-center text-sm">
           {" "}
-          {item.stars}/{item.next_star} <span> <FaStar size={"14"} color="gold" /> </span>
+          {item.stars}/{item.to_mark} <span> <FaStar size={"14"} color="gold" /> </span>
         </p>
       </div>
     </div>

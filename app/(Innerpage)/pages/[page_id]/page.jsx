@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import ProgressCard from "../../(components)/ProgressCard";
+import { FaAngleLeft } from "react-icons/fa6";
 
 const PageDetails = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -37,9 +38,12 @@ const PageDetails = () => {
   const [quizData, setQuizData] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [keywordsArray, setKeywordsArray] = useState([]);
+  const [compatibiltyTest, setCompatibiltyTest] = useState([]);
+  const [keywordsList, setKeywordsList] = useState([]);
 
   const [activeRouteIndex, setActiveRouteIndex] = useState("second");
-  const [activeSecondRouteIndex, setActiveSecondRouteIndex] = useState(0);
+  const [activeThirdIndex, setActiveThirdIndex] = useState(null);
+  // const [activeSecondRouteIndex, setActiveSecondRouteIndex] = useState(0);
   const router = useRouter();
   const visitForm = async () => {
     try {
@@ -137,18 +141,31 @@ const PageDetails = () => {
     };
 
     fetchKeywords();
+    const fetchAllKeywords = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/keywords.php`);
+        // console.log(response.data)
+        setKeywordsList(response.data);
+      } catch (error) {
+        console.error("Error while fetching quiz");
+      }
+    };
+
+    fetchAllKeywords();
     const fetchPrivateQuiz = async () => {
       if (activeRouteIndex == "second") {
-        if (activeRouteIndex) {
+        if (activeRouteIndex && activeThirdIndex) {
           try {
             const response = await axios.get(
               `${baseURL}/getEachTestQuiz.php?userId=${
                 user?.id ? user.id : null
-              }&page_id=${page_id}&page_type=${activeRouteIndex}`
+              }&page_id=${page_id}&page_type=${activeRouteIndex}&type_check=${activeThirdIndex}`
             );
             // console.log(response.data);
             if (response.data) {
               setQuizData(response.data);
+            } else {
+              setQuizData([]);
             }
           } catch (error) {
             console.error("Error while fetching quiz");
@@ -176,7 +193,7 @@ const PageDetails = () => {
         }
       }
     };
-    fetchQuizTest();
+
     const fetchProgress = async () => {
       if (user && page_id) {
         if (activeRouteIndex) {
@@ -213,11 +230,31 @@ const PageDetails = () => {
       }
     };
     fetchProgresspublic();
-  }, [activeRouteIndex, user?.id, page_id]);
+  }, [activeRouteIndex, user?.id, page_id, activeThirdIndex]);
   useEffect(() => {
     visitForm();
     fetchData();
   }, [page_id, user]);
+  useEffect(() => {
+    const fetchCompilibility = async () => {
+      if (user) {
+        try {
+          const response = await axios.get(
+            `${baseURL}/get-user-compatibility.php?user_id=${
+              user?.id ? user.id : null
+            }&page_id=${page_id}`
+          );
+          // console.log(response.data);
+          if (response.data.success) {
+            setCompatibiltyTest(response.data.data);
+          }
+        } catch (error) {
+          console.error("Error while fetching compatibility");
+        }
+      }
+    };
+    fetchCompilibility();
+  }, [user, page_id]);
   useEffect(() => {
     const fetchQuiz = async () => {
       if (
@@ -226,23 +263,18 @@ const PageDetails = () => {
         activeRouteIndex == "second"
       ) {
         if (activeRouteIndex) {
+          // console.log(activeRouteIndex);
           try {
-            let baseApiUrl;
-            let navUrl="getEachQuiz.php"
-            if(activeSecondRouteIndex==0)
-              {
-                 navUrl="getEachQuizEveryone.php"
-
-              }
-            if (user) {
-              baseApiUrl = `&userId=${user.id}`;
-            }
             const response = await axios.get(
-              `${baseURL}/${navUrl}?page_id=${page_id}&page_type=${activeRouteIndex}${baseApiUrl}&id_keyword=${activeSecondRouteIndex}`
+              `${baseURL}/getEachQuiz.php?userId=${
+                user?.id ? user.id : null
+              }&page_id=${page_id}&page_type=${activeRouteIndex}&type_check=${activeThirdIndex}`
             );
             // console.log(response.data);
             if (response.data) {
               setQuizState(response.data);
+            } else {
+              setQuizState([]);
             }
           } catch (error) {
             console.error("Error while fetching quiz");
@@ -251,11 +283,11 @@ const PageDetails = () => {
       }
     };
     fetchQuiz();
-  }, [activeRouteIndex, activeSecondRouteIndex]);
+  }, [activeRouteIndex]);
 
   const [routes] = useState([
     // { key: "sixth", title: "Posts" },
-    { key: "second", title: "Quiz" },
+    { key: "second", title: "Tests" },
     { key: "third", title: "Jobs" },
     { key: "fourth", title: "Internship" },
     { key: "fifth", title: "Progress" },
@@ -264,60 +296,110 @@ const PageDetails = () => {
   const ThirdRoute = () => {
     return (
       <div className="w-full h-full p-1 space-y-4">
-       {quizState?.challenges_by_all_keywords &&
-  Object.keys(quizState.challenges_by_all_keywords).length > 0 ? (
-  Object.keys(quizState.challenges_by_all_keywords).map(
-    (keywordName, keywordIndex) => (
-      <div className="bg-gray-100 w-full pt-3 mb-3" key={keywordName}>
-        {/* <p className="font-bold text-xl mb-4">{keywordName}</p> */}
-        {Object.keys(
-          quizState.challenges_by_all_keywords[keywordName].districts
-        ).map((districtName, districtIndex) => (
-          <div className="bg-white w-full p-2 mb-2" key={districtName}>
-            <p className="font-bold mb-2">{districtName}</p>
-            <div className="flex gap-2 w-full overflow-x-scroll">
-              {quizState.challenges_by_all_keywords[keywordName].districts[
-                districtName
-              ].map((item, itemIndex) => {
-                let formattedEndDate;
-                let formattedDate = moment(item.start_date).fromNow();
-                const endDate = moment(item.end_date);
-                const now = moment();
-
-                const duration = moment.duration(endDate.diff(now));
-
-                if (duration.asDays() >= 1) {
-                  formattedEndDate = `${Math.round(duration.asDays())} days`;
-                } else if (duration.asHours() >= 1) {
-                  formattedEndDate = `${Math.floor(duration.asHours())}:${
-                    duration.minutes() < 10 ? "0" : ""
-                  }${duration.minutes()} hrs`;
-                } else {
-                  formattedEndDate = `${duration.minutes()} minutes`;
-                }
-
-                return (
-                  <ChallengeHomeCard
-                    key={item.challenge_id} // Assuming challenge_id is unique
-                    item={item}
-                    formattedDate={formattedDate}
-                    formattedEndDate={formattedEndDate}
-                    inPage={true}
-                  />
-                );
-              })}
-            </div>
+        <div className="w-full p-3 space-y-5">
+          <div className="w-full grid-cols-12 gap-3 grid text-black">
+            {activeThirdIndex && (
+              <div className="col-span-12 ">
+                <div
+                  onClick={() => setActiveThirdIndex(null)}
+                  className=" flex gap-3 items-center cursor-pointer w-fit"
+                >
+                  <FaAngleLeft size={24} color="black" />
+                  <p className="font-bold">Back</p>
+                </div>
+              </div>
+            )}
+            {!activeThirdIndex && (
+              <>
+                <div
+                  onClick={() => setActiveThirdIndex("software")}
+                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative  cursor-pointer"
+                >
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
+                    <Image
+                      src={baseImgURL + "ui.png"}
+                      fill
+                      objectFit="cover"
+                      className="rounded-md opacity-100"
+                    />
+                  </div>
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-green-900/50  z-20 flex justify-center items-center">
+                    <p className="text-2xl font-bold text-white text-center">
+                      Software
+                    </p>
+                  </div>
+                </div>
+                <div
+                  onClick={() => setActiveThirdIndex("management")}
+                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative cursor-pointer"
+                >
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
+                    <Image
+                      src={baseImgURL + "sales.png"}
+                      fill
+                      objectFit="cover"
+                      className="rounded-md opacity-100"
+                    />
+                  </div>
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-blue-900/50  z-20 flex justify-center items-center">
+                    <p className="text-2xl font-bold text-white text-center">
+                      Management
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
-        ))}
-      </div>
-    )
-  )
-) : (
-  <div className="w-full flex justify-center items-center h-full mt-3">
-    <p className="text-ellipsis font-bold">No {activeRouteIndex=="third" ? "job" : "internship"} in this category now.</p>
-  </div>
-)}
+        </div>
+        {activeThirdIndex &&
+          quizState?.challenges_by_district &&
+          Object.keys(quizState.challenges_by_district).length > 0 &&
+          Object.keys(quizState.challenges_by_district).map(
+            (districtName, index) => (
+              <div className="bg-white w-full p-2" key={index}>
+                <p className="font-bold mb-2">{districtName}</p>
+                <div className="flex gap-2 w-full overflow-x-scroll">
+                  {quizState.challenges_by_district[districtName] &&
+                    quizState.challenges_by_district[districtName].length > 0 &&
+                    quizState.challenges_by_district[districtName].map(
+                      (item, itemIndex) => {
+                        let formattedEndDate;
+                        let formattedDate;
+                        formattedDate = moment(item.start_date).fromNow();
+                        const endDate = moment(item.end_date);
+                        const now = moment();
 
+                        const duration = moment.duration(endDate.diff(now));
+
+                        if (duration.asDays() >= 1) {
+                          formattedEndDate =
+                            Math.round(duration.asDays()) + " days";
+                        } else if (duration.asHours() >= 1) {
+                          formattedEndDate =
+                            Math.floor(duration.asHours()) +
+                            ":" +
+                            (duration.minutes() < 10 ? "0" : "") +
+                            duration.minutes() +
+                            " hrs";
+                        } else {
+                          formattedEndDate = duration.minutes() + " minutes";
+                        }
+
+                        return (
+                          <ChallengeHomeCard
+                            key={itemIndex}
+                            item={item}
+                            formattedDate={formattedDate}
+                            formattedEndDate={formattedEndDate}
+                            inPage={true}
+                          />
+                        );
+                      }
+                    )}
+                </div>
+              </div>
+            )
+          )}
       </div>
     );
   };
@@ -341,7 +423,130 @@ const PageDetails = () => {
   const TestRoute = () => {
     return (
       <div className="w-full  h-full  p-1 space-y-4">
-        {quizData?.challenges_by_district &&
+        <div className="w-full p-3 space-y-5">
+          {compatibiltyTest && (
+            <div
+              onClick={()=>router.push(`/quiz-lobby/${compatibiltyTest.task_id}`)}
+              className="text-white text-center font-bold text-xl bg-gradient-to-r from-[#0a4baf] to-[#c46ae4] py-5 shadow-md rounded-lg cursor-pointer"
+            >
+              <h5>TAKE THE COMPATIBILITY TEST</h5>
+            </div>
+          )}
+          <div className="w-full grid-cols-12 gap-3 grid text-black">
+            {/* {keywordsList?.length > 0 &&
+              keywordsList.map((item) => {
+                return (
+                  <div
+                    className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative "
+                    key={item.id}
+                  >
+                    <div className="absolute top-0 left-0 w-full h-full rounded-md">
+                      <Image
+                        src={baseImgURL + item.image}
+                        fill
+                        objectFit="cover"
+                        className="rounded-md opacity-70"
+                      />
+                    </div>
+                    <div className="absolute top-0 left-0 w-full h-full rounded-md  z-20 flex justify-center items-center">
+                      <p className="text-2xl font-bold text-white text-center">
+                        {item.name}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })} */}
+            {activeThirdIndex && (
+              <div className="col-span-12 ">
+                <div
+                  onClick={() => setActiveThirdIndex(null)}
+                  className=" flex gap-3 items-center cursor-pointer w-fit"
+                >
+                  <FaAngleLeft size={24} color="black" />
+                  <p className="font-bold">Back</p>
+                </div>
+              </div>
+            )}
+            {!activeThirdIndex && (
+              <>
+                <div
+                  onClick={() => setActiveThirdIndex("software")}
+                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative  cursor-pointer"
+                >
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
+                    <Image
+                      src={baseImgURL + "ui.png"}
+                      fill
+                      objectFit="cover"
+                      className="rounded-md opacity-100"
+                    />
+                  </div>
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-green-900/50  z-20 flex justify-center items-center">
+                    <p className="text-2xl font-bold text-white text-center">
+                      Software
+                    </p>
+                  </div>
+                </div>
+                <div
+                  onClick={() => setActiveThirdIndex("management")}
+                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative cursor-pointer"
+                >
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
+                    <Image
+                      src={baseImgURL + "sales.png"}
+                      fill
+                      objectFit="cover"
+                      className="rounded-md opacity-100"
+                    />
+                  </div>
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-blue-900/50  z-20 flex justify-center items-center">
+                    <p className="text-2xl font-bold text-white text-center">
+                      Management
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  href={"/analytics"}
+                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative "
+                >
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
+                    <Image
+                      src={baseImgURL + "english.jpg"}
+                      fill
+                      objectFit="cover"
+                      className="rounded-md opacity-100"
+                    />
+                  </div>
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-purple-900/50  z-20 flex justify-center items-center">
+                    <p className="text-2xl font-bold text-white text-center">
+                      Language
+                    </p>
+                  </div>
+                </Link>
+                <div
+                  onClick={() => setActiveThirdIndex("culture")}
+                  className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative cursor-pointer"
+                >
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md">
+                    <Image
+                      src={baseImgURL + "culture.png"}
+                      fill
+                      objectFit="cover"
+                      className="rounded-md opacity-100"
+                    />
+                  </div>
+                  <div className="absolute top-0 left-0 w-full h-full rounded-md bg-gray-900/50  z-20 flex justify-center items-center">
+                    <p className="text-2xl font-bold text-white text-center">
+                      Culture
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+        {activeThirdIndex &&
+          quizData?.challenges_by_district &&
           Object.keys(quizData.challenges_by_district).length > 0 &&
           Object.keys(quizData.challenges_by_district).map(
             (districtName, index) => (
@@ -389,7 +594,7 @@ const PageDetails = () => {
               </div>
             )
           )}
-        {privateQuiz?.challenges_by_district &&
+        {/* {privateQuiz?.challenges_by_district &&
           Object.keys(privateQuiz.challenges_by_district).length > 0 &&
           Object.keys(privateQuiz.challenges_by_district).map(
             (districtName, index) => (
@@ -437,7 +642,7 @@ const PageDetails = () => {
                 </div>
               </div>
             )
-          )}
+          )} */}
       </div>
     );
   };
@@ -466,11 +671,11 @@ const PageDetails = () => {
               </div>
             </div>
             <div className="w-full space-y-6 pt-3">
-              {progressDetails &&
+              {/* {progressDetails &&
                 progressDetails.length > 0 &&
                 progressDetails.map((item, index) => {
                   return <ProgressCard item={item} key={index} />;
-                })}
+                })} */}
               {progressDetailspublic &&
                 progressDetailspublic.length > 0 &&
                 progressDetailspublic.map((item, index) => {
@@ -557,13 +762,15 @@ const PageDetails = () => {
       ) : (
         <>
           <div className=" relative w-full md:h-40 h-28 ">
-            {selectedMovie?.banner &&(<Image
-              src={baseImgURL + selectedMovie?.banner}
-              fill
-              alt="image"
-              className=" "
-              objectFit="cover"
-            />)}
+            {selectedMovie?.banner && (
+              <Image
+                src={baseImgURL + selectedMovie?.banner}
+                fill
+                alt="image"
+                className=" "
+                objectFit="cover"
+              />
+            )}
           </div>
           <div>
             <div className="flex justify-between w-full p-3 bg-white border border-black/5 ">
@@ -608,7 +815,7 @@ const PageDetails = () => {
                   <div
                     onClick={() => {
                       setActiveRouteIndex(route.key);
-                      setActiveSecondRouteIndex(0);
+                      setActiveThirdIndex(null);
                     }}
                     key={index}
                     className={cn(
@@ -623,42 +830,9 @@ const PageDetails = () => {
                 );
               })}
             </div>
-            {(activeRouteIndex == "third" || activeRouteIndex == "fourth") && (
-              <div className=" flex justify-around w-full overflow-x-scroll space-x-5 p-3 bg-[#c12130] items-center mt-3">
-                <div
-                        onClick={() => setActiveSecondRouteIndex(0)}
-                        className={cn(
-                          " cursor-pointer   whitespace-nowrap min-w-20 flex justify-center items-center px-3",
-                          activeSecondRouteIndex === 0
-                            ? "font-bold uppercase text-[#fdbd5b]"
-                            : "text-white"
-                        )}
-                      >
-                        Special
-                      </div>
-                {keywordsArray?.length > 0 &&
-                  keywordsArray.map((item, index) => {
-                    return (
-                      <div
-                        onClick={() => setActiveSecondRouteIndex(item.id)}
-                        key={index}
-                        className={cn(
-                          " cursor-pointer   whitespace-nowrap min-w-20 flex justify-center items-center px-3",
-                          activeSecondRouteIndex === item.id
-                            ? "font-bold uppercase text-[#fdbd5b]"
-                            : "text-white"
-                        )}
-                      >
-                        {item.name}
-                      </div>
-                    );
-                  })}
-              </div>
-            )}
           </div>
           <div className="w-full h-full overflow-y-scroll">
-          {renderContent()}
-
+            {renderContent()}
           </div>
           <div className="mb-14" />
         </>

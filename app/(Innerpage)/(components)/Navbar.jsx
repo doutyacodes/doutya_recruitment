@@ -35,11 +35,11 @@ const Navbar = () => {
   const router = useRouter();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetOpen2, setSheetOpen2] = useState(false);
-  useEffect(() => {
-    if ( !pathname.includes("coming-soon") && !pathname.includes("coming-soon")) {
-      router.replace("/coming-soon");
-    }
-  }, [user, pathname, router]);
+  // useEffect(() => {
+  //   if ( !pathname.includes("coming-soon") && !pathname.includes("coming-soon")) {
+  //     router.replace("/coming-soon");
+  //   }
+  // }, [user, pathname, router]);
 
   return (
     <nav className="w-full p-4 bg-white">
