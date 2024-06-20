@@ -110,7 +110,7 @@ const Navbar = () => {
               Home
             </p>
           </Link>
-          <Link
+          {/* <Link
             prefetch={false}
             href={"/analytics"}
             className=" w-1/3 text-sm flex flex-col items-center justify-center"
@@ -133,7 +133,7 @@ const Navbar = () => {
             >
               Analytics
             </p>
-          </Link>
+          </Link> */}
           <Link
             prefetch={false}
             href={"/results"}

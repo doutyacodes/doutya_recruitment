@@ -489,7 +489,7 @@ const PageDetails = ({ params }) => {
               </Link>
             ) : (
               <div
-                onClick={() => setShowDialog(true)}
+                // onClick={() => setShowDialog(true)}
                 className="w-full text-center cursor-pointer"
               >
                 Apply
