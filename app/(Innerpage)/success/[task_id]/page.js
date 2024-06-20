@@ -14,6 +14,7 @@ const Success = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   const [starsDetails, setStarsDetails] = useState(0);
   const [percentageDetails, setpercentageDetails] = useState(0);
+  const [types, setTypes] = useState(null);
   const [routes, setRoutes] = useState("home");
   const router = useRouter();
 
@@ -38,6 +39,9 @@ const Success = ({ params }) => {
         }
         if (response.data.data.total_percent) {
           setpercentageDetails(response.data.data.total_percent);
+        }
+        if (response.data.data.types) {
+          setTypes(response.data.data.types);
         }
       } catch (error) {
         console.error(error);
@@ -97,19 +101,21 @@ const Success = ({ params }) => {
             </p>
           </div>
         )}
-        <p className=" text-black/80 p-3">
-          {percentageDetails > 34.99 ? (
-            <>
-              Congratulations! You have successfully completed the first round
-              and are eligible for the next round.
-            </>
-          ) : (
-            <>
-              Unfortunately, you did not complete the first round. You are
-              ineligible for the next round.
-            </>
-          )}
-        </p>
+        {types && types != "compatibility" && (
+          <p className=" text-black/80 p-3">
+            {percentageDetails > 34.99 ? (
+              <>
+                Congratulations! You have successfully completed the first round
+                and are eligible for the next round.
+              </>
+            ) : (
+              <>
+                Unfortunately, you did not complete the first round. You are
+                ineligible for the next round.
+              </>
+            )}
+          </p>
+        )}
 
         <Link prefetch={false} href={`/${routes}`}>
           <Button className="bg-green-600 text-lg">Go to Home</Button>

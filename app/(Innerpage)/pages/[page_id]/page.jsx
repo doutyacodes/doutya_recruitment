@@ -39,6 +39,7 @@ const PageDetails = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [keywordsArray, setKeywordsArray] = useState([]);
   const [keywordsList, setKeywordsList] = useState([]);
+  const [compatibiltyTest, setCompatibiltyTest] = useState([]);
 
   const [activeRouteIndex, setActiveRouteIndex] = useState("second");
   const [activeThirdIndex, setActiveThirdIndex] = useState(null);
@@ -234,7 +235,26 @@ const PageDetails = () => {
     visitForm();
     fetchData();
   }, [page_id, user]);
-  
+  useEffect(() => {
+    const fetchCompilibility = async () => {
+      if (user) {
+        try {
+          const response = await axios.get(
+            `${baseURL}/get-user-compatibility.php?user_id=${
+              user?.id ? user.id : null
+            }&page_id=1`
+          );
+          console.log(response.data);
+          if (response.data.success) {
+            setCompatibiltyTest(response.data.data);
+          }
+        } catch (error) {
+          console.error("Error while fetching compatibility");
+        }
+      }
+    };
+    fetchCompilibility();
+  }, [user,page_id]);
   useEffect(() => {
     const fetchQuiz = async () => {
       if (
@@ -350,7 +370,13 @@ const PageDetails = () => {
     return (
       <div className="w-full  h-full  p-1 space-y-4">
         <div className="w-full p-3 space-y-5">
-          
+        <div className="w-full ">
+          <div onClick={()=>{
+            compatibiltyTest?.completed ? console.log("Clicked"): user &&
+            router.push("/quiz-lobby/129")}} className="text-white text-center font-bold text-xl bg-gradient-to-r from-[#0a4baf] to-[#c46ae4] py-5 shadow-md rounded-lg cursor-pointer">
+            {!compatibiltyTest?.completed ?(<h5>TAKE THE COMPATIBILITY TEST</h5>):(<h5>The Compatibility Percentage : {compatibiltyTest?.compatibility}% </h5>)}
+          </div>
+        </div>
           <div className="w-full grid-cols-12 gap-3 grid text-black">
             {/* {keywordsList?.length > 0 &&
               keywordsList.map((item) => {

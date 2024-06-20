@@ -118,8 +118,8 @@ const LobbyScreen = ({ params }) => {
         seconds
       );
 
-      console.log("Current time", currentTime);
-      console.log("Start time", quizStartTime);
+      // console.log("Current time", currentTime);
+      // console.log("Start time", quizStartTime);
 
       const differenceInMilliseconds = quizStartTime - currentTime;
       const differenceInSeconds = Math.floor(differenceInMilliseconds / 1000);

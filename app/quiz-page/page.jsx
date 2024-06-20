@@ -70,12 +70,10 @@ const QuizPage = () => {
       const response = await axios.get(
         `${baseURL}/get-quiz-completed.php?user_id=${user?.id}&task_id=${task_id}`
       );
-      console.log(response.data)
+      // console.log(response.data)
       if (response.data.success) {
         router.replace("/home");
-      } else {
-        console.error("Failed to fetch quiz");
-      }
+      } 
     } catch (error) {
       console.error(error);
     }
@@ -86,7 +84,7 @@ const QuizPage = () => {
       setIsLoading(true);
       const serializedQuizDatas = localStorage.getItem("quizDatas");
       const quizDatas2 = JSON.parse(serializedQuizDatas);
-      console.log(quizDatas2)
+      // console.log(quizDatas2)
       if (!quizDatas2 || !user) {
         router.replace("/home");
       } else {
@@ -111,10 +109,10 @@ const QuizPage = () => {
         );
         setQuizDatas(quizDatas2);
         const newDataQuestion = questions[currentIndex];
-        // console.log(newDataQuestion)
+        console.log(newDataQuestion)
         setDataQuestion(newDataQuestion);
         setCount_question(quizDatas2.dataQuiz.count_question);
-        if (newDataQuestion.quiz_type !== "psychological" || dataQuestion?.page_type != "language") {
+        if (newDataQuestion.quiz_type !== "psychological" &&  dataQuestion?.page_type != "language" ) {
           setTimer(newDataQuestion.timer);
         }
       }
@@ -278,7 +276,7 @@ const QuizPage = () => {
       )}
       <div style={{ margin: "0 auto", width: "80%", textAlign: "center" }}>
         <div className="w-full justify-center items-center flex">
-          {(dataQuestion?.quiz_type !== "psychological" || (dataQuestion?.page_type != "language" && dataQuestion?.page_type != "compatibility")) && (
+          {(dataQuestion?.quiz_type !== "psychological" && dataQuestion?.page_type != "language" ) && (
             <div
               style={{ position: "relative", marginBottom: "20px" }}
               className="w-16 h-16"
