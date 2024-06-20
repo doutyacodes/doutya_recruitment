@@ -68,7 +68,7 @@ const FollowPage = () => {
 
   const dispatch = useAppDispatch();
   const continueToNextScreen = async () => {
-    if (selectedEvents.length >= 2) {
+    if (selectedEvents.length >= 1) {
       const selectedEventsWithImages = selectedEvents.map((pageId) =>
         pages.find((page) => page.id === pageId)
       );
@@ -91,7 +91,7 @@ const FollowPage = () => {
         alert("An error occurred. Please try again later.");
       }
     } else {
-      alert("Please follow at least 2 pages to continue.");
+      alert("Please follow at least 1 page to continue.");
     }
   };
   const truncateText = (text, maxLength) => {
