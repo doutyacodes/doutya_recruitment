@@ -42,7 +42,7 @@ const Navbar = () => {
   // }, [user, pathname, router]);
 
   return (
-    <nav className="w-full p-4 bg-white">
+    <nav className="w-full p-3 bg-white">
       <ul className="w-full flex justify-between items-center">
         <li>
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
@@ -58,8 +58,8 @@ const Navbar = () => {
           <Image
             src="/assets/images/doutya4.png"
             alt="logo"
-            width={150}
-            height={150}
+            width={120}
+            height={60}
             className=" rounded-md"
           />
         </li>
@@ -85,7 +85,7 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="  fixed py-1 px-3  w-full left-0 bottom-0 z-50 ">
-        <div className=" px-3 py-1 max-w-[800px] rounded-full  bg-[#c12130]/95 border mx-auto relative flex w-full justify-around items-center">
+        <div className=" px-3 py-1 max-w-[800px] rounded-full  bg-[#24975c]/95 border mx-auto relative flex w-full justify-around items-center">
           <Link
             prefetch={false}
             href={"/home"}

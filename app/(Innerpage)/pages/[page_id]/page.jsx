@@ -373,7 +373,7 @@ const PageDetails = () => {
         <div className="w-full ">
           <div onClick={()=>{
             compatibiltyTest?.completed ? console.log("Clicked"): user &&
-            router.push("/quiz-lobby/129")}} className="text-white text-center font-bold text-xl bg-gradient-to-r from-[#0a4baf] to-[#c46ae4] py-5 shadow-md rounded-lg cursor-pointer">
+            router.push("/quiz-lobby/129")}} className="text-white text-center font-bold text-lg bg-gradient-to-r from-[#0a4baf] to-[#c46ae4] py-5 shadow-md rounded-lg cursor-pointer">
             {!compatibiltyTest?.completed ?(<h5>TAKE THE COMPATIBILITY TEST</h5>):(<h5>The Compatibility Percentage : {compatibiltyTest?.compatibility}% </h5>)}
           </div>
         </div>
@@ -432,7 +432,7 @@ const PageDetails = () => {
                     </p>
                   </div>
                 </div>
-                <div
+                {/* <div
                   onClick={() => setActiveThirdIndex("management")}
                   className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative cursor-pointer"
                 >
@@ -449,7 +449,7 @@ const PageDetails = () => {
                       Management
                     </p>
                   </div>
-                </div>
+                </div> */}
                 {/* <Link
                   href={"/analytics"}
                   className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative "
@@ -681,7 +681,7 @@ const PageDetails = () => {
   };
   return (
     <div className="max-w-[800px]  min-h-screen bg-white border  w-full mx-auto ">
-      <div className="w-full p-1 bg-[#c12130]" />
+      <div className="w-full p-[2.5px] bg-[#24975c]" />
       {isLoading ? (
         <div className=" w-full h-full flex flex-1 justify-center items-center ">
           <div role="status">
@@ -754,7 +754,7 @@ const PageDetails = () => {
               </div>
             </div>
 
-            <div className=" flex justify-around w-full  p-3 bg-[#c12130] items-center mt-3">
+            <div className=" flex justify-around w-full  p-3 bg-[#24975c] items-center mt-3">
               {routes.map((route, index) => {
                 return (
                   <div

@@ -24,30 +24,38 @@ const ChallengeBuzzWorld = ({
 
   return (
     <div
-      className={cn("shadow-xl border rounded-md max-md:w-76 md:min-w-96 bg-white h-full")}
+      className={cn(
+        "shadow-xl text-xs border rounded-md max-md:w-76 md:min-w-96 bg-white "
+      )}
     >
-      <Link prefetch={false} 
+      <Link
+        prefetch={false}
         href={`/pages/${item.page_id}`}
-        className="p-3 flex gap-2 items-center"
+        className="px-3 py-1 flex gap-2 items-center"
       >
-        <div className=" rounded-full w-10 h-10 relative">
+        <div className=" rounded-full w-10 h-10 relative border">
           <Image
             src={baseImgURL + item.icon}
             fill
             alt="Profile Image"
-            className="rounded-full"
+            className="rounded-full border"
           />
         </div>
 
         <div>
           <p>
-            <span className="font-bold">{item.page_title}</span> has added
-            {" "}{item.page_type=="internship" ? `an internship` : item.page_type=="job" ? `a job` : `a quiz`}
+            <span className="font-bold text-xs">{item.page_title}</span> has added{" "}
+            {item.page_type == "internship"
+              ? `an internship`
+              : item.page_type == "job"
+              ? `a job`
+              : `a quiz`}
           </p>
-          <p className="text-sm"> {formattedDate}</p>
+          {/* <p className="text-xs"> {formattedDate}</p> */}
         </div>
       </Link>
-      <Link prefetch={false} 
+      <Link
+        prefetch={false}
         href={
           inTodo
             ? user
@@ -55,25 +63,21 @@ const ChallengeBuzzWorld = ({
               : `/challenge/${item.challenge_id}`
             : `/challenge/${item.challenge_id}`
         }
-        className="p-3 space-y-3 rounded-md  gap-3  min-w-72 "
+        className=" rounded-md  min-w-72 "
       >
-        <div
-          className={" px-3"}
-        >
-        <div
-          className={" relative w-full min-h-56 "}
-        >
-          <Image
-            src={baseImgURL + item.image}
-            fill
-            alt="Profile Image"
-            className="rounded-lg object-cover"
-          />
+        <div className={" px-3 py-1"}>
+          <div className={" relative w-full h-20 "}>
+            <Image
+              src={baseImgURL + item.image}
+              fill
+              alt="Profile Image"
+              className="rounded-lg object-cover"
+            />
+          </div>
         </div>
-        </div>
-        <div className="w-full p-3">
+        <div className="w-full px-3">
           <div className="w-full flex justify-between items-center">
-            <p className={cn("font-bold whitespace-nowrap truncate")}>
+            <p className={cn("font-bold text-[16px] my-1 whitespace-nowrap truncate")}>
               {slicedTitle}
             </p>
             {item?.success && (
@@ -83,7 +87,7 @@ const ChallengeBuzzWorld = ({
                   item.success == "yes" ? "bg-green-600" : "bg-red-600"
                 )}
               >
-                <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+                <p className="text-white text-xs font-bold px-7 py-1 text-center flex">
                   {item.success == "yes" ? "Success" : "Failed"}
                 </p>
               </div>
@@ -92,19 +96,19 @@ const ChallengeBuzzWorld = ({
           {<div className="h-[1px] bg-slate-300 my-1 w-full" />}
           <div className="w-full flex items-center justify-between">
             <div>
-              <p className="text-base font-light">Deadline</p>
-              <p className="text-base font-semibold text-slate-600">
+              <p className="text-xs font-light">Deadline</p>
+              <p className="text-xs font-extrabold text-slate-600">
                 {formattedEndDate}
               </p>
             </div>
             {item.stars && (
               <div className="w-26 pl-3">
-                <p className="text-base font-light text-center">Stars</p>
+                <p className="text-xs font-light text-center">Stars</p>
                 <div className="flex gap-1">
                   {Array(parseInt(item.stars))
                     .fill(0)
                     .map((_, index) => (
-                      <FaStar key={index} color="gold" size={12} />
+                      <FaStar key={index} color="gold" size={10} />
                     ))}
                 </div>
               </div>

@@ -22,7 +22,7 @@ const ChallengeHomeCard = ({
   //   : item.title
   // : "";
   const user = useAppSelector((state) => state.auth.user);
-// console.log(item)
+  // console.log(item)
   return (
     <Link
       prefetch={false}
@@ -67,33 +67,41 @@ const ChallengeHomeCard = ({
                   </p>
                 </div>
                 {item.page_type && item.page_type !== "tests" ? (
-  <>
-    {item?.eligible && user && item.eligible === "yes" ? (
-      <div className="w-10 h-10 relative">
-        <Image src="/assets/images/e-green.png" layout="fill" alt="eligible"/>
-      </div>
-    ) : (
-      <div className="w-10 h-10 relative">
-        <Image src="/assets/images/e-red.png" layout="fill" alt="not eligible"/>
-      </div>
-    )}
-  </>
-) : (
-  <>
-    {item.stars && (
-      <div className="w-26">
-        <p className="text-xs font-light text-center">Stars</p>
-        <div className="flex gap-1">
-          {Array(parseInt(item.stars, 10))
-            .fill(0)
-            .map((_, index) => (
-              <FaStar key={index} color="gold" size={12} />
-            ))}
-        </div>
-      </div>
-    )}
-  </>
-)}
+                  <>
+                    {item?.eligible && user && item.eligible === "yes" ? (
+                      <div className="w-10 h-10 relative">
+                        <Image
+                          src="/assets/images/e-green.png"
+                          layout="fill"
+                          alt="eligible"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-10 h-10 relative">
+                        <Image
+                          src="/assets/images/e-red.png"
+                          layout="fill"
+                          alt="not eligible"
+                        />
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {item.stars && (
+                      <div className="w-26">
+                        <p className="text-xs font-light text-center">Stars</p>
+                        <div className="flex gap-1">
+                          {Array(parseInt(item.stars, 10))
+                            .fill(0)
+                            .map((_, index) => (
+                              <FaStar key={index} color="gold" size={12} />
+                            ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
