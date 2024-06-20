@@ -73,13 +73,12 @@ const BuzzwallPage = () => {
     }
   };
   const fetchUserPages = async () => {
-    if (user) {
       try {
         // Only fetch rewards if user data is available
         const response = await axios.get(
           `${baseURL}/get-all-user-pages.php?user_id=${user ? user.id : null}`
         );
-
+console.log(response.data)
         if (response.data.success) {
           setUserPages(response.data.data);
         }
@@ -88,7 +87,7 @@ const BuzzwallPage = () => {
       } finally {
         setIsLoading(false);
       }
-    }
+    
   };
   const fetchAdd = async () => {
     try {
@@ -114,7 +113,7 @@ const BuzzwallPage = () => {
           {user && (
             <p className="font-extrabold text-base py-3 px-3"> Welcome {user.name},</p>
           )}
-          {user && userPages ? (
+          { userPages && (
             <div className="w-full">
               <p className="font-extrabold text-sm px-3">Companies</p>
               <div className="w-full overflow-x-scroll flex gap-5 mb-2 mt-1 bg-gradient-to-l from-[#cfece9] to-[#e3f7de] p-3">
@@ -160,22 +159,8 @@ const BuzzwallPage = () => {
                 </div>
               </div>
             </div>
-          ) : (
-            adDetails && (
-              <Link prefetch={false} href={adDetails.link} className="w-full">
-                <div className="w-full relative object-contain md:object-cover min-h-24 md:h-40 my-4 rounded-md">
-                  {adDetails.image && (
-                    <Image
-                      alt="ad-banner"
-                      src={baseImgURL + adDetails.image}
-                      fill
-                      className="rounded-md"
-                    />
-                  )}
-                </div>
-              </Link>
-            )
-          )}
+          ) 
+          }
         </div>
         <div className="w-full ">
           <div>
