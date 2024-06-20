@@ -31,7 +31,7 @@ const PageDetails = ({ params }) => {
   const [showDialog, setShowDialog] = useState(false);
   const [compatibiltyTest, setCompatibiltyTest] = useState([]);
 
-  const [toggleNav, setToggleNav] = useState("Rounds");
+  const [toggleNav, setToggleNav] = useState("Description");
   const [challenge, setChallenge] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,6 +61,10 @@ const PageDetails = ({ params }) => {
             );
             setIsEligible(isUserEligible);
           }
+          if(response.data?.page_type =="job")
+            {
+              setToggleNav("Rounds")
+            }
           // console.log(response.data.eligibility);
           // console.log(response.data);
         } else {
@@ -261,7 +265,7 @@ const PageDetails = ({ params }) => {
                   : "bg-gradient-to-r from-red-500 to-red-700"
               )}
             >
-              <p className="text-center font-bold text-xl text-white underline uppercase">
+              <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
                 Compatibility
               </p>
               <p className="text-center font-bold text-base text-white ">
@@ -334,7 +338,7 @@ const PageDetails = ({ params }) => {
               <p className="text-center font-bold text-xl text-white underline uppercase"></p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                Start
+                Final Round
               </p>
             </div>
           </div>
@@ -409,7 +413,9 @@ const PageDetails = ({ params }) => {
             <div></div>
           </div>
           <div className="flex justify-between items-center shadow rounded-md">
-            <p
+           {
+            challenge.page_type =="job" && (
+              <p
               className={cn(
                 "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
                 toggleNav == "Rounds" && "border-b border-black"
@@ -418,6 +424,8 @@ const PageDetails = ({ params }) => {
             >
               Rounds
             </p>
+            )
+           }
             <p
               className={cn(
                 "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",

@@ -68,7 +68,7 @@ const BuzzwallPage = () => {
   const fetchAdd = async () => {
     try {
       const response = await axios.get(`${baseURL}/get-ad.php`);
-      console.log(response.data.data);
+      // console.log(response.data.data);
       if (response.data.data) {
         setAdDetails(response.data.data);
       }

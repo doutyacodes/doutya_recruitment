@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { FaStar } from "react-icons/fa6";
 
 const RoundSection = ({ item, index, color,timerValue }) => {
   const [bgColor, setBgColor] = useState("bg-transparent");
@@ -26,13 +27,14 @@ const RoundSection = ({ item, index, color,timerValue }) => {
           bgColor
         )}
       >
-        <p className="text-center font-bold text-xl text-white underline uppercase">
+        <p className="text-center  tracking-wider font-bold text-xl text-white underline uppercase">
           {item.title}
         </p>
         <p className="text-center font-bold text-base text-white">
           {item.keyword}
         </p>
         <div className="flex gap-3 items-center">
+        <FaStar color="gold" size={12} />
           <p className="text-center font-semibold text-sm text-white">
             {item.stars} {item.keyword} stars are required.
           </p>

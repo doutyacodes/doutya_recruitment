@@ -70,6 +70,7 @@ const QuizPage = () => {
       const response = await axios.get(
         `${baseURL}/get-quiz-completed.php?user_id=${user?.id}&task_id=${task_id}`
       );
+      console.log(response.data)
       if (response.data.success) {
         router.replace("/home");
       } else {
@@ -85,6 +86,7 @@ const QuizPage = () => {
       setIsLoading(true);
       const serializedQuizDatas = localStorage.getItem("quizDatas");
       const quizDatas2 = JSON.parse(serializedQuizDatas);
+      console.log(quizDatas2)
       if (!quizDatas2 || !user) {
         router.replace("/home");
       } else {
@@ -219,7 +221,7 @@ const QuizPage = () => {
           },
         }
       );
-      // console.log(response.data)
+      console.log(response.data)
       // console.log(question_id)
 
       if (response.status === 200) {
@@ -276,7 +278,7 @@ const QuizPage = () => {
       )}
       <div style={{ margin: "0 auto", width: "80%", textAlign: "center" }}>
         <div className="w-full justify-center items-center flex">
-          {(dataQuestion?.quiz_type !== "psychological" || dataQuestion?.page_type != "language") && (
+          {(dataQuestion?.quiz_type !== "psychological" || (dataQuestion?.page_type != "language" && dataQuestion?.page_type != "compatibility")) && (
             <div
               style={{ position: "relative", marginBottom: "20px" }}
               className="w-16 h-16"

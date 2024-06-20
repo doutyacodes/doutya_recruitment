@@ -424,7 +424,7 @@ const PageDetails = () => {
                     </p>
                   </div>
                 </div>
-                <Link
+                {/* <Link
                   href={"/analytics"}
                   className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative "
                 >
@@ -441,7 +441,7 @@ const PageDetails = () => {
                       Language
                     </p>
                   </div>
-                </Link>
+                </Link> */}
                 <div
                   onClick={() => setActiveThirdIndex("culture")}
                   className="col-span-6 md:h-72 min-h-40 rounded-md shadow-lg relative cursor-pointer"
