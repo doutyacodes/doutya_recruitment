@@ -299,7 +299,7 @@ const PageDetails = ({ params }) => {
             );
           })}
           <div className="w-full flex flex-col gap-3 justify-center items-center">
-          <p className="font-bold ">Round {challenge?.eligibility.length > 0  ? challenge?.eligibility.length + 2: 2}</p>
+          <p className="font-bold ">Round {challenge?.eligibility?.length > 0  ? challenge?.eligibility?.length + 2: 2}</p>
 
           <div
               onClick={() => {
