@@ -112,7 +112,7 @@ const FollowPage = () => {
           />
         </div>
         <div className="mb-5">
-          <p className="font-bold text-lg">Follow atleast 2 pages to continue</p>
+          <p className="font-bold text-lg">Follow atleast 1 page to continue</p>
         </div>
         {/* <div className=" p-3 bg-white shadow border border-s-slate-100 w-full flex justify-between items-center rounded-md cursor-text">
           <p className="text-sm">Search...</p>
