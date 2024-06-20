@@ -23,16 +23,20 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import DescriptionText from "../../(components)/DescriptionText";
+import RoundSection from "../../(components)/RoundSection";
+import { useRouter } from "next/navigation";
 const PageDetails = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 24 };
   const [showDialog, setShowDialog] = useState(false);
+  const [compatibiltyTest, setCompatibiltyTest] = useState([]);
 
-  const [toggleNav, setToggleNav] = useState("Description");
+  const [toggleNav, setToggleNav] = useState("Rounds");
   const [challenge, setChallenge] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEligible, setIsEligible] = useState(true);
+  const router = useRouter();
 
   const challenge_id = params.challenge_id;
   useEffect(() => {
@@ -57,7 +61,7 @@ const PageDetails = ({ params }) => {
             );
             setIsEligible(isUserEligible);
           }
-          // console.log(response.data);
+          // console.log(response.data.eligibility);
           // console.log(response.data);
         } else {
           console.error("Failed to fetch challenges");
@@ -73,6 +77,27 @@ const PageDetails = ({ params }) => {
     fetchData();
     // console.log(challenge.task_id)
   }, []);
+
+  useEffect(() => {
+    const fetchCompilibility = async () => {
+      if (user) {
+        try {
+          const response = await axios.get(
+            `${baseURL}/get-user-compatibility.php?user_id=${
+              user?.id ? user.id : null
+            }&page_id=1`
+          );
+          console.log(response.data);
+          if (response.data.success) {
+            setCompatibiltyTest(response.data.data);
+          }
+        } catch (error) {
+          console.error("Error while fetching compatibility");
+        }
+      }
+    };
+    fetchCompilibility();
+  }, [user, challenge_id]);
   const fetchData = async () => {
     try {
       setIsLoading(true); // Set isLoading to true before fetching data
@@ -198,6 +223,115 @@ const PageDetails = ({ params }) => {
       </div>
     );
   };
+
+  const RoundsRoute = () => {
+    return (
+      <div className=" mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4 mb-9">
+        <div className=" w-full flex items-center flex-col justify-center">
+          <div className=" w-24 h-24  rounded-md relative">
+            {challenge.image && (
+              <Image
+                src={baseImgURL + challenge.image}
+                fill
+                alt="image"
+                objectFit="cover"
+                className="rounded-md"
+              />
+            )}
+          </div>
+          <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
+        </div>
+        <div className="w-full flex flex-col gap-5 mt-5">
+          <div className="w-full flex flex-col gap-3 justify-center items-center">
+            <p className="font-bold ">Round 1</p>
+            <div
+              onClick={() => {
+                !compatibiltyTest.completed &&
+                  router.push(`/quiz-lobby/${compatibiltyTest.task_id}`);
+              }}
+              className={cn(
+                "p-3 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+                !compatibiltyTest.completed
+                  ? "from-orange-500 to-orange-700"
+                  : compatibiltyTest.compatibility >= 50
+                  ? "from-green-500 to-green-700"
+                  : "from-red-500 to-red-700"
+              )}
+            >
+              <p className="text-center font-bold text-xl text-white underline uppercase">
+                Compatibility
+              </p>
+              <p className="text-center font-bold text-base text-white ">
+                {compatibiltyTest?.completed
+                  ? compatibiltyTest.compatibility
+                  : 0}
+              </p>
+              <p className="text-center font-semibold text-sm text-white">
+                Required compatibility -{" "}
+                {challenge.page_type == "job" ? "60" : "50"}%
+              </p>
+            </div>
+          </div>
+          {challenge?.eligibility?.map((item, index) => {
+            let color;
+            if (
+              !compatibiltyTest.completed ||
+              (compatibiltyTest.completed &&
+              compatibiltyTest?.compatibility >= challenge.page_type == "job"
+                ? 60
+                : 50)
+            ) {
+              color = "bg-gray-400"; // If compatibility test not completed, stay gray
+            } else if (item.isEligible) {
+              color = "bg-green-500";
+            } else if (index === 0) {
+              color = "bg-orange-500";
+            } else {
+              color = "bg-gray-400";
+            }
+            return (
+              <RoundSection
+                key={index}
+                item={item}
+                index={index}
+                color={color}
+              />
+            );
+          })}
+          <div className="w-full flex flex-col gap-3 justify-center items-center">
+          <p className="font-bold ">Round {challenge?.eligibility.length > 0  ? challenge?.eligibility.length + 2: 2}</p>
+
+          <div
+              onClick={() => {
+                compatibiltyTest.completed && compatibiltyTest?.compatibility >= challenge.page_type == "job"
+                ? 60
+                : 50 && isEligible &&
+                  router.push(`/quiz-lobby/${challenge.task_id}`);
+              }}
+              className={cn(
+                "p-3 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+                compatibiltyTest.completed && compatibiltyTest?.compatibility >= challenge.page_type == "job"
+                ? 60
+                : 50 && isEligible 
+                ? "from-orange-500 to-orange-700"
+                
+                : "from-gray-500 to-gray-400"
+              )}
+            >
+              <p className="text-center font-bold text-xl text-white underline uppercase">
+              </p>
+              <p className="text-center font-bold text-base text-white ">
+                
+              </p>
+              <p className="text-center font-semibold text-sm text-white">
+                Start
+              </p>
+            </div>
+            </div>
+        </div>
+      </div>
+    );
+  };
   const RenderData = () => {
     switch (toggleNav) {
       case "Description":
@@ -210,6 +344,8 @@ const PageDetails = ({ params }) => {
         return <EligibilityRoute />;
       case "Stars":
         return <StarsRoute />;
+      case "Rounds":
+        return <RoundsRoute />;
       default:
         return <DescriptionRoute />;
     }
@@ -217,6 +353,7 @@ const PageDetails = ({ params }) => {
   const handleToggle = (value) => {
     setToggleNav(value);
   };
+
   return (
     <>
       {isLoading ? (
@@ -265,6 +402,15 @@ const PageDetails = ({ params }) => {
             <p
               className={cn(
                 "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+                toggleNav == "Rounds" && "border-b border-black"
+              )}
+              onClick={() => handleToggle("Rounds")}
+            >
+              Rounds
+            </p>
+            <p
+              className={cn(
+                "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
                 toggleNav == "Description" && "border-b border-black"
               )}
               onClick={() => handleToggle("Description")}
@@ -280,29 +426,31 @@ const PageDetails = ({ params }) => {
             >
               Rules
             </p>
-            {(challenge.page_type != "tests" && challenge.page_type != "language") && (
-              <>
-                <p
-                  className={cn(
-                    "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
-                    toggleNav == "Salary" && "border-b border-black"
-                  )}
-                  onClick={() => handleToggle("Salary")}
-                >
-                  {challenge.page_type == "job" ? "Salary" : "Stipend"}{" "}
-                </p>
-                <p
-                  className={cn(
-                    "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
-                    toggleNav == "Eligibility" && "border-b border-black"
-                  )}
-                  onClick={() => handleToggle("Eligibility")}
-                >
-                  Eligibility
-                </p>
-              </>
-            )}
-            {(challenge.page_type == "tests" || challenge.page_type == "language") && (
+            {challenge.page_type != "tests" &&
+              challenge.page_type != "language" && (
+                <>
+                  <p
+                    className={cn(
+                      "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+                      toggleNav == "Salary" && "border-b border-black"
+                    )}
+                    onClick={() => handleToggle("Salary")}
+                  >
+                    {challenge.page_type == "job" ? "Salary" : "Stipend"}{" "}
+                  </p>
+                  <p
+                    className={cn(
+                      "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+                      toggleNav == "Eligibility" && "border-b border-black"
+                    )}
+                    onClick={() => handleToggle("Eligibility")}
+                  >
+                    Eligibility
+                  </p>
+                </>
+              )}
+            {(challenge.page_type == "tests" ||
+              challenge.page_type == "language") && (
               <>
                 <p
                   className={cn(
@@ -322,15 +470,22 @@ const PageDetails = ({ params }) => {
               <Link
                 prefetch={false}
                 href={
-                  user && (challenge.page_type != "tests" ||challenge.page_type != "language")
+                  user &&
+                  (challenge.page_type != "tests" ||
+                    challenge.page_type != "language")
                     ? `/rounds/${challenge.challenge_id}`
-                    : user && (challenge.page_type != "tests" ||challenge.page_type != "language")
+                    : user &&
+                      (challenge.page_type != "tests" ||
+                        challenge.page_type != "language")
                     ? `/quiz-lobby/${challenge.task_id}`
                     : "/signup"
                 }
                 className="w-full text-lg"
               >
-                {(challenge.page_type != "tests" ||challenge.page_type != "language")  ? "Start" : "Apply"}
+                {challenge.page_type != "tests" ||
+                challenge.page_type != "language"
+                  ? "Start"
+                  : "Apply"}
               </Link>
             ) : (
               <div
