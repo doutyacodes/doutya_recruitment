@@ -1,10 +1,20 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-const RoundSection = ({ item, index, color }) => {
+const RoundSection = ({ item, index, color,timerValue }) => {
+  const [bgColor, setBgColor] = useState("bg-transparent");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setBgColor(color);
+    }, timerValue);
+
+    return () => clearTimeout(timer);
+  }, [color]);
+
   const isEligible = item.stars <= item.user_stars;
 
   return (
@@ -12,9 +22,9 @@ const RoundSection = ({ item, index, color }) => {
       <p className="font-bold">Round {index + 2}</p>
       <div
         className={cn(
-          "p-3 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",` ${color}`
+          "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+          bgColor
         )}
-      
       >
         <p className="text-center font-bold text-xl text-white underline uppercase">
           {item.title}

@@ -246,16 +246,19 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">Round 1</p>
             <div
               onClick={() => {
-                !compatibiltyTest.completed &&
+                user &&
+                  !compatibiltyTest.completed &&
                   router.push(`/quiz-lobby/${compatibiltyTest.task_id}`);
               }}
               className={cn(
-                "p-3 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                !compatibiltyTest.completed
-                  ? "from-orange-500 to-orange-700"
+                "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+                !user
+                  ? "bg-gray-500"
+                  : !compatibiltyTest.completed
+                  ? "bg-gradient-to-r from-orange-500 to-orange-700"
                   : compatibiltyTest.compatibility >= 50
-                  ? "from-green-500 to-green-700"
-                  : "from-red-500 to-red-700"
+                  ? "bg-gradient-to-r from-green-500 to-green-700"
+                  : "bg-gradient-to-r from-red-500 to-red-700"
               )}
             >
               <p className="text-center font-bold text-xl text-white underline uppercase">
@@ -265,6 +268,7 @@ const PageDetails = ({ params }) => {
                 {compatibiltyTest?.completed
                   ? compatibiltyTest.compatibility
                   : 0}
+                %
               </p>
               <p className="text-center font-semibold text-sm text-white">
                 Required compatibility -{" "}
@@ -295,39 +299,45 @@ const PageDetails = ({ params }) => {
                 item={item}
                 index={index}
                 color={color}
+                timerValue={(index + 1) * 1000}
               />
             );
           })}
           <div className="w-full flex flex-col gap-3 justify-center items-center">
-          <p className="font-bold ">Round {challenge?.eligibility?.length > 0  ? challenge?.eligibility?.length + 2: 2}</p>
+            <p className="font-bold ">
+              Round{" "}
+              {challenge?.eligibility?.length > 0
+                ? challenge?.eligibility?.length + 2
+                : 2}
+            </p>
 
-          <div
+            <div
               onClick={() => {
-                compatibiltyTest.completed && compatibiltyTest?.compatibility >= challenge.page_type == "job"
-                ? 60
-                : 50 && isEligible &&
-                  router.push(`/quiz-lobby/${challenge.task_id}`);
+                compatibiltyTest.completed &&
+                compatibiltyTest?.compatibility >= challenge.page_type == "job"
+                  ? 60
+                  : 50 &&
+                    isEligible &&
+                    router.push(`/quiz-lobby/${challenge.task_id}`);
               }}
               className={cn(
-                "p-3 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                compatibiltyTest.completed && compatibiltyTest?.compatibility >= challenge.page_type == "job"
-                ? 60
-                : 50 && isEligible 
-                ? "from-orange-500 to-orange-700"
-                
-                : "from-gray-500 to-gray-400"
+                "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+                compatibiltyTest.completed &&
+                  compatibiltyTest?.compatibility >= challenge.page_type ==
+                    "job"
+                  ? 60
+                  : 50 && isEligible && user
+                  ? "from-orange-500 to-orange-700"
+                  : "from-gray-500 to-gray-400"
               )}
             >
-              <p className="text-center font-bold text-xl text-white underline uppercase">
-              </p>
-              <p className="text-center font-bold text-base text-white ">
-                
-              </p>
+              <p className="text-center font-bold text-xl text-white underline uppercase"></p>
+              <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
                 Start
               </p>
             </div>
-            </div>
+          </div>
         </div>
       </div>
     );
