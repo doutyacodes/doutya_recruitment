@@ -25,7 +25,7 @@ const ChallengeBuzzWorld = ({
   return (
     <div
       className={cn(
-        "shadow-xl text-xs border rounded-md max-md:w-76 md:min-w-96 bg-white "
+        "shadow-xl text-xs md:text-sm  border rounded-md max-md:w-76 md:min-w-96 bg-white "
       )}
     >
       <Link
@@ -44,14 +44,14 @@ const ChallengeBuzzWorld = ({
 
         <div>
           <p>
-            <span className="font-bold text-xs">{item.page_title}</span> has added{" "}
+            <span className="font-bold text-xs md:text-sm ">{item.page_title}</span> has added{" "}
             {item.page_type == "internship"
               ? `an internship`
               : item.page_type == "job"
               ? `a job`
               : `a quiz`}
           </p>
-          {/* <p className="text-xs"> {formattedDate}</p> */}
+          {/* <p className="text-xs md:text-sm "> {formattedDate}</p> */}
         </div>
       </Link>
       <Link
@@ -66,7 +66,7 @@ const ChallengeBuzzWorld = ({
         className=" rounded-md  min-w-72 "
       >
         <div className={" px-3 py-1"}>
-          <div className={" relative w-full h-20 "}>
+          <div className={" relative w-full h-20 md:h-56 border rounded-md "}>
             <Image
               src={baseImgURL + item.image}
               fill
@@ -87,7 +87,7 @@ const ChallengeBuzzWorld = ({
                   item.success == "yes" ? "bg-green-600" : "bg-red-600"
                 )}
               >
-                <p className="text-white text-xs font-bold px-7 py-1 text-center flex">
+                <p className="text-white text-xs md:text-sm  font-bold px-7 py-1 text-center flex">
                   {item.success == "yes" ? "Success" : "Failed"}
                 </p>
               </div>
@@ -96,14 +96,14 @@ const ChallengeBuzzWorld = ({
           {<div className="h-[1px] bg-slate-300 my-1 w-full" />}
           <div className="w-full flex items-center justify-between">
             <div>
-              <p className="text-xs font-light">Deadline</p>
-              <p className="text-xs font-extrabold text-slate-600">
+              <p className="text-xs md:text-sm  font-light">Deadline</p>
+              <p className="text-xs md:text-sm  font-extrabold text-slate-600">
                 {formattedEndDate}
               </p>
             </div>
             {item.stars && (
               <div className="w-26 pl-3">
-                <p className="text-xs font-light text-center">Stars</p>
+                <p className="text-xs md:text-sm  font-light text-center">Stars</p>
                 <div className="flex gap-1">
                   {Array(parseInt(item.stars))
                     .fill(0)
