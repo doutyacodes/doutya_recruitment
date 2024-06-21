@@ -116,7 +116,7 @@ console.log(response.data)
           { userPages && (
             <div className="w-full">
               <p className="font-extrabold text-sm px-3">Companies</p>
-              <div className="w-full overflow-x-scroll flex gap-5 mb-2 mt-1 bg-gradient-to-l from-[#cfece9] to-[#e3f7de] p-3">
+              <div className="w-full overflow-x-scroll flex gap-8 mb-2 mt-1 bg-gradient-to-l from-[#cfece9] to-[#e3f7de] p-3">
                 {userPages?.length > 0 &&
                   userPages.map((item) => (
                     <Link
@@ -124,10 +124,10 @@ console.log(response.data)
                       href={`/pages/${item.page_id}`}
                       key={item.id}
                     >
-                      <div className="w-16 h-16 rounded-2xl border relative bg-white shadow-sm">
+                      <div className="w-[56px] h-[56px] rounded-2xl border relative bg-white shadow-sm">
                         <Image fill src={baseImgURL + item.icon} />
                       </div>
-                      <p className="w-16 font-bold text-center text-[11px]">
+                      <p className="w-[56px] font-bold text-center text-[11px]">
                         {item.title}
                       </p>
                     </Link>
@@ -135,18 +135,18 @@ console.log(response.data)
                 <div>
                   <DropdownMenu>
                     <DropdownMenuTrigger>
-                      <div className="w-16 h-16 rounded-2xl border relative bg-white shadow-sm">
+                      <div className="w-[56px] h-[56px] rounded-2xl border relative bg-white shadow-sm">
                         <Image
                           fill
                           src={`/assets/images/bckgr3.png`}
                           className="rounded-2xl"
                         />
 
-                        <p className="absolute top-0 justify-center flex items-center left-0 w-16 h-16">
+                        <p className="absolute top-0 justify-center flex items-center left-0 w-[56px] h-[56px]">
                           <CirclePlus />
                         </p>
                       </div>
-                      <p className="w-16 font-bold text-center text-[11px] mt-4">
+                      <p className="w-[56px] font-bold text-center text-[11px] mt-4">
                         Add New
                       </p>
                     </DropdownMenuTrigger>
