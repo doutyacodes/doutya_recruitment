@@ -61,7 +61,7 @@ const PageDetails = ({ params }) => {
             );
             setIsEligible(isUserEligible);
           }
-          if(response.data?.page_type =="job")
+          if(response.data?.page_type =="job" || response.data?.page_type =="internship" )
             {
               setToggleNav("Rounds")
             }
@@ -414,7 +414,7 @@ const PageDetails = ({ params }) => {
           </div>
           <div className="flex justify-between items-center shadow rounded-md">
            {
-            challenge.page_type =="job" && (
+           ( challenge.page_type =="job" ||  challenge.page_type =="internship")  && (
               <p
               className={cn(
                 "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
