@@ -265,17 +265,23 @@ const PageDetails = ({ params }) => {
     return (
       <div className=" mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4 mb-9">
         <div className=" w-full flex items-center flex-col justify-center">
-          <div className=" w-24 h-24  rounded-md relative">
-            {challenge.image && (
-              <Image
-                src={baseImgURL + challenge.image}
-                fill
-                alt="image"
-                objectFit="cover"
-                className="rounded-md"
-              />
+        {challenge.keyword ? (
+              <div className="relative md:h-24 md:w-32 w-20 h-16 border flex text-white bg-gradient-to-l from-red-400 to-blue-400 justify-center items-center text-center rounded-md">
+              <p className="text-5xl font-bold ">{challenge.keyword.charAt(0)}</p>
+            </div>
+            ) : (
+              <div className=" w-24 h-24  rounded-md relative">
+                {challenge.image && (
+                  <Image
+                    src={baseImgURL + challenge.image}
+                    fill
+                    alt="image"
+                    objectFit="cover"
+                    className="rounded-md"
+                  />
+                )}
+              </div>
             )}
-          </div>
           <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
         </div>
         <div className="w-full flex flex-col gap-5 mt-5">
@@ -358,48 +364,13 @@ const PageDetails = ({ params }) => {
               />
             );
           })}
+          
           <div className="w-full flex flex-col gap-3 justify-center items-center">
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
                 ? challenge?.eligibility?.length + 2
                 : 2}
-            </p>
-
-            <div
-              onClick={() => {
-                alreadyStarted &&
-                  compatibilityTest?.completed &&
-                  compatibilityTest?.compatibility >=
-                    (challenge.page_type == "job" ? 60 : 50) &&
-                  isEligible &&
-                  router.push(`/quiz-lobby/${challenge.task_id}`);
-              }}
-              className={cn(
-                "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                alreadyStarted &&
-                  compatibilityTest.completed &&
-                  compatibilityTest?.compatibility >=
-                    (challenge.page_type == "job" ? 60 : 50) &&
-                  isEligible &&
-                  user
-                  ? "from-orange-500 to-orange-700"
-                  : "from-gray-500 to-gray-400"
-              )}
-            >
-              <p className="text-center font-bold text-xl text-white underline uppercase"></p>
-              <p className="text-center font-bold text-base text-white "></p>
-              <p className="text-center font-semibold text-sm text-white">
-                {challenge.title}
-              </p>
-            </div>
-          </div>
-          <div className="w-full flex flex-col gap-3 justify-center items-center">
-            <p className="font-bold ">
-              Round{" "}
-              {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 3
-                : 3}
             </p>
 
             <div
@@ -422,8 +393,8 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 4
-                : 4}
+                ? challenge?.eligibility?.length + 3
+                : 3}
             </p>
 
             <div
@@ -444,8 +415,8 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 5
-                : 5}
+                ? challenge?.eligibility?.length + 4
+                : 4}
             </p>
 
             <div
@@ -555,7 +526,7 @@ const PageDetails = ({ params }) => {
             </div>
             <div></div>
           </div>
-          <div className="flex justify-between items-center shadow rounded-md">
+          <div className="flex justify-between items-center shadow rounded-md max-md:overflow-x-scroll max-md:gap-10 bg-white">
             {(challenge.page_type == "job" ||
               challenge.page_type == "internship") && (
               <p

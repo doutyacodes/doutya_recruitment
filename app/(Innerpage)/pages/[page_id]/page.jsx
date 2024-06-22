@@ -452,8 +452,9 @@ const PageDetails = () => {
   const TestRoute = () => {
     return (
       <div className="w-full  h-full   space-y-4">
-        <div className="w-full space-y-5">
+        <div className="w-full space-y-5 md:mt-5">
           <div className="w-full  p-3">
+            {console.log(compatibiltyTest)}
             <div
               onClick={() => {
                 compatibiltyTest?.completed
@@ -466,16 +467,16 @@ const PageDetails = () => {
                 <h1 className="font-bold text-7xl text-center">C</h1>
                 <p className="text-center text-xs font-bold">Compatibility</p>
               </div>
-              <div className="p-3 rounded-full border border-white text-[10px] font-bold text-white uppercase bg-[#01be6a]">
                 {!compatibiltyTest?.completed ? (
+              <div className="p-3 rounded-full border border-white text-[10px] font-bold text-white uppercase bg-[#01be6a]">
                   <h5>TAKE THE COMPATIBILITY TEST</h5>
-                ) : (
-                  <h5>
-                    The Compatibility Percentage :{" "}
-                    {compatibiltyTest?.compatibility}%{" "}
-                  </h5>
-                )}
               </div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                   <p className="text-3xl font-bold">{compatibiltyTest?.compatibility}%</p>
+                   <p className="text-xs font-bold">{compatibiltyTest?.rank}</p>
+                  </div>
+                )}
             </div>
           </div>
           <div className="w-full p-3 min-h-20 bg-white shadow-md border flex justify-center items-center text-center">

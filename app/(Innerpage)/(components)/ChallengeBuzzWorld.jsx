@@ -93,7 +93,7 @@ const ChallengeBuzzWorld = ({
               src={imageSrc}
               fill
               alt="Profile Image"
-              className="rounded-lg object-contain"
+              className="rounded-lg object-cover md:object-contain"
             />
           </div>
         </div>
