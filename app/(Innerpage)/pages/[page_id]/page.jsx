@@ -232,20 +232,21 @@ const PageDetails = () => {
     };
     fetchProgresspublic();
     const fetchCount = async () => {
-        if (activeRouteIndex) {
-          try {
-            const response = await axios.get(
-              `${baseURL}/get-all-jobs-count.php?userId=${user ? user.id : null}&page_id=${page_id}&page_type=${activeRouteIndex}`
-            );
-            // console.log(response.data);
-            if (response.data.success) {
-              setJobCount(response.data.data);
-            }
-          } catch (error) {
-            console.error("Error while fetching count");
+      if (activeRouteIndex) {
+        try {
+          const response = await axios.get(
+            `${baseURL}/get-all-jobs-count.php?userId=${
+              user ? user.id : null
+            }&page_id=${page_id}&page_type=${activeRouteIndex}`
+          );
+          // console.log(response.data);
+          if (response.data.success) {
+            setJobCount(response.data.data);
           }
+        } catch (error) {
+          console.error("Error while fetching count");
         }
-      
+      }
     };
     fetchCount();
   }, [activeRouteIndex, user?.id, page_id, activeThirdIndex]);
@@ -275,10 +276,7 @@ const PageDetails = () => {
   }, [user, page_id]);
   useEffect(() => {
     const fetchQuiz = async () => {
-      if (
-        activeRouteIndex == "fourth" ||
-        activeRouteIndex == "third" 
-      ) {
+      if (activeRouteIndex == "fourth" || activeRouteIndex == "third") {
         if (activeRouteIndex && activeThirdIndex) {
           // console.log(activeRouteIndex);
           try {
@@ -300,7 +298,7 @@ const PageDetails = () => {
       }
     };
     fetchQuiz();
-  }, [activeRouteIndex,activeThirdIndex]);
+  }, [activeRouteIndex, activeThirdIndex]);
 
   const [routes] = useState([
     // { key: "sixth", title: "Posts" },
@@ -314,61 +312,74 @@ const PageDetails = () => {
     return (
       <div className="w-full h-full p-1 space-y-4">
         <div className="w-full grid-cols-12 gap-3 grid text-black">
-            
-            {activeThirdIndex && (
-              <div className="col-span-12 ">
-                <div
-                  onClick={() => setActiveThirdIndex(null)}
-                  className=" flex gap-3 items-center cursor-pointer w-fit"
-                >
-                  <FaAngleLeft size={24} color="black" />
-                  <p className="font-bold">Back</p>
+          {activeThirdIndex && (
+            <div className="col-span-12 ">
+              <div
+                onClick={() => setActiveThirdIndex(null)}
+                className=" flex gap-3 items-center cursor-pointer w-fit"
+              >
+                <FaAngleLeft size={24} color="black" />
+                <p className="font-bold">Back</p>
+              </div>
+            </div>
+          )}
+          {!activeThirdIndex && (
+            <>
+              <div
+                onClick={() => setActiveThirdIndex("software")}
+                className="col-span-12 mt-3 rounded-md flex justify-between items-center shadow-lg relative cursor-pointer bg-[#33c9e4] py-2 px-3 mx-3"
+              >
+                <div className="flex flex-col gap-2">
+                  <h1 className="text-7xl font-bold text-center">T</h1>
+                  <p className="font-bold text-center text-xs">Technical</p>
+                </div>
+                <div className="text-sm font-bold">
+                  {jobCount?.technical ? jobCount.technical : 0}{" "}
+                  {activeRouteIndex === "third"
+                    ? jobCount?.technical === 1
+                      ? "Job"
+                      : "Jobs"
+                    : jobCount?.technical === 1
+                    ? "Internship"
+                    : "Internships"}{" "}
+                  available
                 </div>
               </div>
-            )}
-            {!activeThirdIndex && (
-              <>
-                
-                <div
-                  onClick={() => setActiveThirdIndex("software")}
-                  className="col-span-12 mt-3 rounded-md flex justify-between items-center shadow-lg relative  cursor-pointer bg-[#33c9e4] py-2 px-3 mx-3"
-                >
-                  <div className="flex flex-col gap-2">
-                    <h1 className="text-7xl font-bold text-center">T</h1>
-                    <p className="font-bold text-center text-xs">Technical</p>
-                  </div>
-                  <div className="text-sm font-bold">
-                  {jobCount?.technical ? jobCount.technical : 0} {activeRouteIndex =="third" ? "Job" : "Internship"} available
-                  </div>
+              <div
+                onClick={() => setActiveThirdIndex("management")}
+                className="col-span-12 rounded-md flex flex-row-reverse justify-between items-center shadow-lg relative cursor-pointer bg-[#fac575] py-2 px-3 mx-3"
+              >
+                <div className="flex flex-col gap-2">
+                  <h1 className="text-7xl font-bold text-center">M</h1>
+                  <p className="font-bold text-center text-xs">Management</p>
                 </div>
-                <div
-                  onClick={() => setActiveThirdIndex("management")}
-                  className="col-span-12  rounded-md flex flex-row-reverse justify-between items-center shadow-lg relative  cursor-pointer bg-[#fac575] py-2 px-3 mx-3"
-                >
-                  <div className="flex flex-col gap-2">
-                    <h1 className="text-7xl font-bold text-center">M</h1>
-                    <p className="font-bold text-center text-xs">Management</p>
-                  </div>
-                  <div className="text-sm font-bold">
-                    {jobCount?.management ? jobCount.management : 0} {activeRouteIndex =="third" ? "Job" : "Internship"} available
-                  </div>
+                <div className="text-sm font-bold">
+                  {jobCount?.management ? jobCount.management : 0}{" "}
+                  {activeRouteIndex === "third"
+                    ? jobCount?.management === 1
+                      ? "Job"
+                      : "Jobs"
+                    : jobCount?.management === 1
+                    ? "Internship"
+                    : "Internships"}{" "}
+                  available
                 </div>
-                <div
-                  className="col-span-12  rounded-md flex justify-between items-center shadow-lg relative  cursor-pointer bg-[#75c669] py-2 px-3 mx-3"
-                >
-                  <div className="flex flex-col gap-2">
-                    <h1 className="text-7xl font-bold text-center">O</h1>
-                    <p className="font-bold text-center text-xs">Others</p>
-                  </div>
-                  <div className="text-sm font-bold">
-                  0 {activeRouteIndex =="third" ? "Job" : "Internship"} available
-                  </div>
+              </div>
+              <div className="col-span-12 rounded-md flex justify-between items-center shadow-lg relative cursor-pointer bg-[#75c669] py-2 px-3 mx-3">
+                <div className="flex flex-col gap-2">
+                  <h1 className="text-7xl font-bold text-center">O</h1>
+                  <p className="font-bold text-center text-xs">Others</p>
                 </div>
-               
-              </>
-            )}
-          </div>
-        {activeThirdIndex && quizState?.challenges_by_district &&
+                <div className="text-sm font-bold">
+                  0 {activeRouteIndex === "third" ? "Jobs" : "Internships"}{" "}
+                  available
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        {activeThirdIndex &&
+          quizState?.challenges_by_district &&
           Object.keys(quizState.challenges_by_district).length > 0 &&
           Object.keys(quizState.challenges_by_district).map(
             (districtName, index) => (
@@ -438,9 +449,9 @@ const PageDetails = () => {
   };
   const TestRoute = () => {
     return (
-      <div className="w-full  h-full  p-1 space-y-4">
-        <div className="w-full p-3 space-y-5">
-          <div className="w-full ">
+      <div className="w-full  h-full   space-y-4">
+        <div className="w-full space-y-5">
+          <div className="w-full  p-3">
             <div
               onClick={() => {
                 compatibiltyTest?.completed
@@ -465,7 +476,10 @@ const PageDetails = () => {
               </div>
             </div>
           </div>
-          <div className="w-full grid-cols-12 gap-3 grid text-black">
+          <div className="w-full p-3 min-h-20 bg-white shadow-md border flex justify-center items-center text-center">
+            <p className="text-base font-bold text-[#32c8e3]">Take the tests & Earn stars for each domain.</p>
+          </div>
+          <div className="w-full grid-cols-12 gap-3  p-3 grid text-black">
             {/* {keywordsList?.length > 0 &&
               keywordsList.map((item) => {
                 return (

@@ -384,7 +384,76 @@ const PageDetails = ({ params }) => {
               <p className="text-center font-bold text-xl text-white underline uppercase"></p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                Final Round
+                 {challenge.title}
+              </p>
+            </div>
+          </div>
+          <div className="w-full flex flex-col gap-3 justify-center items-center">
+            <p className="font-bold ">
+              Round{" "}
+              {challenge?.eligibility?.length > 0
+                ? challenge?.eligibility?.length + 3
+                : 3}
+            </p>
+
+            <div
+              
+              className={cn(
+                "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+                
+                   "from-gray-500 to-gray-400"
+              )}
+            >
+              <p className="text-center font-bold text-xl text-white underline uppercase"></p>
+              <p className="text-center font-bold text-base text-white ">Technical Live Round</p>
+              <p className="text-center font-semibold text-sm text-white">
+                 22-06-2024 {challenge.page_type=="job" ? "08:00" : "07:00"} PM
+              </p>
+            </div>
+          </div>
+          <div className="w-full flex flex-col gap-3 justify-center items-center">
+            <p className="font-bold ">
+              Round{" "}
+              {challenge?.eligibility?.length > 0
+                ? challenge?.eligibility?.length + 4
+                : 4}
+            </p>
+
+            <div
+              
+              className={cn(
+                "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+                
+                   "from-gray-500 to-gray-400"
+              )}
+            >
+              <p className="text-center font-bold text-xl text-white underline uppercase"></p>
+              <p className="text-center font-bold text-base text-white "></p>
+              <p className="text-center font-semibold text-sm text-white">
+                 HR Round
+              </p>
+            </div>
+          </div>
+          <div className="w-full flex flex-col gap-3 justify-center items-center">
+            <p className="font-bold ">
+              Round{" "}
+              {challenge?.eligibility?.length > 0
+                ? challenge?.eligibility?.length + 5
+                : 5}
+            </p>
+
+            <div
+              
+              className={cn(
+                "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
+                
+                   "from-gray-500 to-gray-400"
+              )}
+            >
+              <p className="text-center font-bold text-xl text-white underline uppercase"></p>
+              <p className="text-center font-bold text-base text-white "></p>
+              <p className="text-center font-semibold text-sm text-white">
+                 HR Interview
               </p>
             </div>
           </div>
