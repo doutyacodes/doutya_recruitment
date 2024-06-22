@@ -419,6 +419,8 @@ const PageDetails = () => {
                             formattedDate={formattedDate}
                             formattedEndDate={formattedEndDate}
                             inPage={true}
+                            districtName={districtName}
+
                           />
                         );
                       }
@@ -625,6 +627,7 @@ const PageDetails = () => {
                             formattedDate={formattedDate}
                             formattedEndDate={formattedEndDate}
                             inPage={true}
+                            districtName={districtName}
                           />
                         );
                       }

@@ -117,7 +117,7 @@ const PageDetails = ({ params }) => {
               user?.id ? user.id : null
             }&page_id=1`
           );
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.success) {
             setCompatibilityTest(response.data.data);
           }
@@ -150,17 +150,23 @@ const PageDetails = ({ params }) => {
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] mb-7">
         <div className="w-full h-full  space-y-5 mt-3">
           <div className="mt-4 justify-center flex flex-col gap-3 items-center w-full p-3">
-            <div className=" w-24 h-24  rounded-md relative">
-              {challenge.image && (
-                <Image
-                  src={baseImgURL + challenge.image}
-                  fill
-                  alt="image"
-                  objectFit="cover"
-                  className="rounded-md"
-                />
-              )}
+            {challenge.keyword ? (
+              <div className="relative md:h-24 md:w-32 w-20 h-16 border flex text-white bg-gradient-to-l from-red-400 to-blue-400 justify-center items-center text-center rounded-md">
+              <p className="text-5xl font-bold ">{challenge.keyword.charAt(0)}</p>
             </div>
+            ) : (
+              <div className=" w-24 h-24  rounded-md relative">
+                {challenge.image && (
+                  <Image
+                    src={baseImgURL + challenge.image}
+                    fill
+                    alt="image"
+                    objectFit="cover"
+                    className="rounded-md"
+                  />
+                )}
+              </div>
+            )}
             <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
             <p>
               <DescriptionText rules={challenge.description} />
@@ -384,7 +390,7 @@ const PageDetails = ({ params }) => {
               <p className="text-center font-bold text-xl text-white underline uppercase"></p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                 {challenge.title}
+                {challenge.title}
               </p>
             </div>
           </div>
@@ -397,17 +403,18 @@ const PageDetails = ({ params }) => {
             </p>
 
             <div
-              
               className={cn(
                 "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                
-                   "from-gray-500 to-gray-400"
+
+                "from-gray-500 to-gray-400"
               )}
             >
               <p className="text-center font-bold text-xl text-white underline uppercase"></p>
-              <p className="text-center font-bold text-base text-white ">Technical Live Round</p>
+              <p className="text-center font-bold text-base text-white ">
+                Technical Live Round
+              </p>
               <p className="text-center font-semibold text-sm text-white">
-                 22-06-2024 {challenge.page_type=="job" ? "08:00" : "07:00"} PM
+                22-06-2024 {challenge.page_type == "job" ? "08:00" : "07:00"} PM
               </p>
             </div>
           </div>
@@ -420,17 +427,16 @@ const PageDetails = ({ params }) => {
             </p>
 
             <div
-              
               className={cn(
                 "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                
-                   "from-gray-500 to-gray-400"
+
+                "from-gray-500 to-gray-400"
               )}
             >
               <p className="text-center font-bold text-xl text-white underline uppercase"></p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                 HR Round
+                HR Round
               </p>
             </div>
           </div>
@@ -443,17 +449,16 @@ const PageDetails = ({ params }) => {
             </p>
 
             <div
-              
               className={cn(
                 "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                
-                   "from-gray-500 to-gray-400"
+
+                "from-gray-500 to-gray-400"
               )}
             >
               <p className="text-center font-bold text-xl text-white underline uppercase"></p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                 HR Interview
+                HR Interview
               </p>
             </div>
           </div>

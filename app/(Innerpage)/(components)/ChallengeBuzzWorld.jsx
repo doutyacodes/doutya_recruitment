@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import { baseImgURL } from "@/lib/baseData";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +22,28 @@ const ChallengeBuzzWorld = ({
       : item.title
     : "";
   const user = useAppSelector((state) => state.auth.user);
-
+  const [imageSrc, setImageSrc] = useState(baseImgURL + item.image);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 ) {
+        // Set the image source for medium screens
+        setImageSrc(baseImgURL + "a"+item.image); // Assuming `item.imageForMd` is the image for md screens
+      } else {
+        // Set the default image source
+        setImageSrc(baseImgURL + item.image);
+      }
+    };
+  
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+  
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+  
+    // Remove event listener on cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, [item.image]);
+  // console.log(imageSrc)
   return (
     <div
       className={cn(
@@ -66,12 +88,12 @@ const ChallengeBuzzWorld = ({
         className=" rounded-md  min-w-72 "
       >
         <div className={" px-3 py-1"}>
-          <div className={" relative w-full h-20 md:h-56 border rounded-md "}>
+          <div className={" relative w-full h-[68px] md:h-56 border rounded-md "}>
             <Image
-              src={baseImgURL + item.image}
+              src={imageSrc}
               fill
               alt="Profile Image"
-              className="rounded-lg object-cover"
+              className="rounded-lg object-contain"
             />
           </div>
         </div>
