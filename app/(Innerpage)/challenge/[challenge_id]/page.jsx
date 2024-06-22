@@ -29,7 +29,8 @@ const PageDetails = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 24 };
   const [showDialog, setShowDialog] = useState(false);
-  const [compatibiltyTest, setCompatibiltyTest] = useState([]);
+  const [compatibilityTest, setCompatibilityTest] = useState([]);
+  const [alreadyStarted, setAlreadyStarted] = useState(false);
 
   const [toggleNav, setToggleNav] = useState("Description");
   const [challenge, setChallenge] = useState([]);
@@ -61,10 +62,12 @@ const PageDetails = ({ params }) => {
             );
             setIsEligible(isUserEligible);
           }
-          if(response.data?.page_type =="job" || response.data?.page_type =="internship" )
-            {
-              setToggleNav("Rounds")
-            }
+          if (
+            response.data?.page_type == "job" ||
+            response.data?.page_type == "internship"
+          ) {
+            setToggleNav("Rounds");
+          }
           // console.log(response.data.eligibility);
           // console.log(response.data);
         } else {
@@ -81,7 +84,30 @@ const PageDetails = ({ params }) => {
     fetchData();
     // console.log(challenge.task_id)
   }, []);
+  const fetchAlreadyDone = async () => {
+    if (user) {
+      try {
+        setIsLoading(true);
 
+        const response = await axios.get(
+          `${baseURL}/check-already-exist.php?challenge_id=${challenge_id}&user_id=${
+            user ? user.id : null
+          }`
+        );
+        // console.log(response.data);
+
+        if (response.data.success) {
+          setAlreadyStarted(true);
+        } else {
+          console.error("Failed to fetch availablity");
+        }
+      } catch (error) {
+        console.error("Error while fetching availablity:", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
   useEffect(() => {
     const fetchCompilibility = async () => {
       if (user) {
@@ -93,7 +119,7 @@ const PageDetails = ({ params }) => {
           );
           console.log(response.data);
           if (response.data.success) {
-            setCompatibiltyTest(response.data.data);
+            setCompatibilityTest(response.data.data);
           }
         } catch (error) {
           console.error("Error while fetching compatibility");
@@ -101,6 +127,7 @@ const PageDetails = ({ params }) => {
       }
     };
     fetchCompilibility();
+    fetchAlreadyDone();
   }, [user, challenge_id]);
   const fetchData = async () => {
     try {
@@ -250,49 +277,67 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">Round 1</p>
             <div
               onClick={() => {
-                user &&
-                  !compatibiltyTest.completed &&
-                  router.push(`/quiz-lobby/${compatibiltyTest.task_id}`);
+                if (alreadyStarted && user && !compatibilityTest?.completed) {
+                  router.push(`/quiz-lobby/${compatibilityTest.task_id}`);
+                }
               }}
               className={cn(
-                "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                !user
+                "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
+                !user || !alreadyStarted
                   ? "bg-gray-500"
-                  : !compatibiltyTest.completed
+                  : user && !compatibilityTest?.completed
                   ? "bg-gradient-to-r from-orange-500 to-orange-700"
-                  : compatibiltyTest.compatibility >= 50
+                  : compatibilityTest?.completed &&
+                    compatibilityTest.compatibility >=
+                      (challenge.page_type === "job" ? 60 : 50)
                   ? "bg-gradient-to-r from-green-500 to-green-700"
-                  : "bg-gradient-to-r from-red-500 to-red-700"
+                  : compatibilityTest?.completed &&
+                    compatibilityTest.compatibility <
+                      (challenge.page_type === "job" ? 60 : 50)
+                  ? "bg-gradient-to-r from-red-500 to-red-700"
+                  : "bg-gray-400"
               )}
             >
               <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
                 Compatibility
               </p>
               <p className="text-center font-bold text-base text-white ">
-                {compatibiltyTest?.completed
-                  ? compatibiltyTest.compatibility
+                {compatibilityTest?.completed
+                  ? compatibilityTest.compatibility
                   : 0}
                 %
               </p>
               <p className="text-center font-semibold text-sm text-white">
                 Required compatibility -{" "}
-                {challenge.page_type == "job" ? "60" : "50"}%
+                {challenge.page_type === "job" ? "60" : "50"}%
               </p>
             </div>
           </div>
           {challenge?.eligibility?.map((item, index) => {
             let color;
-            if (
-              !compatibiltyTest.completed ||
-              (compatibiltyTest.completed &&
-              compatibiltyTest?.compatibility >= challenge.page_type == "job"
-                ? 60
-                : 50)
-            ) {
+            // console.log(item)
+            if (!alreadyStarted || !compatibilityTest.completed) {
               color = "bg-gray-400"; // If compatibility test not completed, stay gray
-            } else if (item.isEligible) {
+            } else if (
+              compatibilityTest.completed &&
+              compatibilityTest?.compatibility <
+                (challenge.page_type === "job" ? 60 : 50)
+            ) {
+              color = "bg-red-500";
+              // {console.log(compatibilityTest.compatibility)}
+            } else if (item.eligible) {
               color = "bg-green-500";
-            } else if (index === 0) {
+            } else if (
+              index === 0 &&
+              compatibilityTest.completed &&
+              compatibilityTest?.compatibility >
+                (challenge.page_type === "job" ? 60 : 50)
+            ) {
+              color = "bg-orange-500";
+            } else if (
+              index > 0 &&
+              challenge.eligibility[index - 1].isEligible
+            ) {
               color = "bg-orange-500";
             } else {
               color = "bg-gray-400";
@@ -317,20 +362,21 @@ const PageDetails = ({ params }) => {
 
             <div
               onClick={() => {
-                compatibiltyTest.completed &&
-                compatibiltyTest?.compatibility >= challenge.page_type == "job"
-                  ? 60
-                  : 50 &&
-                    isEligible &&
-                    router.push(`/quiz-lobby/${challenge.task_id}`);
+                alreadyStarted &&
+                  compatibilityTest?.completed &&
+                  compatibilityTest?.compatibility >=
+                    (challenge.page_type == "job" ? 60 : 50) &&
+                  isEligible &&
+                  router.push(`/quiz-lobby/${challenge.task_id}`);
               }}
               className={cn(
                 "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-                compatibiltyTest.completed &&
-                  compatibiltyTest?.compatibility >= challenge.page_type ==
-                    "job"
-                  ? 60
-                  : 50 && isEligible && user
+                alreadyStarted &&
+                  compatibilityTest.completed &&
+                  compatibilityTest?.compatibility >=
+                    (challenge.page_type == "job" ? 60 : 50) &&
+                  isEligible &&
+                  user
                   ? "from-orange-500 to-orange-700"
                   : "from-gray-500 to-gray-400"
               )}
@@ -367,7 +413,30 @@ const PageDetails = ({ params }) => {
   const handleToggle = (value) => {
     setToggleNav(value);
   };
-
+  const gotoQuiz = async () => {
+    try {
+      const response2 = await axios.post(
+        `${baseURL}/create-job-start.php`,
+        {
+          user_id: user.id,
+          challenge_id: challenge_id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+      // console.log(response2.data);
+      if (response2.data.success) {
+        setAlreadyStarted(true);
+      }
+    } catch (error) {
+      console.error("Error2:", error);
+    } finally {
+      setIsEligible(false);
+    }
+  };
   return (
     <>
       {isLoading ? (
@@ -413,19 +482,18 @@ const PageDetails = ({ params }) => {
             <div></div>
           </div>
           <div className="flex justify-between items-center shadow rounded-md">
-           {
-           ( challenge.page_type =="job" ||  challenge.page_type =="internship")  && (
+            {(challenge.page_type == "job" ||
+              challenge.page_type == "internship") && (
               <p
-              className={cn(
-                "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
-                toggleNav == "Rounds" && "border-b border-black"
-              )}
-              onClick={() => handleToggle("Rounds")}
-            >
-              Rounds
-            </p>
-            )
-           }
+                className={cn(
+                  "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+                  toggleNav == "Rounds" && "border-b border-black"
+                )}
+                onClick={() => handleToggle("Rounds")}
+              >
+                Rounds
+              </p>
+            )}
             <p
               className={cn(
                 "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
@@ -483,54 +551,65 @@ const PageDetails = ({ params }) => {
             )}
           </div>
           {RenderData()}
-          <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
-            {isEligible ? (
-              <Link
-                prefetch={false}
-                href={
-                  user &&
-                  (challenge.page_type != "tests" ||
-                    challenge.page_type != "language")
-                    ? `/rounds/${challenge.challenge_id}`
-                    : user &&
-                      (challenge.page_type != "tests" ||
-                        challenge.page_type != "language")
-                    ? `/quiz-lobby/${challenge.task_id}`
-                    : "/signup"
-                }
-                className="w-full text-lg"
-              >
-                {challenge.page_type != "tests" ||
-                challenge.page_type != "language"
-                  ? "Start"
-                  : "Apply"}
-              </Link>
-            ) : (
-              <div
-                // onClick={() => setShowDialog(true)}
-                className="w-full text-center cursor-pointer"
-              >
-                Apply
-              </div>
-            )}
-            <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
-              <AlertDialogTrigger asChild>
-                <div />
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Not Eligible</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    You are not eligible for this job. Please review the
-                    eligibility criteria before proceeding.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>OK</AlertDialogCancel>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </Button>
+          {!alreadyStarted && (
+            <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
+              {isEligible && challenge.page_type == "tests" ? (
+                <Link
+                  prefetch={false}
+                  href={
+                    user &&
+                    (challenge.page_type != "tests" ||
+                      challenge.page_type != "language")
+                      ? `/rounds/${challenge.challenge_id}`
+                      : user &&
+                        (challenge.page_type != "tests" ||
+                          challenge.page_type != "language")
+                      ? `/quiz-lobby/${challenge.task_id}`
+                      : "/signup"
+                  }
+                  className="w-full text-lg"
+                >
+                  {challenge.page_type != "tests" ||
+                  challenge.page_type != "language"
+                    ? "Start"
+                    : "Apply"}
+                </Link>
+              ) : (
+                <div
+                  onClick={() => {
+                    if (
+                      user &&
+                      (challenge.page_type == "job" ||
+                        challenge.page_type == "internship")
+                    ) {
+                      console.log("hello");
+                      gotoQuiz();
+                    }
+                  }}
+                  className="w-full text-center cursor-pointer"
+                >
+                  Apply
+                </div>
+              )}
+              <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+                <AlertDialogTrigger asChild>
+                  <div />
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Not Eligible</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      You are not eligible for this job. Please review the
+                      eligibility criteria before proceeding.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>OK</AlertDialogCancel>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </Button>
+          )}
         </div>
       )}
     </>

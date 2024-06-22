@@ -504,25 +504,25 @@ const PageDetails = () => {
               <>
                 <div
                   onClick={() => setActiveThirdIndex("aptitude")}
-                  className="col-span-6  rounded-md flex justify-between items-center shadow-lg relative  cursor-pointer bg-[#c7fe89] p-3"
+                  className="col-span-6  rounded-md flex gap-2 justify-between items-center shadow-lg relative  cursor-pointer bg-[#c7fe89] p-3"
                 >
                   <div className="flex flex-col gap-2">
                     <h1 className="text-6xl font-bold text-center">A</h1>
                     <p className="font-bold text-center">Aptitude</p>
                   </div>
-                  <div className="text-xs">
+                  <div className="text-[9px] sm:text-xs ">
                     <p>General</p>
                   </div>
                 </div>
                 <div
                   onClick={() => setActiveThirdIndex("software")}
-                  className="col-span-6  rounded-md flex justify-between items-center shadow-lg relative  cursor-pointer bg-[#fb7373] p-3"
+                  className="col-span-6  rounded-md gap-2 flex justify-between items-center shadow-lg relative  cursor-pointer bg-[#fb7373] p-3"
                 >
                   <div className="flex flex-col gap-2">
                     <h1 className="text-6xl font-bold text-center">T</h1>
                     <p className="font-bold text-center">Technical</p>
                   </div>
-                  <div className="text-xs">
+                  <div className="text-[9px] sm:text-xs ">
                     <p>React Js</p>
                     <p>React Native</p>
                     <p>PHP</p>

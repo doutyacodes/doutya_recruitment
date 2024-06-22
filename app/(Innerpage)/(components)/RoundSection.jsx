@@ -19,7 +19,7 @@ const RoundSection = ({ item, index, color,timerValue }) => {
   const isEligible = item.stars <= item.user_stars;
 
   return (
-    <Link href={"/pages/1"} className="w-full flex flex-col gap-3 justify-center items-center">
+    <Link href={color =="bg-orange-500" ? "/pages/1" : "#"} className="w-full flex flex-col gap-3 justify-center items-center">
       <p className="font-bold">Round {index + 2}</p>
       <div
         className={cn(

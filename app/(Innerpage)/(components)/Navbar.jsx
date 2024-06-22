@@ -1,15 +1,9 @@
 "use client";
 import Image from "next/image";
 import { IoSettingsSharp } from "react-icons/io5";
-import { AlignJustify, Clipboard, Home, Search, User } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetClose,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { AlignJustify, Search } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import RightSidebar from "./RightSidebar";
-import { MdHome } from "react-icons/md";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/lib/hooks";
@@ -23,8 +17,6 @@ import {
   RiUser3Line,
   RiUser3Fill,
 } from "react-icons/ri";
-import { IoMdAnalytics } from "react-icons/io";
-import { IoAnalytics } from "react-icons/io5";
 
 import LeftSidebar from "./LeftSidebar";
 import { useEffect, useState } from "react";
@@ -35,11 +27,6 @@ const Navbar = () => {
   const router = useRouter();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetOpen2, setSheetOpen2] = useState(false);
-  // useEffect(() => {
-  //   if ( !pathname.includes("coming-soon") && !pathname.includes("coming-soon")) {
-  //     router.replace("/coming-soon");
-  //   }
-  // }, [user, pathname, router]);
 
   return (
     <nav className="w-full p-3 bg-white">
@@ -84,77 +71,33 @@ const Navbar = () => {
           )}
         </li>
       </ul>
-      <div className="  fixed py-1 px-3  w-full left-0 bottom-0 z-50 ">
-        <div className=" px-3 py-1 max-w-[800px] rounded-full  bg-[#24975c]/95 border mx-auto relative flex w-full justify-around items-center">
+      <div className="fixed py-1 px-3 w-full left-0 bottom-0 z-50">
+        <div className="px-3 py-1 max-w-[800px] rounded-full bg-[#24975c]/95 border mx-auto relative flex w-full justify-around items-center">
           <Link
             prefetch={false}
             href={"/home"}
-            className=" w-1/3 text-sm flex flex-col items-center justify-center"
+            className="w-1/3 text-sm flex flex-col items-center justify-center"
           >
             {pathname.includes("home") ? (
-              <RiHome5Fill
-                color={pathname.includes("home") ? "#fdbd5b" : "white"}
-                size={24}
-              />
+              <RiHome5Fill color="#fdbd5b" size={24} />
             ) : (
-              <RiHome5Line
-                color={pathname.includes("home") ? "#fdbd5b" : "white"}
-                size={24}
-              />
+              <RiHome5Line color="white" size={24} />
             )}
-            <p
-              className={
-                pathname.includes("home") ? "text-[#fdbd5b]" : "text-white"
-              }
-            >
+            <p className={pathname.includes("home") ? "text-[#fdbd5b]" : "text-white"}>
               Home
             </p>
           </Link>
-          {/* <Link
-            prefetch={false}
-            href={"/analytics"}
-            className=" w-1/3 text-sm flex flex-col items-center justify-center"
-          >
-            {pathname.includes("analytics") ? (
-              <IoMdAnalytics
-                color={pathname.includes("analytics") ? "#fdbd5b" : "white"}
-                size={24}
-              />
-            ) : (
-              <IoAnalytics
-                color={pathname.includes("analytics") ? "#fdbd5b" : "white"}
-                size={24}
-              />
-            )}
-            <p
-              className={
-                pathname.includes("analytics") ? "text-[#fdbd5b]" : "text-white"
-              }
-            >
-              Analytics
-            </p>
-          </Link> */}
           <Link
             prefetch={false}
             href={"/results"}
             className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
           >
             {pathname.includes("results") ? (
-              <RiClipboardFill
-                color={pathname.includes("results") ? "#fdbd5b" : "white"}
-                size={24}
-              />
+              <RiClipboardFill color="#fdbd5b" size={24} />
             ) : (
-              <RiClipboardLine
-                color={pathname.includes("results") ? "#fdbd5b" : "white"}
-                size={24}
-              />
+              <RiClipboardLine color="white" size={24} />
             )}
-            <p
-              className={
-                pathname.includes("results") ? "text-[#fdbd5b]" : "text-white"
-              }
-            >
+            <p className={pathname.includes("results") ? "text-[#fdbd5b]" : "text-white"}>
               Results
             </p>
           </Link>
@@ -163,25 +106,11 @@ const Navbar = () => {
               <Sheet open={sheetOpen2} onOpenChange={setSheetOpen2}>
                 <SheetTrigger>
                   {pathname.includes("user") ? (
-                    <RiUser3Fill
-                      color={pathname.includes("user") ? "#fdbd5b" : "white"}
-                      size={24}
-                      className="mx-auto"
-                    />
+                    <RiUser3Fill color="#fdbd5b" size={24} className="mx-auto" />
                   ) : (
-                    <RiUser3Line
-                      color={pathname.includes("user") ? "#fdbd5b" : "white"}
-                      size={24}
-                      className="mx-auto"
-                    />
+                    <RiUser3Line color="white" size={24} className="mx-auto" />
                   )}
-                  <p
-                    className={
-                      pathname.includes("user")
-                        ? "text-[#fdbd5b]"
-                        : "text-white"
-                    }
-                  >
+                  <p className={pathname.includes("user") ? "text-[#fdbd5b]" : "text-white"}>
                     Profile
                   </p>
                 </SheetTrigger>
@@ -196,22 +125,12 @@ const Navbar = () => {
               href={"/signup"}
               className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
             >
-              {pathname.includes("user") ? (
-                <RiUser3Fill
-                  color={pathname.includes("signup") ? "#fdbd5b" : "white"}
-                  size={24}
-                />
+              {pathname.includes("signup") ? (
+                <RiUser3Fill color="#fdbd5b" size={24} />
               ) : (
-                <RiUser3Line
-                  color={pathname.includes("signup") ? "#fdbd5b" : "white"}
-                  size={24}
-                />
+                <RiUser3Line color="white" size={24} />
               )}
-              <p
-                className={
-                  pathname.includes("signup") ? "text-[#fdbd5b]" : "text-white"
-                }
-              >
+              <p className={pathname.includes("signup") ? "text-[#fdbd5b]" : "text-white"}>
                 Profile
               </p>
             </Link>

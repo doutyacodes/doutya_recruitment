@@ -177,7 +177,7 @@ const UserDetails = ({ params }) => {
           </p>
         </div>
       </div>
-      <div className="p-3 flex gap-4 items-center">
+      {/* <div className="p-3 flex gap-4 items-center">
         <p className="text-xl font-bold">My Choices</p>
         <div>
           <DropdownMenu>
@@ -212,7 +212,7 @@ const UserDetails = ({ params }) => {
               </p>
             </Link>
         </div>
-      </div>
+      </div> */}
       <div className="p-3">
       <div className=" flex gap-4 items-center">
         <p className="text-xl font-bold">Edit My Profile</p>

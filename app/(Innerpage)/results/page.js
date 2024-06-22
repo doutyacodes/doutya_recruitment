@@ -19,12 +19,19 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Results = () => {
   const [todoData, setTodoData] = useState([]);
   const [todoQuizData, setTodoQuizData] = useState([]);
   const [toggleNav, setToggleNav] = useState("Jobs & Internships");
+  const [collapseStates, setCollapseStates] = useState([]);
 
+  const toggleCollapse = (index) => {
+    const newCollapseStates = [...collapseStates];
+    newCollapseStates[index] = !newCollapseStates[index];
+    setCollapseStates(newCollapseStates);
+  };
   const user = useAppSelector((state) => state.auth.user);
   const convertStarsToNumber = (stars) => {
     return parseInt(stars);
@@ -75,8 +82,8 @@ const Results = () => {
           const response = await axios.get(
             `${baseURL}/getAlltodoTasks.php?user_id=${user.id}`
           );
-          // console.log(response.data);
-          if (response.status === 200) {
+          console.log(response.data);
+          if (response.data?.tasks) {
             setTodoData(response.data.tasks);
             // console.log(response.data);
           } else {
@@ -95,8 +102,8 @@ const Results = () => {
           const response = await axios.get(
             `${baseURL}/getAlltodoTasksQuiz.php?user_id=${user.id}`
           );
-          console.log(response.data.tasks); // Log response data
-          if (response.status === 200) {
+          console.log("Jobs : ", response.data.tasks.length); // Log response data
+          if (response.data?.tasks) {
             setTodoQuizData(response.data.tasks);
           } else {
             console.error("Failed to fetch progress");
@@ -130,6 +137,8 @@ const Results = () => {
   const JobsRoute = () => {
     return (
       <div className="flex flex-col gap-2 bg-white px-1">
+        {/* {console.log("todoData",todoData)} */}
+
         {todoData?.length > 0 && (
           <Table>
             {/* <TableCaption>Results.</TableCaption> */}
@@ -139,8 +148,8 @@ const Results = () => {
                 <TableHead className="text-center">Company</TableHead>
                 <TableHead className="text-center">Job Title</TableHead>
                 <TableHead className="text-center">Round</TableHead>
-                <TableHead className="text-center">Percentage</TableHead>
                 <TableHead className="text-center">Status</TableHead>
+                <TableHead className="text-center"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -148,89 +157,140 @@ const Results = () => {
                 todoData?.length > 0 &&
                 todoData.map((item, itemIndex) => {
                   // console.log(item);
-                  let formattedEndDate;
-                  let formattedDate;
-                  formattedDate = moment(item?.start_date).fromNow();
-                  const endDate = moment(item?.end_date);
-                  const now = moment();
 
-                  const duration = moment.duration(endDate.diff(now));
-
-                  if (duration.asDays() >= 1) {
-                    formattedEndDate = Math.round(duration.asDays()) + " days";
-                  } else if (duration.asHours() >= 1) {
-                    formattedEndDate =
-                      Math.floor(duration.asHours()) +
-                      ":" +
-                      (duration.minutes() < 10 ? "0" : "") +
-                      duration.minutes() +
-                      " hrs";
-                  } else {
-                    formattedEndDate = duration.minutes() + " minutes";
-                  }
-                  const maxLength = 12;
-                  // const slicedTitle = item?.title
-                  //   ? item?.title.length > maxLength
-                  //     ? item?.title.slice(0, maxLength) + "..."
-                  //     : item?.title
-                  //   : "";
                   return (
-                    <TableRow key={itemIndex}>
-                      <TableCell className="text-center">
-                        <Link href={`/rounds/${item.challenge_id}`}>
-                          <div
-                            className={" relative  w-20 h-16 border rounded-lg"}
-                          >
-                            <Image
-                              src={baseImgURL + item?.selectedMovie.image}
-                              fill
-                              alt="Profile Image"
-                              className="rounded-lg object-cover"
-                            />
-                          </div>
-                        </Link>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {" "}
-                        <Link href={`/rounds/${item.challenge_id}`}>
-                          {item?.selectedMovie.title}
-                        </Link>
-                      </TableCell>
-                      <TableCell className="font-bold text-center">
-                        {" "}
-                        <Link href={`/rounds/${item.challenge_id}`}>
-                          {item?.title}
-                        </Link>
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        <Link href={`/rounds/${item.challenge_id}`}>
-                          {item?.order_id}- {item?.task_title}
-                        </Link>
-                      </TableCell>
-                      <TableCell className="text-center font-bold">
-                        <Link href={`/rounds/${item.challenge_id}`}>
-                          {item?.total_percent.toFixed(2)}%
-                        </Link>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <Link href={`/rounds/${item.challenge_id}`}>
-                          {item?.success && (
+                    <>
+                      <TableRow key={itemIndex}>
+                        <TableCell className="text-center">
+                          <Link href={`/challenge/${item.challenge_id}`}>
                             <div
-                              className={cn(
-                                " rounded-full ",
-                                item?.success == "yes"
-                                  ? "bg-green-600"
-                                  : "bg-red-600"
-                              )}
+                              className={
+                                " relative  w-20 h-16 border rounded-lg"
+                              }
                             >
-                              <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                                {item?.success == "yes" ? "Success" : "Failed"}
-                              </p>
+                              <Image
+                                src={baseImgURL + item?.selectedMovie.image}
+                                fill
+                                alt="Profile Image"
+                                className="rounded-lg object-cover"
+                              />
                             </div>
-                          )}
-                        </Link>
-                      </TableCell>
-                    </TableRow>
+                          </Link>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {" "}
+                          <Link href={`/challenge/${item.challenge_id}`}>
+                            {item?.selectedMovie.title}
+                          </Link>
+                        </TableCell>
+                        <TableCell
+                          className="font-bold text-center"
+                          colSpan={2}
+                        >
+                          {" "}
+                          <Link href={`/challenge/${item.challenge_id}`}>
+                            {item?.title}
+                          </Link>
+                        </TableCell>
+
+                        <TableCell className="text-center">
+                          <Link href={`/challenge/${item.challenge_id}`}>
+                            {item?.success && (
+                              <div
+                                className={cn(
+                                  " rounded-full ",
+                                  item.rounds[0] &&
+                                  item.rounds[0].quiz_status == "ongoing" ? "bg-orange-500" : item?.success == "Success"
+                                    ? "bg-green-600"
+                                    : item?.success == "ongoing"
+                                    ? "bg-orange-500"
+                                    : "bg-red-600"
+                                )}
+                              >
+                                <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+                                  {item.rounds[0] &&
+                            item.rounds[0].quiz_status == "ongoing" ? "Ongoing" :item?.success == "Success"
+                                    ? "Success"
+                                    : item?.success == "ongoing"
+                                    ? "Ongoing"
+                                    : "Failed"}
+                                </p>
+                              </div>
+                            )}
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          <div className="w-full flex justify-center items-center">
+                           {item.rounds[0] &&
+                            item.rounds[0].quiz_status != "ongoing" &&( <div
+                              className="duration-300 transition-all"
+                              onClick={() => toggleCollapse(itemIndex)}
+                            >
+                              {collapseStates[itemIndex] ? (
+                                <ChevronUp size={20} />
+                              ) : (
+                                <ChevronDown size={20} />
+                              )}
+                            </div>)}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                      {collapseStates[itemIndex] &&
+                        item?.rounds &&
+                        item.rounds.map((item2) => {
+                          if (
+                            item.rounds[0] &&
+                            item.rounds[0].quiz_status == "ongoing"
+                          ) {
+                            return;
+                          }
+                          return (
+                            <TableRow key={item2.number}>
+                              <TableCell className="text-center"></TableCell>
+                              <TableCell className="text-center">
+                                {" "}
+                                <Link href={`/challenge/${item.challenge_id}`}>
+                                  {item?.selectedMovie.title}
+                                </Link>
+                              </TableCell>
+                              <TableCell className="font-bold text-center">
+                                {" "}
+                                <Link href={`/challenge/${item.challenge_id}`}>
+                                  {item2?.title}
+                                </Link>
+                              </TableCell>
+                              <TableCell className="font-bold text-center">
+                                Round {item2.number}
+                              </TableCell>
+
+                              <TableCell className="text-center">
+                                <Link href={`/challenge/${item.challenge_id}`}>
+                                  {item2?.quiz_status && (
+                                    <div
+                                      className={cn(
+                                        " rounded-full ",
+                                        item2?.quiz_status == "Success"
+                                          ? "bg-green-600"
+                                          : item2?.quiz_status == "ongoing"
+                                          ? "bg-orange-500"
+                                          : "bg-red-600"
+                                      )}
+                                    >
+                                      <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+                                        {item2?.quiz_status == "Success"
+                                          ? "Success"
+                                          : item2?.quiz_status == "ongoing"
+                                          ? "Ongoing"
+                                          : "Failed"}
+                                      </p>
+                                    </div>
+                                  )}
+                                </Link>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                    </>
                   );
                 })}
             </TableBody>
@@ -240,9 +300,9 @@ const Results = () => {
     );
   };
   const QuizRoute = () => {
-    console.log(todoQuizData.length); // Log data to debug
     return (
       <div className="flex flex-col gap-2 bg-white px-1">
+        {/* {console.log("Quiz",todoQuizData)} */}
         {todoQuizData?.length > 0 && (
           <Table>
             <TableHeader>
@@ -257,32 +317,41 @@ const Results = () => {
             <TableBody>
               {todoQuizData.map((item, itemIndex) => {
                 return (
-                  <TableRow key={itemIndex}>
-                    <TableCell className="text-center">
-                      <div className={"relative w-20 h-16 border rounded-lg"}>
-                        <Image
-                          src={baseImgURL + item?.selectedMovie.image}
-                          fill
-                          alt="Profile Image"
-                          className="rounded-lg object-cover"
-                        />
+                  <>
+                    <TableRow key={itemIndex}>
+                      <TableCell className="text-center">
+                        <div className={"relative w-20 h-16 border rounded-lg"}>
+                          <Image
+                            src={baseImgURL + item?.selectedMovie.image}
+                            fill
+                            alt="Profile Image"
+                            className="rounded-lg object-cover"
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item?.selectedMovie.title}
+                      </TableCell>
+                      <TableCell className="font-bold text-center">
+                        {item?.title}
+                      </TableCell>
+                      <TableCell className="text-center font-bold">
+                        {item?.total_percent.toFixed(2)}%
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="flex w-full justify-center my-4">
+                          {renderStars(item?.stars)}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    {/* <TableRow>
+                    <TableCell colSpan="5">
+                      <div className="w-full bg-red-500 p-6 ">
+
                       </div>
                     </TableCell>
-                    <TableCell className="text-center">
-                      {item?.selectedMovie.title}
-                    </TableCell>
-                    <TableCell className="font-bold text-center">
-                      {item?.title}
-                    </TableCell>
-                    <TableCell className="text-center font-bold">
-                      {item?.total_percent.toFixed(2)}%
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="flex w-full justify-center my-4">
-                        {renderStars(item?.stars)}
-                      </div>
-                    </TableCell>
-                  </TableRow>
+                  </TableRow> */}
+                  </>
                 );
               })}
             </TableBody>
