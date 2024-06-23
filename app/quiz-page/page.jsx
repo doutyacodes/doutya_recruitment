@@ -219,7 +219,7 @@ const QuizPage = () => {
           },
         }
       );
-      console.log(response.data)
+      // console.log(response.data)
       // console.log(question_id)
 
       if (response.status === 200) {

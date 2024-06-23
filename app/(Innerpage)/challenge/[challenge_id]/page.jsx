@@ -346,11 +346,11 @@ const PageDetails = ({ params }) => {
                     ? "bg-gray-500"
                     : user && compatibilityTest?.completed && isEligible
                     ? "bg-gradient-to-r from-orange-500 to-orange-700"
-                    : compatibilityTest?.completed &&
+                    : compatibilityTest?.completed &&isEligible  &&
                       compatibilityTest.compatibility >=
                         (challenge.page_type === "job" ? 60 : 50)
                     ? "bg-gradient-to-r from-green-500 to-green-700"
-                    : compatibilityTest?.completed &&
+                    : compatibilityTest?.completed && isEligible&&
                       compatibilityTest.compatibility <
                         (challenge.page_type === "job" ? 60 : 50)(
                           challenge.page_type === "job" ? 60 : 50
