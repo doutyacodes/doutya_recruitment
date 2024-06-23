@@ -80,7 +80,6 @@ const Success = ({ params }) => {
         ) : (
           <IoMdCloseCircle size={90} color="red" />
         )}
-        <p className="text-3xl font-bold text-green-700">Success</p>
         {starsDetails.stars > 0 && (
           <div>
             <p className="text-lg text-center my-5 space-y-5 font-bold">
@@ -91,16 +90,27 @@ const Success = ({ params }) => {
             </div>
           </div>
         )}
-        {percentageDetails > 0 && (
+        {types && types != "compatibility" && percentageDetails > 0 && (
           <div>
             <p className="text-lg text-center space-y-5 font-bold">
               Your Perfomance
             </p>
-            <p className="w-full text-center mt-3">
+            <p className="w-full text-center my-3 font-bold text-lg">
               {percentageDetails?.toFixed(2)}%
             </p>
           </div>
         )}
+        {types && types == "compatibility" && percentageDetails > 0 && (
+          <div>
+            <p className="text-lg text-center space-y-5 font-bold">
+              Your Compatibility with Doutya Technologies
+            </p>
+            <p className="w-full text-center my-3 font-bold text-lg">
+              {percentageDetails?.toFixed(2)}%
+            </p>
+          </div>
+        )}
+
         {types && types != "compatibility" && (
           <p className=" text-black/80 p-3">
             {percentageDetails > 34.99 ? (

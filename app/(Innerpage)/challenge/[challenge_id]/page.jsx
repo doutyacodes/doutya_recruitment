@@ -152,8 +152,10 @@ const PageDetails = ({ params }) => {
           <div className="mt-4 justify-center flex flex-col gap-3 items-center w-full p-3">
             {challenge.keyword ? (
               <div className="relative md:h-24 md:w-32 w-20 h-16 border flex text-white bg-gradient-to-l from-red-400 to-blue-400 justify-center items-center text-center rounded-md">
-              <p className="text-5xl font-bold ">{challenge.keyword.charAt(0)}</p>
-            </div>
+                <p className="text-5xl font-bold ">
+                  {challenge.keyword.charAt(0)}
+                </p>
+              </div>
             ) : (
               <div className=" w-24 h-24  rounded-md relative">
                 {challenge.image && (
@@ -260,28 +262,31 @@ const PageDetails = ({ params }) => {
       </div>
     );
   };
+  const value = challenge?.page_type === "internship" ? 1 : 0;
 
   const RoundsRoute = () => {
     return (
       <div className=" mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4 mb-9">
         <div className=" w-full flex items-center flex-col justify-center">
-        {challenge.keyword ? (
-              <div className="relative md:h-24 md:w-32 w-20 h-16 border flex text-white bg-gradient-to-l from-red-400 to-blue-400 justify-center items-center text-center rounded-md">
-              <p className="text-5xl font-bold ">{challenge.keyword.charAt(0)}</p>
+          {challenge.keyword ? (
+            <div className="relative md:h-24 md:w-32 w-20 h-16 border flex text-white bg-gradient-to-l from-red-400 to-blue-400 justify-center items-center text-center rounded-md">
+              <p className="text-5xl font-bold ">
+                {challenge.keyword.charAt(0)}
+              </p>
             </div>
-            ) : (
-              <div className=" w-24 h-24  rounded-md relative">
-                {challenge.image && (
-                  <Image
-                    src={baseImgURL + challenge.image}
-                    fill
-                    alt="image"
-                    objectFit="cover"
-                    className="rounded-md"
-                  />
-                )}
-              </div>
-            )}
+          ) : (
+            <div className=" w-24 h-24  rounded-md relative">
+              {challenge.image && (
+                <Image
+                  src={baseImgURL + challenge.image}
+                  fill
+                  alt="image"
+                  objectFit="cover"
+                  className="rounded-md"
+                />
+              )}
+            </div>
+          )}
           <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
         </div>
         <div className="w-full flex flex-col gap-5 mt-5">
@@ -290,7 +295,7 @@ const PageDetails = ({ params }) => {
             <div
               onClick={() => {
                 if (alreadyStarted && user && !compatibilityTest?.completed) {
-                  router.push(`/quiz-lobby/${compatibilityTest.task_id}`);
+                  router.push(`/quiz-lobby/${compatibilityTest?.task_id}`);
                 }
               }}
               className={cn(
@@ -325,6 +330,50 @@ const PageDetails = ({ params }) => {
               </p>
             </div>
           </div>
+          {challenge.challenge_id == 90 && (
+            <div className="w-full flex flex-col gap-3 justify-center items-center">
+              <p className="font-bold ">Round 2</p>
+              <div
+                onClick={() => {
+                  if (alreadyStarted && user && compatibilityTest?.completed && compatibilityTest.compatibility >=
+                    (challenge.page_type === "job" ? 60 : 50)) {
+                    router.push(`/quiz-lobby/${challenge.task_id}`);
+                  }
+                }}
+                className={cn(
+                  "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
+                  !user || !alreadyStarted
+                    ? "bg-gray-500"
+                    : user && compatibilityTest?.completed && isEligible
+                    ? "bg-gradient-to-r from-orange-500 to-orange-700"
+                    : compatibilityTest?.completed &&
+                      compatibilityTest.compatibility >=
+                        (challenge.page_type === "job" ? 60 : 50)
+                    ? "bg-gradient-to-r from-green-500 to-green-700"
+                    : compatibilityTest?.completed &&
+                      compatibilityTest.compatibility <
+                        (challenge.page_type === "job" ? 60 : 50)(
+                          challenge.page_type === "job" ? 60 : 50
+                        )
+                    ? "bg-gradient-to-r from-red-500 to-red-700"
+                    : "bg-gray-400"
+                )}
+              >
+                <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
+                  Aptitude
+                </p>
+                <p className="text-center font-bold text-base text-white ">
+                  {/* {compatibilityTest?.completed
+                    ? compatibilityTest.compatibility
+                    : 0}
+                  % */}
+                </p>
+                <p className="text-center font-semibold text-sm text-white">
+                  General Aptitude
+                </p>
+              </div>
+            </div>
+          )}
           {challenge?.eligibility?.map((item, index) => {
             let color;
             // console.log(item)
@@ -364,13 +413,13 @@ const PageDetails = ({ params }) => {
               />
             );
           })}
-          
+
           <div className="w-full flex flex-col gap-3 justify-center items-center">
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 2
-                : 2}
+                ? challenge?.eligibility?.length + 2+value
+                : 2+value}
             </p>
 
             <div
@@ -385,7 +434,7 @@ const PageDetails = ({ params }) => {
                 Technical Live Round
               </p>
               <p className="text-center font-semibold text-sm text-white">
-                22-06-2024 {challenge.page_type == "job" ? "08:00" : "07:00"} PM
+                30-06-2024 {challenge.page_type == "job" ? "08:00" : "07:00"} PM
               </p>
             </div>
           </div>
@@ -393,8 +442,8 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 3
-                : 3}
+                ? challenge?.eligibility?.length + 3+value
+                : 3+value}
             </p>
 
             <div
@@ -415,8 +464,8 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 4
-                : 4}
+                ? challenge?.eligibility?.length + 4+value
+                : 4+value}
             </p>
 
             <div
@@ -598,7 +647,10 @@ const PageDetails = ({ params }) => {
           {RenderData()}
           {!alreadyStarted && (
             <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
-              {isEligible && challenge.page_type == "tests" ? (
+              {
+                challenge.page_type == "internship" ?  (
+                  <>
+                  {isEligible && challenge.page_type == "tests" ? (
                 <Link
                   prefetch={false}
                   href={
@@ -622,6 +674,9 @@ const PageDetails = ({ params }) => {
               ) : (
                 <div
                   onClick={() => {
+                    if (!user) {
+                      router.push("/signup");
+                    }
                     if (
                       user &&
                       (challenge.page_type == "job" ||
@@ -636,16 +691,36 @@ const PageDetails = ({ params }) => {
                   Apply
                 </div>
               )}
+                  </>
+
+                ):(
+                  <div
+                  onClick={() => {
+                    if (!user) {
+                      router.push("/signup");
+                    }
+                    if (
+                      user 
+                    ) {
+                      setShowDialog(true)
+                    }
+                  }}
+                  className="w-full text-center cursor-pointer"
+                >
+                  Apply
+                </div>
+                )
+              }
               <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
                 <AlertDialogTrigger asChild>
                   <div />
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Not Eligible</AlertDialogTitle>
+                    <AlertDialogTitle>Coming Soon</AlertDialogTitle>
                     <AlertDialogDescription>
-                      You are not eligible for this job. Please review the
-                      eligibility criteria before proceeding.
+                      {challenge.page_type == "job" ? "Job" : "Quiz"} will be
+                      available from 27-06-2024.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
