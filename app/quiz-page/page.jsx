@@ -134,10 +134,10 @@ const QuizPage = () => {
       const marks = (maxMarks / (dataQuestion.timer * 1000)) * (timer);
       earnedMarks = Math.max(0, marks.toFixed(3));
       setMarks(earnedMarks);
-      console.log(earnedMarks)
-      console.log(marks)
-      console.log(timer)
-      console.log(maxMarks)
+      // console.log(earnedMarks)
+      // console.log(marks)
+      // console.log(timer)
+      // console.log(maxMarks)
     }
     // console.log(marks)
     await submitMarks(earnedMarks,question_ids,answer_ids);
@@ -148,9 +148,9 @@ const QuizPage = () => {
   };
 
   const submitMarks = async (earnedMarks,answer_ids,question_ids) => {
-    console.log(question_ids)
-    console.log(answer_ids)
-    console.log(earnedMarks)
+    // console.log(question_ids)
+    // console.log(answer_ids)
+    // console.log(earnedMarks)
     try {
       const formData = new URLSearchParams({
         user_id: quizDatas?.user.id,
