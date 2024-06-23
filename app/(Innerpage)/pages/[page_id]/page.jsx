@@ -263,7 +263,7 @@ const PageDetails = () => {
               user?.id ? user.id : null
             }&page_id=1`
           );
-          // console.log(response.data);
+          console.log(response.data);
           if (response.data.success) {
             setCompatibiltyTest(response.data.data);
           }
