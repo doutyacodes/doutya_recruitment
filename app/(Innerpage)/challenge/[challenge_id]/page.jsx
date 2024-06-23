@@ -83,7 +83,7 @@ const PageDetails = ({ params }) => {
     fetchChallenge();
     fetchData();
     // console.log(challenge.task_id)
-  }, []);
+  }, [alreadyStarted]);
   const fetchAlreadyDone = async () => {
     if (user) {
       try {
@@ -333,6 +333,8 @@ const PageDetails = ({ params }) => {
           {challenge.challenge_id == 90 && (
             <div className="w-full flex flex-col gap-3 justify-center items-center">
               <p className="font-bold ">Round 2</p>
+              {/* {console.log(isEligible)} */}
+
               <div
                 onClick={() => {
                   if (alreadyStarted && user && compatibilityTest?.completed && compatibilityTest.compatibility >=

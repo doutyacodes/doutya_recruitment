@@ -101,9 +101,9 @@ const QuizPage = () => {
           handleTimeOut();
           return 0;
         }
-        return prevTimer - 10; // Decrement timer by 10 milliseconds
+        return prevTimer - 1; // Decrement timer by 1 milliseconds
       });
-    }, 10); // Update interval to 10 milliseconds
+    }, 1); // Update interval to 10 milliseconds
     return () => clearInterval(countdown);
   }, [timer]);
 
@@ -132,17 +132,25 @@ const QuizPage = () => {
     if (data === correctAnswer) {
       const maxMarks = 1000;
       const marks = (maxMarks / (dataQuestion.timer * 1000)) * (timer);
-      earnedMarks = Math.max(0, marks.toFixed(2));
+      earnedMarks = Math.max(0, marks.toFixed(3));
       setMarks(earnedMarks);
+      console.log(earnedMarks)
+      console.log(marks)
+      console.log(timer)
+      console.log(maxMarks)
     }
-    await submitMarks(earnedMarks);
+    // console.log(marks)
+    await submitMarks(earnedMarks,question_ids,answer_ids);
   };
 
   const handleTimeOut = async () => {
     await submitMarks(0);
   };
 
-  const submitMarks = async (earnedMarks) => {
+  const submitMarks = async (earnedMarks,answer_ids,question_ids) => {
+    console.log(question_ids)
+    console.log(answer_ids)
+    console.log(earnedMarks)
     try {
       const formData = new URLSearchParams({
         user_id: quizDatas?.user.id,
@@ -150,8 +158,8 @@ const QuizPage = () => {
         task_id: dataQuestion.task_id,
         marks: earnedMarks,
         optionSend,
-        question_id,
-        answer_id,
+        question_id:question_ids && question_ids!=0 ? question_ids : question_id,
+        answer_id:answer_ids && answer_ids!=0 ? answer_ids : answer_ids,
       });
       const response = await axios.post(`${baseURL}/add-quiz-progress.php`, formData, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -205,7 +213,7 @@ const QuizPage = () => {
                     value={timer}
                     maxValue={dataQuestion?.timer * 1000} // Adjust to milliseconds
                     circleRatio={1}
-                    text={`${(timer / 1000).toFixed(2)}s`} // Display in seconds with two decimals
+                    text={`${(timer / 1000).toFixed(0)}s`} // Display in seconds with two decimals
                   />
                 </div>
               )}
