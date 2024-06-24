@@ -374,14 +374,14 @@ const PageDetails = ({ params }) => {
                 previousItem && previousItem.iseligibility;
               let eligible =
                 index == 0 ? true : previousItemIsEligible ? true : false;
-              console.log("compatibilityTest.completed:", compatibilityTest?.completed);
-              console.log("isEligible:", isEligible);
-              console.log("compatibilityTest.compatibility:", compatibilityTest?.compatibility);
-              console.log("challenge.page_type:", challenge.page_type);
-              console.log("item4.attempted:", item4.attempted);
-              console.log("item4.iseligibility:", item4.iseligibility);
-              console.log("item4:", item4);
-              console.log("eligible:", eligible);
+              // console.log("compatibilityTest.completed:", compatibilityTest?.completed);
+              // console.log("isEligible:", isEligible);
+              // console.log("compatibilityTest.compatibility:", compatibilityTest?.compatibility);
+              // console.log("challenge.page_type:", challenge.page_type);
+              // console.log("item4.attempted:", item4.attempted);
+              // console.log("item4.iseligibility:", item4.iseligibility);
+              // console.log("item4:", item4);
+              // console.log("eligible:", eligible);
               return (
                 <div className="w-full flex flex-col gap-3 justify-center items-center">
                   <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
@@ -402,7 +402,7 @@ const PageDetails = ({ params }) => {
                     }}
                     className={cn(
                       "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
-                      !user || !alreadyStarted || (index>0 && !item4.attempted)
+                      !user || !alreadyStarted || (index>0 &&!item4.attempted)
                         ? "bg-gray-500"
                         : user &&
                           compatibilityTest?.completed &&
