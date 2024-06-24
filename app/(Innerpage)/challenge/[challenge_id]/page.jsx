@@ -402,7 +402,7 @@ const PageDetails = ({ params }) => {
                     }}
                     className={cn(
                       "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
-                      !user || !alreadyStarted || (index>0 &&!item4.attempted)
+                      !user || !alreadyStarted || (index>0 &&(!item4.attempted && !challenge.tasks_list[index - 1].iseligibility))
                         ? "bg-gray-500"
                         : user &&
                           compatibilityTest?.completed &&
