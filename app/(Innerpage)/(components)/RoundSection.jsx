@@ -20,6 +20,8 @@ const RoundSection = ({ item, index, color,timerValue }) => {
 
   return (
     <Link href={color =="bg-orange-500" ? "/pages/1" : "#"} className="w-full flex flex-col gap-3 justify-center items-center">
+              <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
+
       <p className="font-bold">Round {index + 2}</p>
       <div
         className={cn(

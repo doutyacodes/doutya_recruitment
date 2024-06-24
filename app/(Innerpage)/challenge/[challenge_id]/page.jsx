@@ -25,6 +25,12 @@ import {
 import DescriptionText from "../../(components)/DescriptionText";
 import RoundSection from "../../(components)/RoundSection";
 import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 const PageDetails = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 24 };
@@ -271,7 +277,7 @@ const PageDetails = ({ params }) => {
     return (
       <div className=" mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4 mb-9">
         <div className=" w-full flex items-center flex-col justify-center">
-          {challenge.keyword ? (
+          {/* {challenge.keyword ? (
             <div className="relative md:h-24 md:w-32 w-20 h-16 border flex text-white bg-gradient-to-l from-red-400 to-blue-400 justify-center items-center text-center rounded-md">
               <p className="text-5xl font-bold ">
                 {challenge.keyword.charAt(0)}
@@ -289,8 +295,28 @@ const PageDetails = ({ params }) => {
                 />
               )}
             </div>
-          )}
-          <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
+          )} */}
+          <h3 className="font-bold text-center text-2xl">{challenge.title}</h3>
+          <p className="mt-2 text-slate-600 text-xs">
+            Click on each bubble to complete the rounds.
+          </p>
+          <p className="mt-2 text-slate-600 text-xs">
+            You can complete your compatibility test in 'Tests' section.
+          </p>
+          <div className="mt-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <IoMdInformationCircleOutline color="red" size={23} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="min-w-72 max-w-96 p-3">
+                <p class="text-xs text-gray-600 font-bold">
+                  Green Bubble denotes successfully completed round, Red Bubble
+                  denotes failed round, Orange Bubble denotes the round in
+                  progress and the Grey Bubble denotes upcoming rounds.
+                </p>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
         <div className="w-full flex flex-col gap-5 mt-5">
           <div className="w-full flex flex-col gap-3 justify-center items-center">
@@ -334,70 +360,74 @@ const PageDetails = ({ params }) => {
             </div>
           </div>
           {challenge?.tasks_list?.length > 0 &&
-  challenge.tasks_list?.map((item4, index) => {
-    const previousItem = index > 0 ? challenge.tasks_list[index - 1] : null;
-    const previousItemIsEligible = previousItem && previousItem.iseligibility;
-let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
-// console.log("compatibilityTest.completed:", compatibilityTest?.completed);
-// console.log("isEligible:", isEligible);
-// console.log("compatibilityTest.compatibility:", compatibilityTest?.compatibility);
-// console.log("challenge.page_type:", challenge.page_type);
-// console.log("item4.attempted:", item4.attempted);
-// console.log("item4.iseligibility:", item4.iseligibility);
-// console.log("item4:", item4);
-    return (
-      <div className="w-full flex flex-col gap-3 justify-center items-center">
-        <p className="font-bold ">Round {index + 2}</p>
+            challenge.tasks_list?.map((item4, index) => {
+              const previousItem =
+                index > 0 ? challenge.tasks_list[index - 1] : null;
+              const previousItemIsEligible =
+                previousItem && previousItem.iseligibility;
+              let eligible =
+                index == 0 ? true : previousItemIsEligible ? true : false;
+              // console.log("compatibilityTest.completed:", compatibilityTest?.completed);
+              // console.log("isEligible:", isEligible);
+              // console.log("compatibilityTest.compatibility:", compatibilityTest?.compatibility);
+              // console.log("challenge.page_type:", challenge.page_type);
+              // console.log("item4.attempted:", item4.attempted);
+              // console.log("item4.iseligibility:", item4.iseligibility);
+              // console.log("item4:", item4);
+              return (
+                <div className="w-full flex flex-col gap-3 justify-center items-center">
+                  <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
+                  <p className="font-bold ">Round {index + 2}</p>
 
-        <div
-          onClick={() => {
-            if (
-              alreadyStarted &&
-              user &&
-                compatibilityTest?.completed &&
-                isEligible &&
-                !item4.attempted &&
-                eligible
-            ) {
-              router.push(`/quiz-lobby/${item4.task_id}`);
-            }
-          }}
-          className={cn(
-            "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
-            !user ||
-              !alreadyStarted ||!item4.attempted
-              ? "bg-gray-500"
-              : user &&
-                compatibilityTest?.completed &&
-                isEligible &&
-                !item4.attempted &&
-                eligible
-              ? "bg-gradient-to-r from-orange-500 to-orange-700"
-              : compatibilityTest?.completed &&
-                isEligible &&
-                compatibilityTest.compatibility >= (challenge.page_type === "job" ? 60 : 50) &&
-                item4.attempted &&
-                item4.iseligibility
-              ? "bg-gradient-to-r from-green-500 to-green-700"
-              : compatibilityTest?.completed &&
-                isEligible &&
-                item4.attempted &&
-                  !item4.eligibility
-              ? "bg-gradient-to-r from-red-500 to-red-700"
-              : "bg-gray-400"
-          )}
-        >
-          <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
-            {item4.task_id == 138 ? "Aptitude" : "Technical"}
-          </p>
-          <p className="text-center font-bold text-base text-white "></p>
-          <p className="text-center font-semibold text-sm text-white">
-            {item4.task_id == 138 ? "General Aptitude" : "Html React"}
-          </p>
-        </div>
-      </div>
-    );
-  })}
+                  <div
+                    onClick={() => {
+                      if (
+                        alreadyStarted &&
+                        user &&
+                        compatibilityTest?.completed &&
+                        isEligible &&
+                        !item4.attempted &&
+                        eligible
+                      ) {
+                        router.push(`/quiz-lobby/${item4.task_id}`);
+                      }
+                    }}
+                    className={cn(
+                      "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
+                      !user || !alreadyStarted || !item4.attempted
+                        ? "bg-gray-500"
+                        : user &&
+                          compatibilityTest?.completed &&
+                          isEligible &&
+                          !item4.attempted &&
+                          eligible
+                        ? "bg-gradient-to-r from-orange-500 to-orange-700"
+                        : compatibilityTest?.completed &&
+                          isEligible &&
+                          compatibilityTest.compatibility >=
+                            (challenge.page_type === "job" ? 60 : 50) &&
+                          item4.attempted &&
+                          item4.iseligibility
+                        ? "bg-gradient-to-r from-green-500 to-green-700"
+                        : compatibilityTest?.completed &&
+                          isEligible &&
+                          item4.attempted &&
+                          !item4.eligibility
+                        ? "bg-gradient-to-r from-red-500 to-red-700"
+                        : "bg-gray-400"
+                    )}
+                  >
+                    <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
+                      {item4.task_id == 138 ? "Aptitude" : "Technical"}
+                    </p>
+                    <p className="text-center font-bold text-base text-white "></p>
+                    <p className="text-center font-semibold text-sm text-white">
+                      {item4.task_id == 138 ? "General Aptitude" : "Html React"}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
 
           {challenge?.eligibility?.map((item, index) => {
             let color;
@@ -440,6 +470,8 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
           })}
 
           <div className="w-full flex flex-col gap-3 justify-center items-center">
+            <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
+
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
@@ -464,6 +496,8 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
             </div>
           </div>
           <div className="w-full flex flex-col gap-3 justify-center items-center">
+            <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
+
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
@@ -478,14 +512,20 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
                 "from-gray-500 to-gray-400"
               )}
             >
-              <p className="text-center font-bold text-xl text-white underline uppercase"> HR</p>
+              <p className="text-center font-bold text-xl text-white underline uppercase">
+                {" "}
+                HR
+              </p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-               <span className="font-bold">    1 MIN VIDEO </span>: <span>Tell us about yourself.</span>
+                <span className="font-bold"> 1 MIN VIDEO </span>:{" "}
+                <span>Tell us about yourself.</span>
               </p>
             </div>
           </div>
           <div className="w-full flex flex-col gap-3 justify-center items-center">
+            <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
+
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
@@ -534,7 +574,7 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
   };
   const gotoQuiz = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
       const response2 = await axios.post(
         `${baseURL}/create-job-start.php`,
@@ -555,8 +595,7 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
     } catch (error) {
       console.error("Error2:", error);
     } finally {
-      
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
   return (
@@ -676,7 +715,10 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
           </div>
           {RenderData()}
           {!alreadyStarted && (
-            <Button disabled={isLoading} className="bg-[#0d988c] px-3 max-w-[600px] mx-2 min-w-72 h-12 fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
+            <Button
+              disabled={isLoading}
+              className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-2 min-w-72 h-12 fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4"
+            >
               {challenge.page_type == "internship" ||
               challenge.page_type == "tests" ? (
                 <>

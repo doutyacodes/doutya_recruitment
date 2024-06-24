@@ -88,12 +88,12 @@ const ChallengeBuzzWorld = ({
         className=" rounded-md  min-w-72 "
       >
         <div className={" px-3 py-1"}>
-          <div className={" relative w-full h-[68px] md:h-56 border rounded-md "}>
+          <div className={" relative w-full h-[68px] md:h-56 border rounded-lg "}>
             <Image
               src={imageSrc}
               fill
               alt="Profile Image"
-              className="rounded-lg min-[570px]:object-cover md:object-contain max-[570px]:object-fill"
+              className="rounded-lg min-[576px]:object-cover md:object-contain max-[575px]:object-fill"
             />
           </div>
         </div>
