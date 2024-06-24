@@ -737,7 +737,7 @@ const PageDetails = ({ params }) => {
                         user &&
                         (challenge.page_type != "tests" ||
                           challenge.page_type != "language")
-                          ? `/rounds/${challenge.challenge_id}`
+                          ? `/quiz-lobby/${challenge.task_id}`
                           : user &&
                             (challenge.page_type != "tests" ||
                               challenge.page_type != "language")
