@@ -297,10 +297,10 @@ const PageDetails = ({ params }) => {
             </div>
           )} */}
           <h3 className="font-bold text-center text-2xl">{challenge.title}</h3>
-          <p className="mt-2 text-slate-600 text-xs">
+          <p className="mt-2 text-slate-600 text-xs text-center">
             Click on each bubble to complete the rounds.
           </p>
-          <p className="mt-2 text-slate-600 text-xs">
+          <p className="mt-2 text-slate-600 text-xs text-center">
             You can complete your compatibility test in 'Tests' section.
           </p>
           <div className="mt-2">
@@ -309,10 +309,17 @@ const PageDetails = ({ params }) => {
                 <IoMdInformationCircleOutline color="red" size={23} />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="min-w-72 max-w-96 p-3">
-                <p class="text-xs text-gray-600 font-bold">
-                  Green Bubble denotes successfully completed round, Red Bubble
-                  denotes failed round, Orange Bubble denotes the round in
-                  progress and the Grey Bubble denotes upcoming rounds.
+                <p className="text-xs text-gray-600 text-center">
+                  Green Bubble denotes successfully completed round.
+                </p>
+                <p className="text-xs text-gray-600 text-center">
+                  Red Bubble denotes failed round.
+                </p>
+                <p className="text-xs text-gray-600 text-center">
+                  Orange Bubble denotes the round in progress.
+                </p>
+                <p className="text-xs text-gray-600 text-center">
+                  Grey Bubble denotes upcoming rounds.{" "}
                 </p>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -367,13 +374,14 @@ const PageDetails = ({ params }) => {
                 previousItem && previousItem.iseligibility;
               let eligible =
                 index == 0 ? true : previousItemIsEligible ? true : false;
-              // console.log("compatibilityTest.completed:", compatibilityTest?.completed);
-              // console.log("isEligible:", isEligible);
-              // console.log("compatibilityTest.compatibility:", compatibilityTest?.compatibility);
-              // console.log("challenge.page_type:", challenge.page_type);
-              // console.log("item4.attempted:", item4.attempted);
-              // console.log("item4.iseligibility:", item4.iseligibility);
-              // console.log("item4:", item4);
+              console.log("compatibilityTest.completed:", compatibilityTest?.completed);
+              console.log("isEligible:", isEligible);
+              console.log("compatibilityTest.compatibility:", compatibilityTest?.compatibility);
+              console.log("challenge.page_type:", challenge.page_type);
+              console.log("item4.attempted:", item4.attempted);
+              console.log("item4.iseligibility:", item4.iseligibility);
+              console.log("item4:", item4);
+              console.log("eligible:", eligible);
               return (
                 <div className="w-full flex flex-col gap-3 justify-center items-center">
                   <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
@@ -394,7 +402,7 @@ const PageDetails = ({ params }) => {
                     }}
                     className={cn(
                       "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
-                      !user || !alreadyStarted || !item4.attempted
+                      !user || !alreadyStarted || (index>0 && !item4.attempted)
                         ? "bg-gray-500"
                         : user &&
                           compatibilityTest?.completed &&
