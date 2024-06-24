@@ -454,12 +454,12 @@ const PageDetails = () => {
       <div className="w-full  h-full   space-y-4">
         <div className="w-full space-y-5 md:mt-5">
           <div className="w-full  p-3">
-            {console.log(compatibiltyTest)}
+            {/* {console.log(compatibiltyTest)} */}
             <div
               onClick={() => {
                 compatibiltyTest?.completed
                   ? console.log("Clicked")
-                  : user && router.push("/quiz-lobby/129");
+                  : user ? router.push("/quiz-lobby/129") : router.push("/signup");
               }}
               className=" text-center bg-[#2aa8bf] flex justify-between max-h-24 items-center py-1 shadow-md rounded-lg cursor-pointer px-3"
             >
