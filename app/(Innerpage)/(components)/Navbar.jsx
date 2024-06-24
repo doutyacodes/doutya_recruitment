@@ -42,13 +42,14 @@ const Navbar = () => {
           </Sheet>
         </li>
         <li>
+          <Link href={"/home"}>
           <Image
             src="/assets/images/doutya4.png"
             alt="logo"
             width={120}
             height={60}
             className=" rounded-md"
-          />
+          /></Link>
         </li>
         <li>
           {!user ? (
