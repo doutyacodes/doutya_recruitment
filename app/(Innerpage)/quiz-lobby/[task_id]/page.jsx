@@ -204,6 +204,7 @@ const LobbyScreen = ({ params }) => {
         const serializedQuizDatas = JSON.stringify(quizDatas);
         await localStorage.setItem("quizDatas", serializedQuizDatas);
         setQuizDatas(quizDatas);
+        console.log(serializedQuizDatas)
         router.replace("/quiz-page");
       }
     } catch (error) {

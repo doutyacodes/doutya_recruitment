@@ -134,13 +134,16 @@ const QuizPage = () => {
       const marks = (maxMarks / (dataQuestion.timer * 1000)) * (timer);
       earnedMarks = Math.max(0, marks.toFixed(3));
       setMarks(earnedMarks);
-      // console.log(earnedMarks)
-      // console.log(marks)
-      // console.log(timer)
-      // console.log(maxMarks)
+    //   console.log(earnedMarks)
+    //   console.log(marks)
+    //   console.log(timer)
+    //   console.log(maxMarks)
+    //   console.log(question_ids)
+    // console.log(answer_ids)
+    // console.log(earnedMarks)
     }
     // console.log(marks)
-    await submitMarks(earnedMarks,question_ids,answer_ids);
+    await submitMarks(earnedMarks,answer_ids,question_ids);
   };
 
   const handleTimeOut = async () => {

@@ -333,67 +333,66 @@ const PageDetails = ({ params }) => {
               </p>
             </div>
           </div>
-          {challenge.challenge_id == 90 && (
-            <>
-              {challenge?.tasks_list?.length > 0 &&
-                challenge.tasks_list?.map((item4, index) => {
-                  return (
-                    <div className="w-full flex flex-col gap-3 justify-center items-center">
-                      <p className="font-bold ">Round {index+2}</p>
-                      {/* {console.log(isEligible)} */}
+          {challenge?.tasks_list?.length > 0 &&
+  challenge.tasks_list?.map((item4, index) => {
+    const previousItem = index > 0 ? challenge.tasks_list[index - 1] : null;
+    const previousItemIsEligible = previousItem && previousItem.iseligibility;
+let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
 
-                      <div
-                        onClick={() => {
-                          if (
-                            alreadyStarted &&
-                            user &&
-                            compatibilityTest?.completed &&
-                            compatibilityTest.compatibility >=
-                              (challenge.page_type === "job" ? 60 : 50)
-                          ) {
-                            router.push(`/quiz-lobby/${item4.task_id}`);
-                          }
-                        }}
-                        className={cn(
-                          "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
-                          !user || !alreadyStarted
-                            ? "bg-gray-500"
-                            : user && compatibilityTest?.completed && isEligible
-                            ? "bg-gradient-to-r from-orange-500 to-orange-700"
-                            : compatibilityTest?.completed &&
-                              isEligible &&
-                              compatibilityTest.compatibility >=
-                                (challenge.page_type === "job" ? 60 : 50)
-                            ? "bg-gradient-to-r from-green-500 to-green-700"
-                            : compatibilityTest?.completed &&
-                              isEligible &&
-                              compatibilityTest.compatibility <
-                                (challenge.page_type === "job" ? 60 : 50)(
-                                  challenge.page_type === "job" ? 60 : 50
-                                )
-                            ? "bg-gradient-to-r from-red-500 to-red-700"
-                            : "bg-gray-400"
-                        )}
-                      >
-                        <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
-                          {item4.task_id ==138 ? "Aptitude" : "Technical"}
-                        </p>
-                        <p className="text-center font-bold text-base text-white ">
-                          {/* {compatibilityTest?.completed
-                    ? compatibilityTest.compatibility
-                    : 0}
-                  % */}
-                        </p>
-                        <p className="text-center font-semibold text-sm text-white">
-                        {item4.task_id ==138 ? "General Aptitude" : "Html React"}
-                        
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-            </>
+    return (
+      <div className="w-full flex flex-col gap-3 justify-center items-center">
+        <p className="font-bold ">Round {index + 2}</p>
+
+        <div
+          onClick={() => {
+            if (
+              alreadyStarted &&
+              user &&
+                compatibilityTest?.completed &&
+                isEligible &&
+                !item4.attempted &&
+                eligible
+            ) {
+              router.push(`/quiz-lobby/${item4.task_id}`);
+            }
+          }}
+          className={cn(
+            "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
+            !user ||
+              !alreadyStarted 
+              ? "bg-gray-500"
+              : user &&
+                compatibilityTest?.completed &&
+                isEligible &&
+                !item4.attempted &&
+                eligible
+              ? "bg-gradient-to-r from-orange-500 to-orange-700"
+              : compatibilityTest?.completed &&
+                isEligible &&
+                compatibilityTest.compatibility >= (challenge.page_type === "job" ? 60 : 50) &&
+                item4.attempted &&
+                item4.iseligibility
+              ? "bg-gradient-to-r from-green-500 to-green-700"
+              : compatibilityTest?.completed &&
+                isEligible &&
+                compatibilityTest.compatibility <
+                  (challenge.page_type === "job" ? 60 : 50) 
+              ? "bg-gradient-to-r from-red-500 to-red-700"
+              : "bg-gray-400"
           )}
+        >
+          <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
+            {item4.task_id == 138 ? "Aptitude" : "Technical"}
+          </p>
+          <p className="text-center font-bold text-base text-white "></p>
+          <p className="text-center font-semibold text-sm text-white">
+            {item4.task_id == 138 ? "General Aptitude" : "Html React"}
+          </p>
+        </div>
+      </div>
+    );
+  })}
+
           {challenge?.eligibility?.map((item, index) => {
             let color;
             // console.log(item)
@@ -473,10 +472,10 @@ const PageDetails = ({ params }) => {
                 "from-gray-500 to-gray-400"
               )}
             >
-              <p className="text-center font-bold text-xl text-white underline uppercase"></p>
+              <p className="text-center font-bold text-xl text-white underline uppercase"> HR</p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                HR Round
+               <span className="font-bold">    1 MIN VIDEO </span>: <span>Tell us about yourself.</span>
               </p>
             </div>
           </div>
@@ -529,6 +528,8 @@ const PageDetails = ({ params }) => {
   };
   const gotoQuiz = async () => {
     try {
+      setIsLoading(true)
+
       const response2 = await axios.post(
         `${baseURL}/create-job-start.php`,
         {
@@ -548,7 +549,8 @@ const PageDetails = ({ params }) => {
     } catch (error) {
       console.error("Error2:", error);
     } finally {
-      setIsEligible(false);
+      
+      setIsLoading(false)
     }
   };
   return (
@@ -668,7 +670,7 @@ const PageDetails = ({ params }) => {
           </div>
           {RenderData()}
           {!alreadyStarted && (
-            <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
+            <Button disabled={isLoading} className="bg-[#0d988c] px-3 max-w-[600px] mx-2 min-w-72 h-12 fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
               {challenge.page_type == "internship" ||
               challenge.page_type == "tests" ? (
                 <>
