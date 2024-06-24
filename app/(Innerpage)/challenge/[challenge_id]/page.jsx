@@ -342,11 +342,11 @@ const PageDetails = ({ params }) => {
                   ? "bg-gradient-to-r from-orange-500 to-orange-700"
                   : compatibilityTest?.completed &&
                     compatibilityTest.compatibility >=
-                      (challenge.page_type === "job" ? 60 : 50)
+                      (challenge.page_type === "job" ? 60 : 55)
                   ? "bg-gradient-to-r from-green-500 to-green-700"
                   : compatibilityTest?.completed &&
                     compatibilityTest.compatibility <
-                      (challenge.page_type === "job" ? 60 : 50)
+                      (challenge.page_type === "job" ? 60 : 55)
                   ? "bg-gradient-to-r from-red-500 to-red-700"
                   : "bg-gray-400"
               )}
@@ -362,7 +362,7 @@ const PageDetails = ({ params }) => {
               </p>
               <p className="text-center font-semibold text-sm text-white">
                 Required compatibility -{" "}
-                {challenge.page_type === "job" ? "60" : "50"}%
+                {challenge.page_type === "job" ? "60" : "55"}%
               </p>
             </div>
           </div>
@@ -413,7 +413,7 @@ const PageDetails = ({ params }) => {
                         : compatibilityTest?.completed &&
                           isEligible &&
                           compatibilityTest.compatibility >=
-                            (challenge.page_type === "job" ? 60 : 50) &&
+                            (challenge.page_type === "job" ? 60 : 55) &&
                           item4.attempted &&
                           item4.iseligibility
                         ? "bg-gradient-to-r from-green-500 to-green-700"
@@ -445,7 +445,7 @@ const PageDetails = ({ params }) => {
             } else if (
               compatibilityTest.completed &&
               compatibilityTest?.compatibility <
-                (challenge.page_type === "job" ? 60 : 50)
+                (challenge.page_type === "job" ? 60 : 55)
             ) {
               color = "bg-red-500";
               // {console.log(compatibilityTest.compatibility)}
@@ -455,7 +455,7 @@ const PageDetails = ({ params }) => {
               index === 0 &&
               compatibilityTest.completed &&
               compatibilityTest?.compatibility >
-                (challenge.page_type === "job" ? 60 : 50)
+                (challenge.page_type === "job" ? 60 : 55)
             ) {
               color = "bg-orange-500";
             } else if (
