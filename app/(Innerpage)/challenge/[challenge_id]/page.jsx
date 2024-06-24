@@ -52,7 +52,7 @@ const PageDetails = ({ params }) => {
             user ? user.id : null
           }`
         );
-        // console.log(response.data);
+        console.log(response.data);
 
         if (response.status === 200) {
           setChallenge(response.data);
@@ -67,6 +67,9 @@ const PageDetails = ({ params }) => {
             response.data?.page_type == "internship"
           ) {
             setToggleNav("Rounds");
+          }
+          if (response.data?.page_type == "tests") {
+            setToggleNav("Stars");
           }
           // console.log(response.data.eligibility);
           // console.log(response.data);
@@ -262,7 +265,7 @@ const PageDetails = ({ params }) => {
       </div>
     );
   };
-  const value = challenge?.page_type === "internship" ? 1 : 0;
+  const value = challenge?.page_type === "internship" ? 2 : 0;
 
   const RoundsRoute = () => {
     return (
@@ -331,50 +334,65 @@ const PageDetails = ({ params }) => {
             </div>
           </div>
           {challenge.challenge_id == 90 && (
-            <div className="w-full flex flex-col gap-3 justify-center items-center">
-              <p className="font-bold ">Round 2</p>
-              {/* {console.log(isEligible)} */}
+            <>
+              {challenge?.tasks_list?.length > 0 &&
+                challenge.tasks_list?.map((item4, index) => {
+                  return (
+                    <div className="w-full flex flex-col gap-3 justify-center items-center">
+                      <p className="font-bold ">Round {index+2}</p>
+                      {/* {console.log(isEligible)} */}
 
-              <div
-                onClick={() => {
-                  if (alreadyStarted && user && compatibilityTest?.completed && compatibilityTest.compatibility >=
-                    (challenge.page_type === "job" ? 60 : 50)) {
-                    router.push(`/quiz-lobby/${challenge.task_id}`);
-                  }
-                }}
-                className={cn(
-                  "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
-                  !user || !alreadyStarted
-                    ? "bg-gray-500"
-                    : user && compatibilityTest?.completed && isEligible
-                    ? "bg-gradient-to-r from-orange-500 to-orange-700"
-                    : compatibilityTest?.completed &&isEligible  &&
-                      compatibilityTest.compatibility >=
-                        (challenge.page_type === "job" ? 60 : 50)
-                    ? "bg-gradient-to-r from-green-500 to-green-700"
-                    : compatibilityTest?.completed && isEligible&&
-                      compatibilityTest.compatibility <
-                        (challenge.page_type === "job" ? 60 : 50)(
-                          challenge.page_type === "job" ? 60 : 50
-                        )
-                    ? "bg-gradient-to-r from-red-500 to-red-700"
-                    : "bg-gray-400"
-                )}
-              >
-                <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
-                  Aptitude
-                </p>
-                <p className="text-center font-bold text-base text-white ">
-                  {/* {compatibilityTest?.completed
+                      <div
+                        onClick={() => {
+                          if (
+                            alreadyStarted &&
+                            user &&
+                            compatibilityTest?.completed &&
+                            compatibilityTest.compatibility >=
+                              (challenge.page_type === "job" ? 60 : 50)
+                          ) {
+                            router.push(`/quiz-lobby/${item4.task_id}`);
+                          }
+                        }}
+                        className={cn(
+                          "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
+                          !user || !alreadyStarted
+                            ? "bg-gray-500"
+                            : user && compatibilityTest?.completed && isEligible
+                            ? "bg-gradient-to-r from-orange-500 to-orange-700"
+                            : compatibilityTest?.completed &&
+                              isEligible &&
+                              compatibilityTest.compatibility >=
+                                (challenge.page_type === "job" ? 60 : 50)
+                            ? "bg-gradient-to-r from-green-500 to-green-700"
+                            : compatibilityTest?.completed &&
+                              isEligible &&
+                              compatibilityTest.compatibility <
+                                (challenge.page_type === "job" ? 60 : 50)(
+                                  challenge.page_type === "job" ? 60 : 50
+                                )
+                            ? "bg-gradient-to-r from-red-500 to-red-700"
+                            : "bg-gray-400"
+                        )}
+                      >
+                        <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
+                          {item4.task_id ==138 ? "Aptitude" : "Technical"}
+                        </p>
+                        <p className="text-center font-bold text-base text-white ">
+                          {/* {compatibilityTest?.completed
                     ? compatibilityTest.compatibility
                     : 0}
                   % */}
-                </p>
-                <p className="text-center font-semibold text-sm text-white">
-                  General Aptitude
-                </p>
-              </div>
-            </div>
+                        </p>
+                        <p className="text-center font-semibold text-sm text-white">
+                        {item4.task_id ==138 ? "General Aptitude" : "Html React"}
+                        
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+            </>
           )}
           {challenge?.eligibility?.map((item, index) => {
             let color;
@@ -420,8 +438,8 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 2+value
-                : 2+value}
+                ? challenge?.eligibility?.length + 2 + value
+                : 2 + value}
             </p>
 
             <div
@@ -444,8 +462,8 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 3+value
-                : 3+value}
+                ? challenge?.eligibility?.length + 3 + value
+                : 3 + value}
             </p>
 
             <div
@@ -466,8 +484,8 @@ const PageDetails = ({ params }) => {
             <p className="font-bold ">
               Round{" "}
               {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 4+value
-                : 4+value}
+                ? challenge?.eligibility?.length + 4 + value
+                : 4 + value}
             </p>
 
             <div
@@ -590,15 +608,17 @@ const PageDetails = ({ params }) => {
                 Rounds
               </p>
             )}
-            <p
-              className={cn(
-                "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
-                toggleNav == "Description" && "border-b border-black"
-              )}
-              onClick={() => handleToggle("Description")}
-            >
-              Description
-            </p>
+            {challenge.page_type != "tests" && (
+              <p
+                className={cn(
+                  "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+                  toggleNav == "Description" && "border-b border-black"
+                )}
+                onClick={() => handleToggle("Description")}
+              >
+                Description
+              </p>
+            )}
             <p
               className={cn(
                 "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
@@ -649,43 +669,59 @@ const PageDetails = ({ params }) => {
           {RenderData()}
           {!alreadyStarted && (
             <Button className="bg-[#0d988c] px-3 max-w-[600px] fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4">
-              {
-                challenge.page_type == "internship" ?  (
-                  <>
+              {challenge.page_type == "internship" ||
+              challenge.page_type == "tests" ? (
+                <>
                   {isEligible && challenge.page_type == "tests" ? (
-                <Link
-                  prefetch={false}
-                  href={
-                    user &&
-                    (challenge.page_type != "tests" ||
-                      challenge.page_type != "language")
-                      ? `/rounds/${challenge.challenge_id}`
-                      : user &&
+                    <Link
+                      prefetch={false}
+                      href={
+                        user &&
                         (challenge.page_type != "tests" ||
                           challenge.page_type != "language")
-                      ? `/quiz-lobby/${challenge.task_id}`
-                      : "/signup"
-                  }
-                  className="w-full text-lg"
-                >
-                  {challenge.page_type != "tests" ||
-                  challenge.page_type != "language"
-                    ? "Start"
-                    : "Apply"}
-                </Link>
+                          ? `/rounds/${challenge.challenge_id}`
+                          : user &&
+                            (challenge.page_type != "tests" ||
+                              challenge.page_type != "language")
+                          ? `/quiz-lobby/${challenge.task_id}`
+                          : "/signup"
+                      }
+                      className="w-full text-lg"
+                    >
+                      {challenge.page_type != "tests" ||
+                      challenge.page_type != "language"
+                        ? "Start"
+                        : "Apply"}
+                    </Link>
+                  ) : (
+                    <div
+                      onClick={() => {
+                        if (!user) {
+                          router.push("/signup");
+                        }
+                        if (
+                          user &&
+                          (challenge.page_type == "job" ||
+                            challenge.page_type == "internship")
+                        ) {
+                          console.log("hello");
+                          gotoQuiz();
+                        }
+                      }}
+                      className="w-full text-center cursor-pointer"
+                    >
+                      Apply
+                    </div>
+                  )}
+                </>
               ) : (
                 <div
                   onClick={() => {
                     if (!user) {
                       router.push("/signup");
                     }
-                    if (
-                      user &&
-                      (challenge.page_type == "job" ||
-                        challenge.page_type == "internship")
-                    ) {
-                      console.log("hello");
-                      gotoQuiz();
+                    if (user) {
+                      setShowDialog(true);
                     }
                   }}
                   className="w-full text-center cursor-pointer"
@@ -693,26 +729,6 @@ const PageDetails = ({ params }) => {
                   Apply
                 </div>
               )}
-                  </>
-
-                ):(
-                  <div
-                  onClick={() => {
-                    if (!user) {
-                      router.push("/signup");
-                    }
-                    if (
-                      user 
-                    ) {
-                      setShowDialog(true)
-                    }
-                  }}
-                  className="w-full text-center cursor-pointer"
-                >
-                  Apply
-                </div>
-                )
-              }
               <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
                 <AlertDialogTrigger asChild>
                   <div />

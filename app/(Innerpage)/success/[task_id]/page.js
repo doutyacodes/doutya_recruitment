@@ -13,8 +13,9 @@ const Success = ({ params }) => {
   const task_id = params.task_id;
   const user = useAppSelector((state) => state.auth.user);
   const [starsDetails, setStarsDetails] = useState(0);
-  const [percentageDetails, setpercentageDetails] = useState(0);
+  const [percentageDetails, setPercentageDetails] = useState(0);
   const [types, setTypes] = useState(null);
+  const [pageTypes, setPageTypes] = useState(null);
   const [routes, setRoutes] = useState("home");
   const router = useRouter();
 
@@ -28,7 +29,7 @@ const Success = ({ params }) => {
     const getStars = async () => {
       try {
         const response = await axios.get(
-          ` ${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
+          `${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
         );
         console.log(response.data);
         if (response.data.data.stars) {
@@ -38,10 +39,13 @@ const Success = ({ params }) => {
           setRoutes("pages/" + response.data.data.page_id);
         }
         if (response.data.data.total_percent) {
-          setpercentageDetails(response.data.data.total_percent);
+          setPercentageDetails(response.data.data.total_percent);
         }
         if (response.data.data.types) {
           setTypes(response.data.data.types);
+        }
+        if (response.data.data.page_type) {
+          setPageTypes(response.data.data.page_type);
         }
       } catch (error) {
         console.error(error);
@@ -51,20 +55,19 @@ const Success = ({ params }) => {
       getStars();
     }
   }, [user, task_id]);
+
   const total_stars = 3;
+
   // Function to render stars
   const renderStars = () => {
-    const goldStars =
-      starsDetails && starsDetails.stars > 0 ? starsDetails.stars : 0; // Number of gold stars
-    const grayStars = total_stars - goldStars; // Number of gray stars
+    const goldStars = starsDetails && starsDetails.stars > 0 ? starsDetails.stars : 0;
+    const grayStars = total_stars - goldStars;
     const stars = [];
 
-    // Render gold stars
     for (let i = 0; i < goldStars; i++) {
       stars.push(<FaStar key={i} color="gold" size={20} />);
     }
 
-    // Render gray stars
     for (let i = 0; i < grayStars; i++) {
       stars.push(<FaStar key={i + goldStars} color="gray" size={20} />);
     }
@@ -90,17 +93,17 @@ const Success = ({ params }) => {
             </div>
           </div>
         )}
-        {types && types != "compatibility" && percentageDetails > 0 && (
+        {types && types !== "compatibility" && percentageDetails > 0 && (
           <div>
             <p className="text-lg text-center space-y-5 font-bold">
-              Your Perfomance
+              Your Performance
             </p>
             <p className="w-full text-center my-3 font-bold text-lg">
               {percentageDetails?.toFixed(2)}%
             </p>
           </div>
         )}
-        {types && types == "compatibility" && percentageDetails > 0 && (
+        {types && types === "compatibility" && percentageDetails > 0 && (
           <div>
             <p className="text-lg text-center space-y-5 font-bold">
               Your Compatibility with Doutya Technologies
@@ -111,7 +114,7 @@ const Success = ({ params }) => {
           </div>
         )}
 
-        {types && types != "compatibility" && (
+        {types && types !== "compatibility" && (pageTypes && pageTypes !== "tests" && pageTypes !== "language") && (
           <p className=" text-black/80 p-3">
             {percentageDetails > 34.99 ? (
               <>
