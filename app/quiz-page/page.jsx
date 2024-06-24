@@ -94,16 +94,19 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (!timer) return;
+    const start = Date.now();
     const countdown = setInterval(() => {
+      const elapsed = Date.now() - start;
       setTimer((prevTimer) => {
-        if (prevTimer <= 1) {
+        const newTimer = prevTimer - elapsed;
+        if (newTimer <= 0) {
           clearInterval(countdown);
           handleTimeOut();
           return 0;
         }
-        return prevTimer - 1; // Decrement timer by 1 milliseconds
+        return newTimer;
       });
-    }, 1); // Update interval to 10 milliseconds
+    }, 1);
     return () => clearInterval(countdown);
   }, [timer]);
 
@@ -134,26 +137,15 @@ const QuizPage = () => {
       const marks = (maxMarks / (dataQuestion.timer * 1000)) * (timer);
       earnedMarks = Math.max(0, marks.toFixed(3));
       setMarks(earnedMarks);
-    //   console.log(earnedMarks)
-    //   console.log(marks)
-    //   console.log(timer)
-    //   console.log(maxMarks)
-    //   console.log(question_ids)
-    // console.log(answer_ids)
-    // console.log(earnedMarks)
     }
-    // console.log(marks)
-    await submitMarks(earnedMarks,answer_ids,question_ids);
+    await submitMarks(earnedMarks, answer_ids, question_ids);
   };
 
   const handleTimeOut = async () => {
     await submitMarks(0);
   };
 
-  const submitMarks = async (earnedMarks,answer_ids,question_ids) => {
-    // console.log(question_ids)
-    // console.log(answer_ids)
-    // console.log(earnedMarks)
+  const submitMarks = async (earnedMarks, answer_ids, question_ids) => {
     try {
       const formData = new URLSearchParams({
         user_id: quizDatas?.user.id,
@@ -161,8 +153,8 @@ const QuizPage = () => {
         task_id: dataQuestion.task_id,
         marks: earnedMarks,
         optionSend,
-        question_id:question_ids && question_ids!=0 ? question_ids : question_id,
-        answer_id:answer_ids && answer_ids!=0 ? answer_ids : answer_ids,
+        question_id: question_ids && question_ids != 0 ? question_ids : question_id,
+        answer_id: answer_ids && answer_ids != 0 ? answer_ids : answer_ids,
       });
       const response = await axios.post(`${baseURL}/add-quiz-progress.php`, formData, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -178,7 +170,7 @@ const QuizPage = () => {
     } catch (error) {
       console.error("Error adding marks:", error);
     }
-  };
+  }
 
   return (
     <div className="max-w-[800px] min-h-screen overflow-x-scroll w-full mx-auto bg-blue-400 p-4" style={{ padding: "45px 20px" }}>
