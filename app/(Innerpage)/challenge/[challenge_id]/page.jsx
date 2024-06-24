@@ -338,7 +338,13 @@ const PageDetails = ({ params }) => {
     const previousItem = index > 0 ? challenge.tasks_list[index - 1] : null;
     const previousItemIsEligible = previousItem && previousItem.iseligibility;
 let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
-
+// console.log("compatibilityTest.completed:", compatibilityTest?.completed);
+// console.log("isEligible:", isEligible);
+// console.log("compatibilityTest.compatibility:", compatibilityTest?.compatibility);
+// console.log("challenge.page_type:", challenge.page_type);
+// console.log("item4.attempted:", item4.attempted);
+// console.log("item4.iseligibility:", item4.iseligibility);
+// console.log("item4:", item4);
     return (
       <div className="w-full flex flex-col gap-3 justify-center items-center">
         <p className="font-bold ">Round {index + 2}</p>
@@ -359,7 +365,7 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
           className={cn(
             "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
             !user ||
-              !alreadyStarted 
+              !alreadyStarted ||!item4.attempted
               ? "bg-gray-500"
               : user &&
                 compatibilityTest?.completed &&
@@ -375,8 +381,8 @@ let eligible = index==0 ? true : ( previousItemIsEligible)  ? true : false;
               ? "bg-gradient-to-r from-green-500 to-green-700"
               : compatibilityTest?.completed &&
                 isEligible &&
-                compatibilityTest.compatibility <
-                  (challenge.page_type === "job" ? 60 : 50) 
+                item4.attempted &&
+                  !item4.eligibility
               ? "bg-gradient-to-r from-red-500 to-red-700"
               : "bg-gray-400"
           )}
