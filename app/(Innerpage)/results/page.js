@@ -194,30 +194,7 @@ const Results = () => {
                         </TableCell>
 
                         <TableCell className="text-center">
-                          <Link href={`/challenge/${item.challenge_id}`}>
-                            {item?.success && (
-                              <div
-                                className={cn(
-                                  " rounded-full ",
-                                  item.rounds[0] &&
-                                  item.rounds[0].quiz_status == "ongoing" ? "bg-orange-500" : item?.success == "Success"
-                                    ? "bg-green-600"
-                                    : item?.success == "ongoing"
-                                    ? "bg-orange-500"
-                                    : "bg-red-600"
-                                )}
-                              >
-                                <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                                  {item.rounds[0] &&
-                            item.rounds[0].quiz_status == "ongoing" ? "Ongoing" :item?.success == "Success"
-                                    ? "Success"
-                                    : item?.success == "ongoing"
-                                    ? "Ongoing"
-                                    : "Failed"}
-                                </p>
-                              </div>
-                            )}
-                          </Link>
+                         
                         </TableCell>
                         <TableCell>
                           <div className="w-full flex justify-center items-center">
@@ -246,7 +223,22 @@ const Results = () => {
                           }
                           return (
                             <TableRow key={item2.number}>
-                              <TableCell className="text-center"></TableCell>
+                              <TableCell className="text-center">
+                              <Link href={`/challenge/${item.challenge_id}`}>
+                            <div
+                              className={
+                                " relative  w-20 h-16 border rounded-lg"
+                              }
+                            >
+                              <Image
+                                src={baseImgURL + item?.selectedMovie.image}
+                                fill
+                                alt="Profile Image"
+                                className="rounded-lg object-cover"
+                              />
+                            </div>
+                          </Link>
+                              </TableCell>
                               <TableCell className="text-center">
                                 {" "}
                                 <Link href={`/challenge/${item.challenge_id}`}>
