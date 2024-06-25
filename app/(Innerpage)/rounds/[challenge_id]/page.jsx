@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { isMobile } from 'react-device-detect';
 
 const RoundScreen = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
@@ -27,6 +28,7 @@ const RoundScreen = ({ params }) => {
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "rounds");
       formData.append("challenge_id", challenge_id);
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useAppSelector } from "@/lib/hooks";
 import axios from "axios";
 import { baseURL } from "@/lib/baseData";
+import { isMobile } from 'react-device-detect';
 
 const PageFaq = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -52,6 +53,7 @@ const PageFaq = () => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "home");
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { isMobile } from 'react-device-detect';
 
 const Results = () => {
   const [todoData, setTodoData] = useState([]);
@@ -49,6 +50,7 @@ const Results = () => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "results");
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

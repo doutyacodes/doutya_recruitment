@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/app/QuizProvider";
 import { useAppSelector } from "@/lib/hooks";
 import { Button } from "@/components/ui/button";
+import { isMobile } from 'react-device-detect';
 
 const LobbyScreen = ({ params }) => {
   const [quizData, setQuizData] = useState(null);
@@ -30,6 +31,7 @@ const LobbyScreen = ({ params }) => {
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "quiz-lobby");
       formData.append("task_id", task_id);
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

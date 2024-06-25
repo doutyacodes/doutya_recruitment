@@ -20,6 +20,7 @@ import {
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import ProgressCard from "../../(components)/ProgressCard";
 import { FaAngleLeft } from "react-icons/fa6";
+import { isMobile } from 'react-device-detect';
 
 const PageDetails = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -52,6 +53,7 @@ const PageDetails = () => {
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "pages");
       formData.append("page_id", page_id);
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

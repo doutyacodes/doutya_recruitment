@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CirclePlus } from "lucide-react";
-
+import { isMobile } from 'react-device-detect';
 const BuzzwallPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [filterChallenges, setFilterChallenges] = useState([]);
@@ -28,6 +28,7 @@ const BuzzwallPage = () => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "home");
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

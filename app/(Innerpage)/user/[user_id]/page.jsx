@@ -21,6 +21,7 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 
 import { FaPlusCircle } from "react-icons/fa";
 import EditProfile from "../../(components)/EditProfile";
+import { isMobile } from 'react-device-detect';
 
 const UserDetails = ({ params }) => {
   const [todoData, setTodoData] = useState([]);
@@ -44,6 +45,7 @@ const UserDetails = ({ params }) => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "user");
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

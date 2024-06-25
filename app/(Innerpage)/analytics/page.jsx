@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ChallengeHomeCard from "../(components)/ChallengeHomeCard";
 import Quiz from "../(components)/Quiz";
+import { isMobile } from 'react-device-detect';
 
 const AnalyticsPage = () => {
   const [toggleNav, setToggleNav] = useState("Analysis");
@@ -126,6 +127,7 @@ const AnalyticsPage = () => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "analytics");
+      formData.append("devices", isMobile ? 'mobile' : 'desktop');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,
