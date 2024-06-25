@@ -117,7 +117,7 @@ const EditProfile = ({setReloadData,reloadData}) => {
     <div className="h-full w-full bg-white ">
       <div className="w-full">
         <div className="space-y-4 mt-4">
-          <div>
+          {/* <div>
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
@@ -125,7 +125,7 @@ const EditProfile = ({setReloadData,reloadData}) => {
               placeholder="Name"
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
-          </div>
+          </div> */}
           <div>
             <Label htmlFor="education">Education</Label>
             <Input

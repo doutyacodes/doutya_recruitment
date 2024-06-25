@@ -207,6 +207,7 @@ const SignUp = () => {
               className="rounded-none focus:ring-white ring-white"
             />
           </div>
+          <span className="text-[12px] text-slate-600 mt-2">Please fill in your name as per your official document. You can't reverse this process.</span>
           <Input
             value={form.email}
             placeholder="Email Address"
