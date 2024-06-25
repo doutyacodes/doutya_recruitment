@@ -28,7 +28,7 @@ const RoundScreen = ({ params }) => {
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "rounds");
       formData.append("challenge_id", challenge_id);
-      formData.append("devices", isMobile ? 'mobile' : 'desktop');
+      formData.append("devices", isMobile ? 'mobile devices' : 'desktop devices');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,

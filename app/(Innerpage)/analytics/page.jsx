@@ -127,7 +127,7 @@ const AnalyticsPage = () => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "analytics");
-      formData.append("devices", isMobile ? 'mobile' : 'desktop');
+      formData.append("devices", isMobile ? 'mobile devices' : 'desktop devices');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,
