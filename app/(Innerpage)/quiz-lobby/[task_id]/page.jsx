@@ -25,6 +25,8 @@ const LobbyScreen = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   const task_id = params.task_id;
   const { setQuizDatas } = useGlobalContext();
+  const [isQuizStarting, setIsQuizStarting] = useState(false);
+
   const visitForm = async () => {
     try {
       const formData = new URLSearchParams();
@@ -44,7 +46,6 @@ const LobbyScreen = ({ params }) => {
       );
 
       const result = response.data;
-      // console.log(result)
       if (result.success) {
         console.log("success");
       } else {
@@ -54,9 +55,11 @@ const LobbyScreen = ({ params }) => {
       console.error("Error submitting data:", error);
     }
   };
+
   useEffect(() => {
     visitForm();
   }, []);
+
   useEffect(() => {
     const fetchQuiz = async () => {
       if (user) {
@@ -64,7 +67,6 @@ const LobbyScreen = ({ params }) => {
           const response = await axios.get(
             `${baseURL}/getSingleQuiz.php?userId=${user?.id}&task_id=${task_id}`
           );
-          // console.log(response.data)
           if (response.status === 200) {
             setQuizData(response.data.challenges);
           } else {
@@ -120,9 +122,6 @@ const LobbyScreen = ({ params }) => {
         seconds
       );
 
-      // console.log("Current time", currentTime);
-      // console.log("Start time", quizStartTime);
-
       const differenceInMilliseconds = quizStartTime - currentTime;
       const differenceInSeconds = Math.floor(differenceInMilliseconds / 1000);
 
@@ -164,18 +163,22 @@ const LobbyScreen = ({ params }) => {
     if (countdown3 === 0) {
       handleQuiz();
     }
-    // console.log(countdown3);
   }, [countdown3]);
 
   const handleQuiz = () => {
+    if (isQuizStarting) return; // Prevent multiple calls
+    setIsQuizStarting(true);
+
     if (quizData) {
-      if (quizData.completed == "true") {
+      if (quizData.completed === "true") {
         alert("You can't attempt a quiz again.");
+        setIsQuizStarting(false); // Allow future attempts if it's just an alert
       } else {
         gotoQuiz(quizData.challenge_id);
       }
     } else {
       alert("Quiz data is not available.");
+      setIsQuizStarting(false); // Allow future attempts if it's just an alert
     }
   };
 
@@ -206,11 +209,11 @@ const LobbyScreen = ({ params }) => {
         const serializedQuizDatas = JSON.stringify(quizDatas);
         await localStorage.setItem("quizDatas", serializedQuizDatas);
         setQuizDatas(quizDatas);
-        console.log(serializedQuizDatas)
         router.replace("/quiz-page");
       }
     } catch (error) {
       console.error("Error2:", error);
+      setIsQuizStarting(false); // Reset flag on error
     } finally {
       setisLoading(false);
     }
@@ -263,7 +266,7 @@ const LobbyScreen = ({ params }) => {
           {quizData.live === "no" && (
             <Button
               onClick={handleQuiz}
-              disabled={quizData.completed == "true" || isLoading}
+              disabled={quizData.completed === "true" || isLoading}
               className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold"
             >
               Start
