@@ -230,7 +230,7 @@ const PageDetails = () => {
         }
       }
     };
-    fetchProgresspublic();
+    // fetchProgresspublic();
     const fetchCount = async () => {
       if (activeRouteIndex) {
         try {
