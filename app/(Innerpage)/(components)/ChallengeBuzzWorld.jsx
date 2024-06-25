@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { baseImgURL } from "@/lib/baseData";
+import { baseImgURL, generateSlug } from "@/lib/baseData";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -44,6 +44,7 @@ const ChallengeBuzzWorld = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [item.image]);
   // console.log(imageSrc)
+const slug = generateSlug(item.page_title);
   return (
     <div
       className={cn(
@@ -52,7 +53,7 @@ const ChallengeBuzzWorld = ({
     >
       <Link
         prefetch={false}
-        href={`/pages/${item.page_id}`}
+        href={`/companies/${slug}`}
         className="px-3 py-1 flex gap-2 items-center"
       >
         <div className=" rounded-full w-10 h-10 relative border">

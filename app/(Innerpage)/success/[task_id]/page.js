@@ -31,12 +31,14 @@ const Success = ({ params }) => {
         const response = await axios.get(
           `${baseURL}/get-user-stars.php?user_id=${user.id}&task_id=${task_id}`
         );
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.data.stars) {
           setStarsDetails(response.data.data);
         }
         if (response.data.data.page_id) {
-          setRoutes("pages/" + response.data.data.page_id);
+          const slug = generateSlug(response.data.data.page_title);
+
+          setRoutes(`companies/${slug}`);
         }
         if (response.data.data.total_percent) {
           setPercentageDetails(response.data.data.total_percent);
@@ -60,7 +62,8 @@ const Success = ({ params }) => {
 
   // Function to render stars
   const renderStars = () => {
-    const goldStars = starsDetails && starsDetails.stars > 0 ? starsDetails.stars : 0;
+    const goldStars =
+      starsDetails && starsDetails.stars > 0 ? starsDetails.stars : 0;
     const grayStars = total_stars - goldStars;
     const stars = [];
 
@@ -114,21 +117,25 @@ const Success = ({ params }) => {
           </div>
         )}
 
-        {types && types !== "compatibility" && (pageTypes && pageTypes !== "tests" && pageTypes !== "language") && (
-          <p className=" text-black/80 p-3">
-            {percentageDetails > 34.99 ? (
-              <>
-                Congratulations! You have successfully completed the first round
-                and are eligible for the next round.
-              </>
-            ) : (
-              <>
-                Unfortunately, you did not complete the first round. You are
-                ineligible for the next round.
-              </>
-            )}
-          </p>
-        )}
+        {types &&
+          types !== "compatibility" &&
+          pageTypes &&
+          pageTypes !== "tests" &&
+          pageTypes !== "language" && (
+            <p className=" text-black/80 p-3">
+              {percentageDetails > 34.99 ? (
+                <>
+                  Congratulations! You have successfully completed the first
+                  round and are eligible for the next round.
+                </>
+              ) : (
+                <>
+                  Unfortunately, you did not complete the first round. You are
+                  ineligible for the next round.
+                </>
+              )}
+            </p>
+          )}
 
         <Link prefetch={false} href={`/${routes}`}>
           <Button className="bg-green-600 text-lg">Go to Home</Button>

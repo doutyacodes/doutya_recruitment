@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Search, BookOpen } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
-import { baseImgURL, baseURL } from "@/lib/baseData";
+import { baseImgURL, baseURL, generateSlug } from "@/lib/baseData";
 import Image from "next/image";
 import Link from "next/link";
 import { FaPeopleArrows } from "react-icons/fa";
@@ -148,9 +148,11 @@ const LeftSidebar = ({setSheetOpen}) => {
             {searchData?.length > 0 &&
               searchData?.map((item, index) => {
                 let Navpass;
+                const slug = generateSlug(item.page_title);
+
                 item.type == "user"
                   ? (Navpass = `/user/${item.id}`)
-                  : (Navpass = `/pages/${item.id}`);
+                  : (Navpass = `/companies/${item.id}`);
                 // console.log(item)
                 return item.type == "user" ? (
                   <Link prefetch={false} 
@@ -233,9 +235,11 @@ const LeftSidebar = ({setSheetOpen}) => {
                 <AccordionContent>
                   {userPages?.length > 0 &&
                     userPages?.map((item, index) => {
+                        const slug = generateSlug(item.title);
+
                       return (
                         <div
-                        onClick={()=>handleNav(`/pages/${item.id}`)}
+                        onClick={()=>handleNav(`/companies/${slug}/${item.id}`)}
                           className="flex gap-2 mt-4 items-center border-t cursor-pointer"
                           key={index}
                         >

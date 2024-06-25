@@ -20,15 +20,14 @@ import {
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import ProgressCard from "../../(components)/ProgressCard";
 import { FaAngleLeft } from "react-icons/fa6";
-import { isMobile } from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 
 const PageDetails = () => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 1 };
 
   const params = useParams();
-
-  const page_id = params.page_id;
+ 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [postData, setPostData] = useState([]);
@@ -42,6 +41,7 @@ const PageDetails = () => {
   const [keywordsList, setKeywordsList] = useState([]);
   const [compatibiltyTest, setCompatibiltyTest] = useState([]);
   const [jobCount, setJobCount] = useState([]);
+  const [page_id, setPage_id] = useState(null);
 
   const [activeRouteIndex, setActiveRouteIndex] = useState("second");
   const [activeThirdIndex, setActiveThirdIndex] = useState(null);
@@ -53,7 +53,10 @@ const PageDetails = () => {
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "pages");
       formData.append("page_id", page_id);
-      formData.append("devices", isMobile ? 'mobile devices' : 'desktop devices');
+      formData.append(
+        "devices",
+        isMobile ? "mobile devices" : "desktop devices"
+      );
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,
@@ -77,6 +80,30 @@ const PageDetails = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchPage = async () => {
+      try {
+        setIsLoading(true);
+
+        const response = await axios.get(`${baseURL}/get-slug.php?slug=${params.page_id[1]}`);
+        // console.log(response.data)
+        if(response.data.success)
+          {
+            setPage_id(response.data.data.id)
+          }
+          else{
+            router.push("/")
+          }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+   
+        fetchPage()
+    
+  }, [page_id]);
   useEffect(() => {
     // if(user){
     //   console.log(user)
@@ -143,7 +170,10 @@ const PageDetails = () => {
       }
     };
 
-    fetchKeywords();
+    if(page_id)
+      {
+        fetchKeywords();
+      }
     const fetchAllKeywords = async () => {
       try {
         const response = await axios.get(`${baseURL}/keywords.php`);
@@ -154,7 +184,10 @@ const PageDetails = () => {
       }
     };
 
-    fetchAllKeywords();
+    if(page_id)
+      {
+        fetchAllKeywords();
+      }
     const fetchPrivateQuiz = async () => {
       if (activeRouteIndex == "second") {
         if (activeRouteIndex && activeThirdIndex) {
@@ -176,7 +209,10 @@ const PageDetails = () => {
         }
       }
     };
-    fetchPrivateQuiz();
+   if(page_id)
+    {
+      fetchPrivateQuiz();
+    }
     const fetchQuizTest = async () => {
       if (activeRouteIndex == "second") {
         if (activeRouteIndex) {
@@ -214,7 +250,10 @@ const PageDetails = () => {
         }
       }
     };
-    fetchProgress();
+   if(page_id)
+    {
+      fetchProgress();
+    }
     const fetchProgresspublic = async () => {
       if (user) {
         if (activeRouteIndex) {
@@ -250,11 +289,17 @@ const PageDetails = () => {
         }
       }
     };
-    fetchCount();
+    if(page_id)
+      {
+        fetchCount();
+      }
   }, [activeRouteIndex, user?.id, page_id, activeThirdIndex]);
   useEffect(() => {
-    visitForm();
+    if(page_id)
+      {
+        visitForm();
     fetchData();
+      }
   }, [page_id, user]);
   useEffect(() => {
     const fetchCompilibility = async () => {
@@ -274,7 +319,10 @@ const PageDetails = () => {
         }
       }
     };
-    fetchCompilibility();
+    if(page_id)
+      {
+        fetchCompilibility();
+      }
   }, [user, page_id]);
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -299,7 +347,9 @@ const PageDetails = () => {
         }
       }
     };
-    fetchQuiz();
+    if(page_id){
+      fetchQuiz();
+    }
   }, [activeRouteIndex, activeThirdIndex]);
 
   const [routes] = useState([
@@ -422,7 +472,6 @@ const PageDetails = () => {
                             formattedEndDate={formattedEndDate}
                             inPage={true}
                             districtName={districtName}
-
                           />
                         );
                       }
@@ -461,7 +510,9 @@ const PageDetails = () => {
               onClick={() => {
                 compatibiltyTest?.completed
                   ? console.log("Clicked")
-                  : user ? router.push("/quiz-lobby/129") : router.push("/signup");
+                  : user
+                  ? router.push("/quiz-lobby/129")
+                  : router.push("/signup");
               }}
               className=" text-center bg-[#2aa8bf] flex justify-between max-h-24 items-center py-1 shadow-md rounded-lg cursor-pointer px-3"
             >
@@ -469,20 +520,24 @@ const PageDetails = () => {
                 <h1 className="font-bold text-7xl text-center">C</h1>
                 <p className="text-center text-xs font-bold">Compatibility</p>
               </div>
-                {!compatibiltyTest?.completed ? (
-              <div className="p-3 rounded-full border border-white text-[10px] font-bold text-white uppercase bg-[#01be6a]">
+              {!compatibiltyTest?.completed ? (
+                <div className="p-3 rounded-full border border-white text-[10px] font-bold text-white uppercase bg-[#01be6a]">
                   <h5>TAKE THE COMPATIBILITY TEST</h5>
-              </div>
-                ) : (
-                  <div className="flex flex-col gap-2">
-                   <p className="text-3xl font-bold">{compatibiltyTest?.compatibility}%</p>
-                   <p className="text-xs font-bold">{compatibiltyTest?.rank}</p>
-                  </div>
-                )}
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  <p className="text-3xl font-bold">
+                    {compatibiltyTest?.compatibility}%
+                  </p>
+                  <p className="text-xs font-bold">{compatibiltyTest?.rank}</p>
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full p-3 min-h-20 bg-white shadow-md border flex justify-center items-center text-center">
-            <p className="text-base font-bold text-[#32c8e3]">Take the tests & Earn stars for each domain.</p>
+            <p className="text-base font-bold text-[#32c8e3]">
+              Take the tests & Earn stars for each domain.
+            </p>
           </div>
           <div className="w-full grid-cols-12 gap-3  p-3 grid text-black">
             {/* {keywordsList?.length > 0 &&

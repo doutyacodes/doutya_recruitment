@@ -1,5 +1,5 @@
 "use client";
-import { baseImgURL, baseURL } from "@/lib/baseData";
+import { baseImgURL, baseURL, generateSlug } from "@/lib/baseData";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Posts from "../(components)/Posts";
@@ -119,10 +119,13 @@ console.log(response.data)
               <p className="font-extrabold text-sm px-3">Companies</p>
               <div className="w-full overflow-x-scroll flex gap-8 mb-2 mt-1 bg-gradient-to-l from-[#cfece9] to-[#e3f7de] p-3">
                 {userPages?.length > 0 &&
-                  userPages.map((item) => (
+                  userPages.map((item) => {
+                    const slug = generateSlug(item.title);
+
+                    return(
                     <Link
                       className="flex flex-col gap-2 justify-center items-center"
-                      href={`/pages/${item.page_id}`}
+                      href={`/companies/${slug}`}
                       key={item.id}
                     >
                       <div className="w-[56px] h-[56px] rounded-2xl border relative bg-white shadow-sm">
@@ -132,7 +135,7 @@ console.log(response.data)
                         {item.title}
                       </p>
                     </Link>
-                  ))}
+                  )})}
                 <div>
                   <DropdownMenu>
                     <DropdownMenuTrigger>

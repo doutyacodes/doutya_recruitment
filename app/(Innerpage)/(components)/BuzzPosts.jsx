@@ -1,5 +1,5 @@
 "use client";
-import { baseImgURL, baseURL, baseVidUrl } from "@/lib/baseData";
+import { baseImgURL, baseURL, baseVidUrl, generateSlug } from "@/lib/baseData";
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,10 +46,12 @@ const BuzzPosts = ({ item, user_id }) => {
   let encryptId;
   const key = "yourSecretKey"; // Replace with your secret key
   encryptId = CryptoJS.AES.encrypt(item.post_id, key).toString();
+  const slug = generateSlug(item.page_title);
+
   return (
     <div className="col-span-12 shadow-lg border border-black/5 rounded-lg">
       <Link prefetch={false} 
-        href={`/pages/${item.page_id}`}
+        href={`/companies/${slug}`}
         className="p-3 flex gap-2 items-center"
       >
         <div className=" rounded-full w-10 h-10 relative">
