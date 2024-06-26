@@ -114,8 +114,8 @@ const BuzzwallPage = () => {
 
       selectedTitle: { title: "Doutya Technologies", image: "doutya6.png" },
       interview: "Interview will resume on:",
-      time: "05:00 PM",
-      interview_date: "28-06-24",
+      time: "07:00 PM",
+      interview_date: "29-06-24",
       open_for: "everyone",
 
       single_task: "no",
