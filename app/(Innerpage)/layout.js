@@ -1,7 +1,15 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import Navbar from "./(components)/Navbar";
+import { redirect, usePathname } from "next/navigation";
 
 const InnerLayout = ({ children }) => {
+  const pathname = usePathname();
+  useEffect(()=>{
+    if (!pathname.includes("home")) {
+      redirect("/home");
+    }
+  },[pathname])
   return (
     <section className="w-full relative min-h-screen bg-[url('/assets/images/bckgr3.png')] bg-cover bg-center">
     {/* Include shared UI here e.g. a header or sidebar */}

@@ -59,12 +59,12 @@ const RightSidebar = ({setSheetOpen2}) => {
           <PiUserCircleFill color="black" size={24} /> <p>My Profile</p>
         </div>
 
-        <div 
+        {/* <div 
           onClick={()=>handleNav(`/faq`)} 
           className="flex gap-3 w-full p-3 items-center bg-white border-b cursor-pointer"
         >
           <FaQuestionCircle color="black" size={24} /> <p>FAQ</p>
-        </div>
+        </div> */}
         <div
           onClick={handleLogout}
           className=" cursor-pointer flex gap-3 w-full p-3 items-center bg-white border-b"

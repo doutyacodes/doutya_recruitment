@@ -339,7 +339,7 @@ const PageDetails = ({ params }) => {
                 !user || !alreadyStarted
                   ? "bg-gray-500"
                   : user && !compatibilityTest?.completed
-                  ? "bg-gradient-to-r from-orange-500 to-orange-700"
+                  ? "bg-orange-500"
                   : compatibilityTest?.completed &&
                     compatibilityTest.compatibility >=
                       (challenge.page_type === "job" ? 60 : 55)
@@ -409,7 +409,7 @@ const PageDetails = ({ params }) => {
                           isEligible &&
                           !item4.attempted &&
                           eligible
-                        ? "bg-gradient-to-r from-orange-500 to-orange-700"
+                        ? "bg-orange-500"
                         : compatibilityTest?.completed &&
                           isEligible &&
                           compatibilityTest.compatibility >=

@@ -1,6 +1,14 @@
-import React from "react";
+"use client"
+import { redirect, usePathname } from "next/navigation";
+import React, { useEffect } from "react";
 
 const HomeLayout = ({ children }) => {
+  const pathname = usePathname();
+  useEffect(()=>{
+    if (!pathname.includes("home")) {
+      redirect("/home");
+    }
+  },[pathname])
   return (
     <section className="relative w-full min-h-screen bg-[url('/assets/images/bckgr3.png')] bg-cover bg-center">
       {/* Overlay */}
