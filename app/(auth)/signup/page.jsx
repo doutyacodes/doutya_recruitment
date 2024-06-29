@@ -126,7 +126,7 @@ const SignUp = () => {
       formData.append("yearOfPassing", form.yearOfPassing || '');
       formData.append("monthOfPassing", form.monthOfPassing || '');
   
-      console.log(form);
+      // console.log(form);
   
       const response = await axios.post(`${baseURL}/sign-up.php`, formData, {
         headers: {

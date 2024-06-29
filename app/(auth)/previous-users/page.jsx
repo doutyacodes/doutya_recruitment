@@ -26,7 +26,11 @@ const Previous = () => {
   const [ph, setPh] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showUser, setShowUser] = useState(false);
+  const [user_id, setUser_id] = useState(null);
   const [showOTP, setShowOTP] = useState(false);
   const [user, setUser] = useState(null);
   const [timer, setTimer] = useState(30);
@@ -78,7 +82,8 @@ const Previous = () => {
         setTimer(30);
         setCanResend(false);
         setLoading(false);
-        onClick(formatPh);
+        // setShowUser(true)
+        
       })
       .catch((error) => {
         console.log(error);
@@ -107,8 +112,9 @@ const Previous = () => {
       const response = await axios.get(
         `${baseURL}/check-user-exist.php?phone=${formatPh}`
       );
-      // console.log(response.data);
+      console.log(response.data);
       if (response.data.success) {
+        setUser_id(response.data.user_id)
         onSignInSubmit();
       }
     } catch (error) {
@@ -128,13 +134,59 @@ const Previous = () => {
         setUser(res.user);
         const formatPh = countryCode + ph;
         dispatch(storeMobile({ phone: formatPh, uid: res.user.uid }));
+        setShowUser(true)
+        setShowOTP(!true)
       })
+    
       .catch((err) => {
         console.log(err);
         setLoading(false);
       });
   };
-
+  const handleSubmited = async () => {
+    if (!username) {
+      alert("Please enter a username.");
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+    
+    try {
+     
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("password", password);
+      formData.append("user_id", user_id);
+     
+  
+      // console.log(form);
+  
+      const response = await axios.post(`${baseURL}/change-data.php`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Use proper content type for FormData
+        },
+      });
+  
+      const result = response.data;
+     
+      
+  
+      // Proceed with the rest of your logic if the username exists and passwords match
+      console.log(response.data);
+      if (response.data.success) {
+        dispatch(loginSuccess(response.data.user));
+        router.replace("/home");
+      } else {
+        router.replace("/register");
+      }
+    } catch (error) {
+      console.error("Error checking username:", error);
+    }
+  };
+  
   return (
     <div className="h-full w-full p-4  min-h-screen">
       <div className="h-full w-full p-4 bg-white rounded-md ">
@@ -164,8 +216,37 @@ const Previous = () => {
               Enter Your Mobile Number
             </p>
           )}
-          {showOTP && (
+          {showOTP && !showUser && (
             <p className=" text-lg text-center font-bold ">Enter Your OTP</p>
+          )}
+          {showUser && !showOTP && (
+            <>
+              <input
+                type="text"
+                className="focus:outline-none p-3 bg-white border w-full rounded-lg"
+                placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <input
+                type="password"
+                className="focus:outline-none p-3 bg-white border w-full rounded-lg"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <input
+                type="password"
+                className="focus:outline-none p-3 bg-white border w-full rounded-lg"
+                placeholder="Confirm Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <Button
+                onClick={handleSubmited}
+                className="bg-[#fdbd5b] mt-3 w-fit mx-auto"
+              >
+                Submit
+              </Button>
+            </>
           )}
           <div className="mt-2 p-3 space-y-5 w-full flex flex-col items-center gap-1">
             {!showOTP && (
@@ -178,7 +259,7 @@ const Previous = () => {
                 />
               </>
             )}
-            {showOTP && (
+            {showOTP && !showUser && (
               <>
                 <input
                   type="text"
