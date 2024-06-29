@@ -953,7 +953,7 @@ const PageDetails = () => {
                     <p>{selectedMovie?.title}</p>
                   </div>
                   {compatibiltyTest?.completed &&  (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col my-4 gap-2">
                     <p className="text-sm text-green-700 font-bold">
                     COMPATIBILITY - {compatibiltyTest?.compatibility}%
                     </p>

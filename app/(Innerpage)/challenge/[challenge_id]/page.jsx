@@ -757,7 +757,7 @@ const PageDetails = ({ params }) => {
                   <p>{selectedMovie?.title}</p>
                 </div>
                 {compatibiltyTest?.completed && (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col my-4 gap-2">
                     <p className="text-sm text-green-700 font-bold">
                       COMPATIBILITY - {compatibiltyTest?.compatibility}%
                     </p>
@@ -766,10 +766,11 @@ const PageDetails = ({ params }) => {
               </div>
             </div>
             <div className="w-full relative">
-              {!alreadyStarted && (
+            {!alreadyStarted && (
                 <Button
                   disabled={isLoading}
-                  className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-2 min-w-72 h-12 fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4 "
+                  className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-auto min-w-72 h-12 absolute left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4"
+      style={{ zIndex: 10 }}
                 >
                   {challenge.page_type == "internship" ||
                   challenge.page_type == "tests" ? (
