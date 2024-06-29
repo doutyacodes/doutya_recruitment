@@ -32,7 +32,7 @@ const EditProfile = ({setReloadData,reloadData}) => {
   const { toast } = useToast();
   useEffect(() => {
     if (!user) {
-      router.replace("/signup");
+      router.replace("/login");
     } else {
       getUserDetails();
     }

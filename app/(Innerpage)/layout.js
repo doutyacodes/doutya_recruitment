@@ -4,22 +4,22 @@ import Navbar from "./(components)/Navbar";
 import { redirect, usePathname } from "next/navigation";
 
 const InnerLayout = ({ children }) => {
-  const pathname = usePathname();
-  useEffect(()=>{
-    if (!pathname.includes("home")) {
-      redirect("/home");
-    }
-  },[pathname])
+  // const pathname = usePathname();
+  // useEffect(()=>{
+  //   if (!pathname.includes("home")) {
+  //     redirect("/home");
+  //   }
+  // },[pathname])
   return (
-    <section className="w-full relative min-h-screen bg-[url('/assets/images/bckgr3.png')] bg-cover bg-center">
+    <section className="w-full relative  bg-[url('/assets/images/bckgr3.png')] bg-cover bg-center">
     {/* Include shared UI here e.g. a header or sidebar */}
     <div className="absolute inset-0 bg-white bg-opacity-50 z-10"></div>
       {/* Include shared UI here e.g. a header or sidebar */}
-      <div className="max-w-[800px]  h-full w-full mx-auto border z-20 relative">
+      <div className=" h-full w-full mx-auto border z-20 relative">
 
       <Navbar />
 
-      <main className="  flex-1 min-h-screen overflow-y-auto bg-[#e5e5e5]">
+      <main className="  flex-1  overflow-y-auto bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4]">
         {children}
       </main>
 

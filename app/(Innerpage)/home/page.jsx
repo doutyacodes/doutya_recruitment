@@ -16,20 +16,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CirclePlus } from "lucide-react";
-import { isMobile } from "react-device-detect";
-import { IoCloseCircle } from "react-icons/io5";
+import { isMobile } from 'react-device-detect';
+import MyCompany from "../(components)/MyCompany";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 const BuzzwallPage = () => {
-  const [showImage, setShowImage] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filterChallenges, setFilterChallenges] = useState([]);
+  const [adDetails, setAdDetails] = useState(null);
+  const [userPages, setUserPages] = useState([]);
   const user = useAppSelector((state) => state.auth.user);
   const visitForm = async () => {
     try {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "home");
-      formData.append(
-        "devices",
-        isMobile ? "mobile devices" : "desktop devices"
-      );
+      formData.append("devices", isMobile ? 'mobile devices' : 'desktop devices');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,
@@ -55,331 +57,101 @@ const BuzzwallPage = () => {
   useEffect(() => {
     visitForm();
   }, []);
-  const filterChallenges = [
-    {
-      info_type: "challenge",
-
-      challenge_id: "90",
-
-      title: "Web Development Intern",
-
-      description:
-        "<div>We are looking for a Web Development intern, who will work remotely on creating and maintaining our web applications. The intern will be responsible for developing web front-end user interfaces using HTML5, CSS, and JavaScript, as well as implementing software features using web frameworks such as React. The intern will work hand in hand with our experienced team, gaining experience on how to develop complex web applications.<br><br><br>This is a PAID 3-month INTERNSHIP with the opportunity for a full-time position. Hours are flexible.<br><br></div>",
-
-      challenge_type: "ordered",
-
-      page_id: "1",
-
-      start_date: "2024-06-24 12:17:32",
-
-      rewards: "yes",
-
-      start_time: "12:16:27",
-
-      end_date: "2024-06-30 16:46:50",
-
-      end_time: "23:59:59",
-
-      entry_points: "0",
-
-      reward_points: "25",
-
-      level: "1",
-
-      created_by: "Admin",
-
-      created_date: "2024-03-26 05:25:12",
-
-      participants_count: "0",
-
-      removed_date: null,
-
-      removed_by: null,
-
-      frequency: "quiz",
-
-      page_type: "internship",
-
-      page_title: "Doutya Technologies",
-
-      icon: "doutya6.png",
-
-      image: "web.png",
-
-      completed: "false",
-
-      referral_count: "0",
-
-      created_at: "24-06-2024 12:17:32",
-
-      selectedTitle: { title: "Doutya Technologies", image: "doutya6.png" },
-      interview: "Interview will resume on:",
-      time: "07:00 PM",
-      interview_date: "29-06-24",
-      open_for: "everyone",
-
-      single_task: "no",
-      salary: "Rs 8000 / month",
-
-      task_keyword: {
-        0: "40",
-
-        1: "90",
-
-        2: "138",
-
-        3: "12",
-
-        id: "40",
-        challenge_id: "90",
-
-        task_id: "138",
-
-        keyword_id: "12",
-        domain: [
-          {
-            title: "React Js",
-          },
-          {
-            title: "CSS",
-          },
-          {
-            title: "HTML",
-          },
-        ],
-      },
-    },
-
-    {
-      info_type: "challenge",
-
-      challenge_id: "78",
-
-      title: "Python",
-
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-
-      challenge_type: "ordered",
-
-      page_id: "1",
-
-      start_date: "2024-06-10 06:09:44",
-
-      rewards: "yes",
-
-      start_time: "00:35:59",
-
-      end_date: "2024-06-30 16:46:50",
-
-      end_time: "27:35:59",
-
-      entry_points: "0",
-
-      reward_points: "25",
-
-      level: "1",
-
-      created_by: "Admin",
-
-      created_date: "2024-06-10 06:09:44",
-
-      participants_count: "0",
-
-      removed_date: null,
-
-      removed_by: null,
-
-      frequency: "quiz",
-
-      page_type: "job",
-
-      page_title: "Doutya Technologies",
-
-      icon: "doutya6.png",
-
-      image: "jr.png",
-
-      completed: "false",
-
-      referral_count: "0",
-
-      created_at: "10-06-2024 06:09:44",
-
-      selectedTitle: { title: "Doutya Technologies", image: "doutya6.png" },
-
-      open_for: "everyone",
-
-      stars: "3",
-
-      single_task: "yes",
-      salary: "Rs 25000 - 33000 / month",
-      interview: "Interview begins on:",
-      time: "08:00 AM",
-      interview_date: "01-07-24",
-      task_keyword: {
-        0: "30",
-
-        1: "78",
-
-        2: "125",
-
-        3: "7",
-
-        id: "30",
-        challenge_id: "78",
-
-        task_id: "125",
-
-        keyword_id: "7",
-        domain: [
-          {
-            title: "React Js",
-          },
-          {
-            title: "React Native",
-          },
-          {
-            title: "SQL",
-          },
-          {
-            title: "PHP",
-          },
-          {
-            title: "Python",
-          },
-        ],
-      },
-    },
-
-    {
-      info_type: "challenge",
-
-      challenge_id: "78",
-
-      title: "Python",
-
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-
-      challenge_type: "ordered",
-
-      page_id: "1",
-
-      start_date: "2024-06-10 06:09:44",
-
-      rewards: "yes",
-
-      start_time: "00:35:59",
-
-      end_date: "2024-06-30 16:46:50",
-
-      end_time: "27:35:59",
-
-      entry_points: "0",
-
-      reward_points: "25",
-
-      level: "1",
-
-      created_by: "Admin",
-
-      created_date: "2024-06-10 06:09:44",
-
-      participants_count: "0",
-
-      removed_date: null,
-
-      removed_by: null,
-
-      frequency: "quiz",
-
-      page_type: "job",
-
-      page_title: "Doutya Technologies",
-
-      icon: "doutya6.png",
-
-      image: "jfd.png",
-
-      completed: "false",
-
-      referral_count: "0",
-
-      created_at: "10-06-2024 06:09:44",
-
-      selectedTitle: { title: "Doutya Technologies", image: "doutya6.png" },
-
-      open_for: "everyone",
-
-      stars: "3",
-
-      single_task: "yes",
-      salary: "Rs 15000 - 22000 / month",
-      interview: "Interview begins on:",
-      time: "08:00 AM",
-      interview_date: "01-07-24",
-      task_keyword: {
-        0: "30",
-
-        1: "78",
-
-        2: "125",
-
-        3: "7",
-
-        id: "30",
-        challenge_id: "78",
-
-        task_id: "125",
-
-        keyword_id: "7",
-        domain: [
-          {
-            title: "React Js",
-          },
-
-          {
-            title: "SQL",
-          },
-          {
-            title: "PHP",
-          },
-        ],
-      },
-    },
-  ];
-
-  return (
-    <div className="max-w-[800px]  min-h-screen bg-[#fee9c6] border  w-full mx-auto ">
-      <div className="w-full p-[2.7px] bg-[#24975c]" />
-      {
-        showImage && (
-          <div className="absolute flex  items-center mx-auto top-0 left-0  z-[999]">
-        <div className="relative">
-          <div className=" mx-auto flex items-center w-screen h-screen max-w-[800px] justify-center">
-            <div className="relative w-72 h-72 md:w-full md:h-full max-h-96 max-w-96">
-              <Image
-                src={"/assets/images/web-data.png"}
-                fill
-                className="rounded-md"
-                alt="notified"
-              />
-              <IoCloseCircle
-                className="absolute -top-3 -right-3"
-                onClick={() => setShowImage(false)}
-                color="red"
-                size={30}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-        )
+  const fetchUserBuzzwall = async () => {
+    try {
+      // Only fetch rewards if user data is available
+      const response = await axios.get(
+        `${baseURL}/getBuzzWall.php?userId=${user ? user.id : null}`
+      );
+
+      // console.log(response.data);
+      if (response.status === 200) {
+        setFilterChallenges(response.data);
+      } else {
+        console.error("Failed to fetch buzzwall");
       }
-      <div className="w-full  ">
-        <div className="w-full h-full ">
-          <div className="w-full  grid grid-cols-12 gap-3  p-3">
+    } catch (error) {
+      console.error("Error while fetching buzzwall:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const fetchUserPages = async () => {
+      try {
+        // Only fetch rewards if user data is available
+        const response = await axios.get(
+          `${baseURL}/get-all-user-pages.php?user_id=${user ? user.id : null}`
+        );
+// console.log(response.data)
+        if (response.data.success) {
+          setUserPages(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error while fetching pages:", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    
+  };
+  const fetchAdd = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/get-ad.php`);
+      // console.log(response.data.data);
+      if (response.data.data) {
+        setAdDetails(response.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchUserBuzzwall();
+    fetchUserPages();
+    fetchAdd();
+  }, []);
+  return (
+    <div className="  min-h-screen bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4]  w-full  ">
+      <MyCompany />
+      <div className="w-full max-w-[1201px] mx-auto flex">
+      <div className="hidden md:flex justify-center items-center w-56 mt-5 h-full">
+                <div className="w-full bg-white h-full rounded-md flex flex-col  items-center">
+                  <div
+                    className={cn(
+                      " relative  h-16 rounded-full w-16 border border-black/5 justify-center items-center mt-4"
+                    )}
+                  >
+                    {user?.image?.length > 0 ? (
+                      <Image
+                        src={baseImgURL + user?.image}
+                        fill
+                        alt="Profile Image"
+                        className="rounded-full object-contain"
+                      />
+                    ):(
+                      <Image
+                        src={"/assets/images/avatar.jpg"}
+                        fill
+                        alt="Profile Image"
+                        className="rounded-full object-contain"
+                      />
+                    )}
+                  </div>
+                 {user ?( <div className="flex flex-col justify-center gap-4 py-3 font-bold ">
+                    <p>{user?.name}</p>
+                  </div>
+                  ):(
+                    <Button className="my-3">
+                    <Link prefetch={false} href="/login" className="w-full">
+                      Login
+                    </Link>
+                  </Button>
+                  )}
+                  
+                </div>
+              </div>
+        <div className="w-full ">
+          
+          <div className="w-full  grid grid-cols-12 gap-3 p-3 mt-2">
             {filterChallenges?.length > 0 &&
               filterChallenges.map((item, index) => {
                 if (item.info_type === "challenge") {

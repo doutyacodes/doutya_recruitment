@@ -47,9 +47,13 @@ const QuizPage = () => {
       if (!quizDatas2 || !user) {
         router.replace("/home");
       } else {
-        const response = await axios.get(`${baseURL}/get-quiz-completed.php?user_id=${user.id}&task_id=${quizDatas2.dataQuiz[0].task_id}`);
-        if (response.data.success) {
-          router.replace("/home");
+        try {
+          const response = await axios.get(`${baseURL}/get-quiz-completed.php?user_id=${user.id}&task_id=${quizDatas2.dataQuiz[0].task_id}`);
+          if (response.data.success) {
+            router.replace("/home");
+          }
+        } catch (error) {
+          console.error("Error fetching quiz completion status:", error);
         }
       }
       setIsLoading(false);
@@ -70,7 +74,7 @@ const QuizPage = () => {
         const newDataQuestion = questions[currentIndex];
         setDataQuestion(newDataQuestion);
         setCount_question(quizDatas2.dataQuiz.count_question);
-        if (newDataQuestion.quiz_type !== "psychological" && dataQuestion?.page_type !== "language") {
+        if (newDataQuestion.quiz_type !== "psychological" && newDataQuestion.page_type !== "language") {
           setTimer(newDataQuestion.timer * 1000); // Convert seconds to milliseconds
         }
       }
@@ -84,7 +88,7 @@ const QuizPage = () => {
     if (dataQuestion.type === "video" && videoRef.current) {
       videoRef.current.src = `${baseVidUrl}${dataQuestion.video}`;
       videoRef.current.play();
-    } else if (dataQuestion.type === "audio") {
+    } else if (dataQuestion.type === "audio" && dataQuestion.audio) {
       if (sound) sound.pause();
       const audio = new Audio(`${baseVidUrl}${dataQuestion.audio}`);
       setSound(audio);
@@ -94,19 +98,16 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (!timer) return;
-    const start = Date.now();
     const countdown = setInterval(() => {
-      const elapsed = Date.now() - start;
       setTimer((prevTimer) => {
-        const newTimer = prevTimer - elapsed;
-        if (newTimer <= 0) {
+        if (prevTimer <= 1000) {
           clearInterval(countdown);
           handleTimeOut();
           return 0;
         }
-        return newTimer;
+        return prevTimer - 1000; // Decrement by 1 second (1000 milliseconds)
       });
-    }, 1);
+    }, 1000);
     return () => clearInterval(countdown);
   }, [timer]);
 
@@ -147,14 +148,15 @@ const QuizPage = () => {
 
   const submitMarks = async (earnedMarks, answer_ids, question_ids) => {
     try {
+      setIsLoading(true)
       const formData = new URLSearchParams({
         user_id: quizDatas?.user.id,
         challenge_id: dataQuestion.challenge_id,
         task_id: dataQuestion.task_id,
         marks: earnedMarks,
         optionSend,
-        question_id: question_ids && question_ids != 0 ? question_ids : question_id,
-        answer_id: answer_ids && answer_ids != 0 ? answer_ids : answer_ids,
+        question_id: question_ids && question_ids !== 0 ? question_ids : question_id,
+        answer_id: answer_ids && answer_ids !== 0 ? answer_ids : answer_id,
       });
       const response = await axios.post(`${baseURL}/add-quiz-progress.php`, formData, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -169,11 +171,14 @@ const QuizPage = () => {
       }
     } catch (error) {
       console.error("Error adding marks:", error);
+    }finally{
+      setIsLoading(true)
+
     }
-  }
+  };
 
   return (
-    <div className="max-w-[800px] min-h-screen overflow-x-scroll w-full mx-auto bg-blue-400 p-4" style={{ padding: "45px 20px" }}>
+    <div className="max-w-[1201px] min-h-screen overflow-x-scroll w-full mx-auto bg-blue-400 p-4" style={{ padding: "45px 20px" }}>
       {isLoading ? (
         <div className="w-full h-full flex flex-1 justify-center items-center">
           <div role="status">
@@ -208,7 +213,7 @@ const QuizPage = () => {
                     value={timer}
                     maxValue={dataQuestion?.timer * 1000} // Adjust to milliseconds
                     circleRatio={1}
-                    text={`${(timer / 1000).toFixed(0)}s`} // Display in seconds with two decimals
+                    text={`${(timer / 1000).toFixed(0)}s`} // Display in seconds
                   />
                 </div>
               )}

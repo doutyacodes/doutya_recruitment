@@ -43,7 +43,7 @@ const RightSidebar = ({setSheetOpen2}) => {
   const router = useRouter();
   const handleLogout = () => {
     dispatch(logout());
-    router.replace("/signup");
+    router.replace("/login");
   };
   const handleNav = (Navpass) =>{
     setSheetOpen2(false)

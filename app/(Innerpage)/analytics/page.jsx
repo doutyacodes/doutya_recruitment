@@ -22,7 +22,7 @@ const AnalyticsPage = () => {
 
   useEffect(() => {
     if (!user && !user?.id) {
-      return redirect("/signup");
+      return redirect("/login");
     } else {
       fetchData();
     }

@@ -67,6 +67,7 @@ const LobbyScreen = ({ params }) => {
           const response = await axios.get(
             `${baseURL}/getSingleQuiz.php?userId=${user?.id}&task_id=${task_id}`
           );
+          console.log(response.data)
           if (response.status === 200) {
             setQuizData(response.data.challenges);
           } else {
@@ -79,7 +80,7 @@ const LobbyScreen = ({ params }) => {
     };
 
     fetchQuiz();
-  }, [user]);
+  }, [user, task_id]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -213,9 +214,9 @@ const LobbyScreen = ({ params }) => {
       }
     } catch (error) {
       console.error("Error2:", error);
-      setIsQuizStarting(false); // Reset flag on error
     } finally {
       setisLoading(false);
+      setIsQuizStarting(false); // Reset flag
     }
   };
 

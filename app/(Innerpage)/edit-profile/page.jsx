@@ -31,7 +31,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     if (!user) {
-      router.replace("/signup");
+      router.replace("/login");
     } else {
       getUserDetails();
     }

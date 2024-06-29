@@ -18,7 +18,7 @@ const FollowPage = () => {
 
   useEffect(()=>{
     if (!user) {
-        router.replace("/signup");
+        router.replace("/login");
       }
   },[user])
   const [selectedEvents, setSelectedEvents] = useState([]);
@@ -101,7 +101,7 @@ const FollowPage = () => {
     return text.substring(0, maxLength) + "...";
   };
   return (
-    <div className="max-w-[800px]  min-h-screen overflow-y-scroll w-full mx-auto bg-white border p-3 relative flex flex-col gap-4">
+    <div className="max-w-[1201px]  min-h-screen overflow-y-scroll w-full mx-auto bg-white border p-3 relative flex flex-col gap-4">
       <div className="flex flex-col gap-3 justify-center items-center">
       <div className="relative w-32 h-24">
           <Image

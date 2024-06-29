@@ -34,7 +34,7 @@ const page = () => {
     fetchNotification();
   }, [user]);
   return (
-    <div className="max-w-[800px]  min-h-screen overflow-y-scroll w-full mx-auto bg-white border p-3 relative flex flex-col gap-4">
+    <div className="max-w-[1201px]  min-h-screen overflow-y-scroll w-full mx-auto bg-white border p-3 relative flex flex-col gap-4">
       <div className="flex gap-4 items-center">
         <Link prefetch={false}  href="/home">
           <FaChevronLeft />

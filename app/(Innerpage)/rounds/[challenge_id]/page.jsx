@@ -19,7 +19,7 @@ const RoundScreen = ({ params }) => {
   const challenge_id = params.challenge_id;
   useEffect(() => {
     if (!user && !user?.id) {
-      return redirect("/signup");
+      return redirect("/login");
     }
   }, [user]);
   const visitForm = async () => {

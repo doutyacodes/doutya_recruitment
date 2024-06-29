@@ -3,7 +3,6 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { StoreProvider } from "./StoreProvider";
 import GlobalProvider from "./QuizProvider";
-import { usePathname } from "next/navigation";
 const nunito = Nunito({ subsets: ["latin"] });
 export const metadata = {
   title: "Doutya Recruit",
@@ -18,8 +17,8 @@ export default function RootLayout({ children }) {
         <StoreProvider>
           <GlobalProvider>{children}</GlobalProvider>
         </StoreProvider>
-
         <Toaster />
+
       </body>
     </html>
   );

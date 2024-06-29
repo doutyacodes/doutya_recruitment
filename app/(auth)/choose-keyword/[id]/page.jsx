@@ -43,7 +43,7 @@ function ChooseKeyword() {
 
   useEffect(() => {
     if (!user) {
-      router.replace("/signup");
+      router.replace("/login");
     } else {
       fetchUserKeywords();
     }
@@ -148,7 +148,7 @@ function ChooseKeyword() {
         alert("You must select at least one item to continue.");
       }
     } else {
-      router.replace("/signup");
+      router.replace("/login");
     }
   };
 

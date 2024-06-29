@@ -80,7 +80,7 @@ const PageFaq = () => {
     visitForm();
   }, []);
   return (
-    <div className="max-w-[800px]  min-h-screen overflow-x-scroll  w-full mx-auto bg-[#e5e5e5] p-3">
+    <div className="max-w-[1201px]  min-h-screen overflow-x-scroll  w-full mx-auto bg-[#e5e5e5] p-3">
       <div className="flex items-center">
         <Link prefetch={false}  href="/home">
         <FaChevronLeft /></Link>

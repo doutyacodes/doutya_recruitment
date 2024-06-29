@@ -33,7 +33,7 @@ const UserDetails = ({ params }) => {
 
   useEffect(() => {
     if (!user) {
-      router.push("/signup");
+      router.push("/login");
     }
   }, [user, router]);
 
@@ -144,7 +144,7 @@ const UserDetails = ({ params }) => {
   }
 
   return (
-    <div className="max-w-[800px]  min-h-screen overflow-x-scroll w-full mx-auto bg-white">
+    <div className="max-w-[1201px]  min-h-screen overflow-x-scroll w-full mx-auto bg-white">
       <div className="w-full h-full flex-1 ">
         <div className=" relative w-full md:h-40 h-28 ">
           <Image

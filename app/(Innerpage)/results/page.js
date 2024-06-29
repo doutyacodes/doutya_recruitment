@@ -39,7 +39,7 @@ const Results = () => {
   };
   useEffect(() => {
     if (!user && !user?.id) {
-      return redirect("/signup");
+      return redirect("/login");
     }
   }, [user]);
   const handleToggle = (value) => {
@@ -138,7 +138,7 @@ const Results = () => {
   // console.log(todoQuizData)
   const JobsRoute = () => {
     return (
-      <div className="flex flex-col gap-2 bg-white px-1">
+      <div className="flex flex-col gap-2 bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4] px-1">
         {/* {console.log("todoData",todoData)} */}
 
         {todoData?.length > 0 && (
@@ -295,7 +295,7 @@ const Results = () => {
   };
   const QuizRoute = () => {
     return (
-      <div className="flex flex-col gap-2 bg-white px-1">
+      <div className="flex flex-col gap-2 bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4] px-1">
         {/* {console.log("Quiz",todoQuizData)} */}
         {todoQuizData?.length > 0 && (
           <Table>
@@ -366,7 +366,7 @@ const Results = () => {
     }
   };
   return (
-    <div className="w-full p-3">
+    <div className="w-full bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4] min-h-[95vh] p-3">
       <div className="flex justify-between items-center shadow">
         <p
           className={cn(

@@ -20,7 +20,7 @@ const Posts = ({ item, user_id }) => {
   const handleHeart = async () => {
     // alert("hello")
     if (!user_id) {
-    return  router.push("/signup");
+    return  router.push("/login");
     }
     try {
       const response = await axios.get(

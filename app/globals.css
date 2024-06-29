@@ -74,3 +74,9 @@
       @apply bg-background text-foreground;
     }
   }
+  html {
+    scrollbar-width: none; /* FF */
+}
+::-webkit-scrollbar {
+    width: 0px; /* Chrome & Edge */
+}
