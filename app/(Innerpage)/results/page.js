@@ -150,6 +150,8 @@ const Results = () => {
                 <TableHead className="text-center">Company</TableHead>
                 <TableHead className="text-center">Job Title</TableHead>
                 <TableHead className="text-center">Round</TableHead>
+                <TableHead className="text-center">Your Percentage</TableHead>
+                <TableHead className="text-center">Required Percentage</TableHead>
                 <TableHead className="text-center">Status</TableHead>
                 <TableHead className="text-center"></TableHead>
               </TableRow>
@@ -255,6 +257,12 @@ const Results = () => {
                               </TableCell>
                               <TableCell className="font-bold text-center">
                                 Round {item2.number}
+                              </TableCell>
+                              <TableCell className="font-bold text-center">
+                               {item2.task_id == 129 ? item2.compatibility : item2.total_percent}%
+                              </TableCell>
+                              <TableCell className="font-bold text-center">
+                               {item2.task_id == 129 ? "55%" : `50%`}
                               </TableCell>
 
                               <TableCell className="text-center">
