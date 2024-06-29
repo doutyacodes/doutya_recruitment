@@ -290,7 +290,7 @@ const SignUp = () => {
                 <SelectItem value="others">Others</SelectItem>
               </SelectContent>
             </Select>
-            {form.country_id === 101 && (
+            {form.country_id == 101 && (
               <Select
                 onValueChange={(value) => setForm({ ...form, state_id: value })}
               >

@@ -20,7 +20,9 @@ const InnerLayout = ({ children }) => {
       <Navbar />
 
       <main className="  flex-1  overflow-y-auto bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4]">
+      <div className="  w-full mx-auto max-w-[1200px]">
         {children}
+      </div>
       </main>
 
       {/* <footer className="bg-red-500 h-16 flex justify-center items-center"> */}
