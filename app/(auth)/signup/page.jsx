@@ -30,9 +30,9 @@ const SignUp = () => {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    email: "",
     username: "",
     password: "",
+    confirmPassword: "", // Added confirmPassword field
     name: "",
     mobile: "",
     education: "Post Doctoral Fellowship",
@@ -40,38 +40,16 @@ const SignUp = () => {
     date: new Date(),
     gender: "Mr",
     student: "no",
-    country_id: 101,
-    state_id: "",
     university: "",
     yearOfPassing: "",
     monthOfPassing: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState(null);
-  const [country, setCountry] = useState([]);
-  const [states, setStates] = useState([]);
 
-  const fetchCountry = async () => {
-    try {
-      const response = await axios.get(`${baseURL}/country.php`);
-      setCountry(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
-  const fetchState = async (country_id) => {
-    if (form.country_id === 101) {
-      try {
-        const response = await axios.get(
-          `${baseURL}/state.php?country_id=${country_id}`
-        );
-        setStates(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+
 
   const formatDate = (date) => {
     const d = new Date(date);
@@ -100,51 +78,65 @@ const SignUp = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    if (
-      !form.email ||
-      !form.username ||
-      !form.password ||
-      !form.name ||
-      !form.education ||
-      !date ||
-      !form.gender ||
-      !form.mobile
-    ) {
-      return alert("Please fill all fields to continue.");
+  
+    // Ensure all required fields are filled
+    const requiredFields = [
+      'username',
+      'password',
+      'confirmPassword',
+      'name',
+      'education',
+      'date',
+      'gender',
+      'mobile'
+    ];
+  
+    for (const field of requiredFields) {
+      if (!form[field]) {
+        return alert("Please fill all fields to continue.");
+      }
     }
+  
+    // Check if passwords match
+    if (form.password !== form.confirmPassword) {
+      return alert("Passwords do not match.");
+    }
+  
+    // Calculate age from date
     const age = calculateAge(date);
-    
+  
     if (age < 18) {
       return alert("You must be at least 18 years old to sign up.");
     }
+  
     try {
       setIsLoading(true);
-
-      const formData = new URLSearchParams();
-      formData.append("email", form.email);
+  
+      const formData = new FormData();
       formData.append("username", form.username);
       formData.append("password", form.password);
       formData.append("name", form.name);
       formData.append("mobile", form.mobile);
       formData.append("education", form.education);
-      formData.append("college", form.college);
-      formData.append("university", form.university);
-      formData.append("student", form.student);
-      formData.append("date", formatDate(date));
+      formData.append("college", form.college || '');
+      formData.append("university", form.university || '');
+      formData.append("student", form.student || '');
+      formData.append("date", formatDate(date)); // Ensure formatDate function is defined
       formData.append("gender", form.gender);
-      formData.append("country_id", form.country_id);
-      formData.append("state_id", form.state_id);
-      formData.append("yearOfPassing", form.yearOfPassing);
-      formData.append("monthOfPassing", form.monthOfPassing);
-
+      formData.append("yearOfPassing", form.yearOfPassing || '');
+      formData.append("monthOfPassing", form.monthOfPassing || '');
+  
+      console.log(form);
+  
       const response = await axios.post(`${baseURL}/sign-up.php`, formData, {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "multipart/form-data", // Use proper content type for FormData
         },
       });
-
+  
       const result = response.data;
-      // console.log(response.data)
+      console.log(result);
+  
       if (result.success) {
         dispatch(loginSuccess(result.user));
         router.replace("/follow-page");
@@ -159,16 +151,10 @@ const SignUp = () => {
       setIsLoading(false);
     }
   };
+  
 
-  useEffect(() => {
-    fetchCountry();
-  }, []);
 
-  useEffect(() => {
-    if (form.country_id) {
-      fetchState(form.country_id);
-    }
-  }, [form.country_id]);
+
 
   return (
     <div className="h-full w-full p-4  min-h-screen">
@@ -219,17 +205,7 @@ const SignUp = () => {
               Please fill in your name as per your official document. You can't
               reverse this process.
             </span>
-            <Input
-              value={form.email}
-              placeholder="Email Address"
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  email: e.target.value,
-                })
-              }
-              type="email"
-            />
+            
             <Input
               value={form.username}
               placeholder="Username"
@@ -247,6 +223,17 @@ const SignUp = () => {
                 setForm({
                   ...form,
                   password: e.target.value,
+                })
+              }
+              type="password"
+            />
+            <Input
+              value={form.confirmPassword}
+              placeholder="Confirm Password"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  confirmPassword: e.target.value,
                 })
               }
               type="password"
@@ -279,39 +266,8 @@ const SignUp = () => {
               </PopoverContent>
             </Popover>
 
-            <Select
-              onValueChange={(value) => setForm({ ...form, country_id: value })}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Country" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="101">India</SelectItem>
-                <SelectItem value="others">Others</SelectItem>
-              </SelectContent>
-            </Select>
-            {form.country_id == 101 && (
-              <Select
-                onValueChange={(value) => setForm({ ...form, state_id: value })}
-              >
-                <SelectTrigger
-                  className="w-full"
-                  disabled={form.country_id !== 101}
-                >
-                  <SelectValue placeholder="State" />
-                </SelectTrigger>
-                <SelectContent>
-                  {states &&
-                    states.length > 0 &&
-                    form.country_id === 101 &&
-                    states.map((item, index) => (
-                      <SelectItem value={item.value} key={index}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-            )}
+            
+            
             <p>Are you a college student?</p>
             <div className="flex space-x-5">
               <button
@@ -351,7 +307,7 @@ const SignUp = () => {
               <SelectTrigger className="w-full">
                 <SelectValue
                   placeholder={
-                    form.student === "yes"
+                    form.student == "yes"
                       ? "Current Enrollment"
                       : "Highest Degree"
                   }
