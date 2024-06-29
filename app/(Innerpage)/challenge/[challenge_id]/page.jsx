@@ -769,7 +769,7 @@ const PageDetails = ({ params }) => {
             {!alreadyStarted && (
                 <Button
                   disabled={isLoading}
-                  className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-auto min-w-72 h-12 absolute left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4"
+                  className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-auto min-w-72 h-12 fixed left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4"
       style={{ zIndex: 10 }}
                 >
                   {challenge.page_type == "internship" ||
