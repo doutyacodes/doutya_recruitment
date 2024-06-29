@@ -135,7 +135,7 @@ const SignUp = () => {
       });
   
       const result = response.data;
-      console.log(result);
+      // console.log(result);
   
       if (result.success) {
         dispatch(loginSuccess(result.user));

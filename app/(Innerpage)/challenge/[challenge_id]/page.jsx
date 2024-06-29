@@ -31,6 +31,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IoMdInformationCircleOutline } from "react-icons/io";
+import MyCompany from "../../(components)/MyCompany";
 const PageDetails = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 24 };
@@ -111,9 +112,8 @@ const PageDetails = ({ params }) => {
         }
       }
     };
-  
-      fetchCompilibility();
-    
+
+    fetchCompilibility();
   }, [user]);
   const fetchAlreadyDone = async () => {
     if (user) {
@@ -424,7 +424,11 @@ const PageDetails = ({ params }) => {
                     }}
                     className={cn(
                       "p-3 justify-center duration-300 min-h-32 transition-all ease-in-out items-center rounded-full w-full flex flex-col gap-3",
-                      !user || !alreadyStarted || (index>0 &&(!item4.attempted && !challenge.tasks_list[index - 1].iseligibility))
+                      !user ||
+                        !alreadyStarted ||
+                        (index > 0 &&
+                          !item4.attempted &&
+                          !challenge.tasks_list[index - 1].iseligibility)
                         ? "bg-gray-500"
                         : user &&
                           compatibilityTest?.completed &&
@@ -654,31 +658,16 @@ const PageDetails = ({ params }) => {
         </div>
       ) : (
         <div className="mt-3 px-3 py-2 h-full relative ">
-          <div className="w-full bg-white shadow-lg border border-muted p-3 rounded-md flex justify-between items-center">
-            <div className="w-fit border rounded-full">
-              <div className=" w-20 h-20  rounded-md relative">
-                {selectedMovie.image && (
-                  <Image
-                    src={baseImgURL + selectedMovie.image}
-                    fill
-                    alt="image"
-                    objectFit="cover"
-                  />
-                )}
-              </div>
-            </div>
-            <div>
-              <p className="text-lg font-bold">{selectedMovie.title}</p>
-            </div>
-            <div></div>
-          </div>
+          <MyCompany />
+
           <div className="flex justify-between mt-2 uppercase items-center shadow rounded-md max-md:overflow-x-scroll max-md:gap-10 bg-[#24975c] text-white px-3">
             {(challenge.page_type == "job" ||
               challenge.page_type == "internship") && (
               <p
                 className={cn(
                   "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
-                  toggleNav == "Rounds" && "border-b border-black text-yellow-400"
+                  toggleNav == "Rounds" &&
+                    "border-b border-black text-yellow-400"
                 )}
                 onClick={() => handleToggle("Rounds")}
               >
@@ -689,7 +678,8 @@ const PageDetails = ({ params }) => {
               <p
                 className={cn(
                   "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
-                  toggleNav == "Description" && "border-b border-black text-yellow-400"
+                  toggleNav == "Description" &&
+                    "border-b border-black text-yellow-400"
                 )}
                 onClick={() => handleToggle("Description")}
               >
@@ -711,7 +701,8 @@ const PageDetails = ({ params }) => {
                   <p
                     className={cn(
                       "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
-                      toggleNav == "Salary" && "border-b border-black text-yellow-400"
+                      toggleNav == "Salary" &&
+                        "border-b border-black text-yellow-400"
                     )}
                     onClick={() => handleToggle("Salary")}
                   >
@@ -720,7 +711,8 @@ const PageDetails = ({ params }) => {
                   <p
                     className={cn(
                       "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
-                      toggleNav == "Eligibility" && "border-b border-black text-yellow-400"
+                      toggleNav == "Eligibility" &&
+                        "border-b border-black text-yellow-400"
                     )}
                     onClick={() => handleToggle("Eligibility")}
                   >
@@ -734,7 +726,8 @@ const PageDetails = ({ params }) => {
                 <p
                   className={cn(
                     "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
-                    toggleNav == "Stars" && "border-b border-black text-yellow-400"
+                    toggleNav == "Stars" &&
+                      "border-b border-black text-yellow-400"
                   )}
                   onClick={() => handleToggle("Stars")}
                 >
@@ -744,83 +737,93 @@ const PageDetails = ({ params }) => {
             )}
           </div>
           <div className="w-full flex gap-2">
-          <div className="hidden md:flex justify-center items-center w-56 mt-2 h-full">
-                <div className="w-full bg-white h-full rounded-md min-h-[70vh]  flex flex-col  items-center">
-                  <div
-                    className={cn(
-                      " relative  h-16 rounded-md w-16 border border-black/5 justify-center items-center mt-4"
-                    )}
-                  >
-                    {selectedMovie?.image?.length > 0 && (
-                      <Image
-                        src={baseImgURL + selectedMovie?.image}
-                        fill
-                        alt="Profile Image"
-                        className="rounded-full object-contain"
-                      />
-                    )}
-                  </div>
-                  <div className="flex flex-col justify-center gap-4 py-3 font-bold ">
-                    <p>{selectedMovie?.title}</p>
-                  </div>
-                  {compatibiltyTest?.completed &&  (
+            <div className="hidden md:flex justify-center items-center w-56 mt-2 h-full">
+              <div className="w-full bg-white h-full rounded-md min-h-[70vh]  flex flex-col  items-center">
+                <div
+                  className={cn(
+                    " relative  h-16 rounded-md w-16 border border-black/5 justify-center items-center mt-4"
+                  )}
+                >
+                  {selectedMovie?.image?.length > 0 && (
+                    <Image
+                      src={baseImgURL + selectedMovie?.image}
+                      fill
+                      alt="Profile Image"
+                      className="rounded-full object-contain"
+                    />
+                  )}
+                </div>
+                <div className="flex flex-col justify-center gap-4 py-3 font-bold ">
+                  <p>{selectedMovie?.title}</p>
+                </div>
+                {compatibiltyTest?.completed && (
                   <div className="flex flex-col gap-2">
                     <p className="text-sm text-green-700 font-bold">
-                    COMPATIBILITY - {compatibiltyTest?.compatibility}%
+                      COMPATIBILITY - {compatibiltyTest?.compatibility}%
                     </p>
-                    
                   </div>
                 )}
-                  
-                </div>
               </div>
-<div className="w-full">
-
-          {RenderData()}
-</div>
-          </div>
-          {!alreadyStarted && (
-            <Button
-              disabled={isLoading}
-              className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-2 min-w-72 h-12 fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4"
-            >
-              {challenge.page_type == "internship" ||
-              challenge.page_type == "tests" ? (
-                <>
-                  {isEligible && challenge.page_type == "tests" ? (
-                    <Link
-                      prefetch={false}
-                      href={
-                        user &&
-                        (challenge.page_type != "tests" ||
-                          challenge.page_type != "language")
-                          ? `/quiz-lobby/${challenge.task_id}`
-                          : user &&
+            </div>
+            <div className="w-full relative">
+              {!alreadyStarted && (
+                <Button
+                  disabled={isLoading}
+                  className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-2 min-w-72 h-12 fixed p-4 left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4 "
+                >
+                  {challenge.page_type == "internship" ||
+                  challenge.page_type == "tests" ? (
+                    <>
+                      {isEligible && challenge.page_type == "tests" ? (
+                        <Link
+                          prefetch={false}
+                          href={
+                            user &&
                             (challenge.page_type != "tests" ||
                               challenge.page_type != "language")
-                          ? `/quiz-lobby/${challenge.task_id}`
-                          : "/login"
-                      }
-                      className="w-full text-lg"
-                    >
-                      {challenge.page_type != "tests" ||
-                      challenge.page_type != "language"
-                        ? "Start"
-                        : "Apply"}
-                    </Link>
+                              ? `/quiz-lobby/${challenge.task_id}`
+                              : user &&
+                                (challenge.page_type != "tests" ||
+                                  challenge.page_type != "language")
+                              ? `/quiz-lobby/${challenge.task_id}`
+                              : "/login"
+                          }
+                          className="w-full text-lg"
+                        >
+                          {challenge.page_type != "tests" ||
+                          challenge.page_type != "language"
+                            ? "Start"
+                            : "Apply"}
+                        </Link>
+                      ) : (
+                        <div
+                          onClick={() => {
+                            if (!user) {
+                              router.push("/login");
+                            }
+                            if (
+                              user &&
+                              (challenge.page_type == "job" ||
+                                challenge.page_type == "internship")
+                            ) {
+                              console.log("hello");
+                              gotoQuiz();
+                            }
+                          }}
+                          className="w-full text-center cursor-pointer"
+                        >
+                          Apply
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <div
                       onClick={() => {
                         if (!user) {
                           router.push("/login");
                         }
-                        if (
-                          user &&
-                          (challenge.page_type == "job" ||
-                            challenge.page_type == "internship")
-                        ) {
-                          console.log("hello");
-                          gotoQuiz();
+                        if (user) {
+                          setShowDialog(true);
                         }
                       }}
                       className="w-full text-center cursor-pointer"
@@ -828,41 +831,28 @@ const PageDetails = ({ params }) => {
                       Apply
                     </div>
                   )}
-                </>
-              ) : (
-                <div
-                  onClick={() => {
-                    if (!user) {
-                      router.push("/login");
-                    }
-                    if (user) {
-                      setShowDialog(true);
-                    }
-                  }}
-                  className="w-full text-center cursor-pointer"
-                >
-                  Apply
-                </div>
+                  <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+                    <AlertDialogTrigger asChild>
+                      <div />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Coming Soon</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          {challenge.page_type == "job" ? "Job" : "Quiz"} will
+                          be available from 27-06-2024.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>OK</AlertDialogCancel>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </Button>
               )}
-              <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
-                <AlertDialogTrigger asChild>
-                  <div />
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Coming Soon</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      {challenge.page_type == "job" ? "Job" : "Quiz"} will be
-                      available from 27-06-2024.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>OK</AlertDialogCancel>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </Button>
-          )}
+              {RenderData()}
+            </div>
+          </div>
         </div>
       )}
     </>
