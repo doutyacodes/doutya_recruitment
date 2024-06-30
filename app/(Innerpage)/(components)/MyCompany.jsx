@@ -36,7 +36,7 @@ const MyCompany = () => {
   return (
     <>
       {userPages && (
-        <div className=" bg-gradient-to-l from-[#cfece9] to-[#e3f7de]  ">
+        <div className="   ">
           <div className="w-full hidden overflow-x-scroll md:grid grid-cols-12 gap-3 max-w-[1200px] mx-auto ">
             <div className=" col-span-2 flex justify-center h-full items-center ">
               <p className="font-bold text-sm px-3 text-gray-600 md:text-base ">

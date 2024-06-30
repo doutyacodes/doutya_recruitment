@@ -375,6 +375,7 @@ const Results = () => {
   };
   return (
     <div className="w-full bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4] min-h-[95vh] p-3">
+    <div className="w-full max-w-[1200px] mx-auto">
       <div className="flex justify-between items-center shadow">
         <p
           className={cn(
@@ -396,6 +397,7 @@ const Results = () => {
         </p>
       </div>
       {RenderData()}
+    </div>
     </div>
   );
 };

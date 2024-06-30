@@ -110,8 +110,9 @@ const BuzzwallPage = () => {
     fetchAdd();
   }, []);
   return (
-    <div className="  min-h-screen bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4]  w-full  ">
+    <div className="  min-h-screen   w-full  ">
       <MyCompany />
+      <div className="w-full bg-white h-4" />
       <div className="w-full max-w-[1201px] mx-auto flex">
       <div className="hidden md:flex justify-center items-center w-56 mt-5 h-full">
                 <div className="w-full bg-white h-full rounded-md flex flex-col  items-center">

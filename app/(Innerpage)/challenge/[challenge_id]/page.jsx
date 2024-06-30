@@ -657,8 +657,10 @@ const PageDetails = ({ params }) => {
           </div>
         </div>
       ) : (
-        <div className="mt-3 px-3 py-2 h-full relative ">
+        <>
           <MyCompany />
+          <div className="w-full bg-white h-4" />
+        <div className="mt-3 px-3 py-2 h-full relative ">
 
           <div className="flex justify-between mt-2 uppercase items-center shadow rounded-md max-md:overflow-x-scroll max-md:gap-10 bg-[#24975c] text-white px-3">
             {(challenge.page_type == "job" ||
@@ -855,6 +857,7 @@ const PageDetails = ({ params }) => {
             </div>
           </div>
         </div>
+        </>
       )}
     </>
   );

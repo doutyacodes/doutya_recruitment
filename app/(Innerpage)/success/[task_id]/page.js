@@ -74,6 +74,7 @@ const Success = ({ params }) => {
 
   return (
     <div className="w-full p-3 h-full">
+    <div className="w-full max-w-[1200px] mx-auto">
       {isLoading ? (
         <div className="w-full h-[70vh] justify-center flex items-center">
           <svg
@@ -150,6 +151,7 @@ const Success = ({ params }) => {
           </Link>
         </div>
       )}
+    </div>
     </div>
   );
 };

@@ -58,8 +58,8 @@ const Navbar = () => {
             <Image
               src="/assets/images/doutya4.png"
               alt="logo"
-              width={120}
-              height={60}
+              width={150}
+              height={120}
               className=" rounded-md"
             />
           </Link>
@@ -86,7 +86,7 @@ const Navbar = () => {
         </li>
         
           <li className=" max-md:hidden w-full justify-end items-center flex mr-3">
-            <ul className="flex gap-4 items-center">
+            <ul className="flex gap-12 items-center">
               <li>
                 <Link
                   href={"/home"}

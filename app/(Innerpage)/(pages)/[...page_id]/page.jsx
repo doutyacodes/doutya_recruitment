@@ -846,7 +846,8 @@ const PageDetails = () => {
   return (
     <div className="  md:min-h-screen min-h-[86vh] bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4] border w-full ">
       <MyCompany setIsLoading={setIsLoading} />
-      <div className="w-full p-2 bg-[white]" />
+      <div className="w-full bg-white h-4" />
+      <div className="w-full  bg-[white]" />
       <div className="    max-w-[1200px] w-full mx-auto ">
         {isLoading ? (
           <div className=" w-full h-full flex flex-1 justify-center items-center ">
