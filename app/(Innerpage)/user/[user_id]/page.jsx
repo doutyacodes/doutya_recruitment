@@ -144,9 +144,9 @@ const UserDetails = ({ params }) => {
   }
 
   return (
-    <div className="max-w-[1201px]  min-h-screen overflow-x-scroll w-full mx-auto bg-white">
+    <div className="max-w-[1201px]  min-h-screen overflow-x-scroll w-full mx-auto bg-white mt-3 rounded-md">
       <div className="w-full h-full flex-1 ">
-        <div className=" relative w-full md:h-40 h-28 ">
+        <div className=" relative w-full md:h-40 h-28 px-3">
           <Image
             src={"/assets/images/bgImg.png"}
             fill
@@ -155,7 +155,7 @@ const UserDetails = ({ params }) => {
             objectFit="contain"
           />
         </div>
-        <div className="w-full flex items-center gap-3">
+        <div className="w-full flex items-center gap-3 px-3">
           <div className=" rounded-full border border-black/5 my-3">
             <div className=" relative  w-10 h-10 ">
               <Image

@@ -111,7 +111,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  href={"/user"}
+                  href={user ? `/user/${user.id}` : "/login"}
                   className={cn(
                     "",
                     pathname.includes("user") ? "font-bold" : ""
