@@ -116,6 +116,9 @@ const Previous = () => {
       if (response.data.success) {
         setUser_id(response.data.user_id)
         onSignInSubmit();
+      }else {
+        console.log(response.data.error);
+        alert(response.data.error[0] || "Something went wrong.");
       }
     } catch (error) {
       console.error("error", error);
@@ -180,7 +183,8 @@ const Previous = () => {
         dispatch(loginSuccess(response.data.user));
         router.replace("/home");
       } else {
-        router.replace("/register");
+        console.log(response.data.error);
+        alert(response.data.error[0] || "Something went wrong.");
       }
     } catch (error) {
       console.error("Error checking username:", error);

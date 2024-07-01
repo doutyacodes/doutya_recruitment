@@ -37,13 +37,13 @@ const MyCompany = () => {
     <>
       {userPages && (
         <div>
-          <div className="w-full hidden overflow-x-scroll md:grid grid-cols-12 gap-3 max-w-[1200px] mx-auto ">
-            <div className=" col-span-2 flex justify-center h-full items-center ">
-              <p className="font-bold text-sm px-3 text-gray-600 md:text-base ">
+          <div className="w-full  overflow-x-scroll flex items-center gap-3 max-w-[1200px] mx-auto ">
+            <div className=" h-full items-center ">
+              <p className="font-bold text-sm px-3 text-gray-600 md:text-base whitespace-nowrap">
                 My Companies
               </p>
             </div>
-            <div className=" col-span-10 w-full  flex gap-3  mt-1  p-1">
+            <div className="  items-center w-full  flex gap-3  mt-1  p-1">
               {userPages?.length > 0 &&
                 userPages.map((item) => {
                   const slug = generateSlug(item.title);
@@ -57,7 +57,7 @@ const MyCompany = () => {
                       <div className="w-[46px] h-[46px] rounded-2xl border relative bg-white shadow-sm">
                         <Image fill src={baseImgURL + item.icon} />
                       </div>
-                      <p className=" font-bold text-slate-500 text-center text-[9px]">
+                      <p className=" font-bold text-slate-500 text-center text-[9px] mt-2">
                         {item.title}
                       </p>
                     </Link>
@@ -77,7 +77,7 @@ const MyCompany = () => {
                         <CirclePlus />
                       </p>
                     </div>
-                    <p className=" font-bold text-slate-500 text-center text-[9px] ">
+                    <p className=" font-bold text-slate-500 text-center text-[9px] mt-2">
                       Add New
                     </p>
                   </DropdownMenuTrigger>

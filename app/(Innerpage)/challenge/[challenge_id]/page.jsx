@@ -454,7 +454,7 @@ const PageDetails = ({ params }) => {
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
                       {item4.task_id == 138 ? "Aptitude" : "Technical"}
                     </p>
-                    <p className="text-center font-bold text-base text-white "></p>
+                    <p className="text-center font-bold text-base text-white ">{item4.attempted && `${item4.total_user_percent.toFixed(2)}%`}</p>
                     <p className="text-center font-semibold text-sm text-white">
                       {item4.task_id == 138 ? "General Aptitude" : "Html React"}
                     </p>
@@ -659,8 +659,8 @@ const PageDetails = ({ params }) => {
       ) : (
         <>
           <MyCompany />
-          <div className="w-full bg-white h-4" />
-        <div className="mt-3 px-3 py-2 h-full relative ">
+          <div className="w-full bg-white h-4 " />
+        <div className="mt-3 px-3 py-2 h-full relative max-w-[1201px] mx-auto">
 
           <div className="flex justify-between mt-2 uppercase items-center shadow rounded-md max-md:overflow-x-scroll max-md:gap-10 bg-[#24975c] text-white px-3">
             {(challenge.page_type == "job" ||
