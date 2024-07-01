@@ -511,9 +511,9 @@ const PageDetails = ({ params }) => {
 
             <p className="font-bold ">
               Round{" "}
-              {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 2 + value
-                : 2 + value}
+              {challenge?.tasks_list?.length> 0
+                ? challenge?.tasks_list?.length + value
+                : 1+ value}
             </p>
 
             <div
@@ -537,9 +537,9 @@ const PageDetails = ({ params }) => {
 
             <p className="font-bold ">
               Round{" "}
-              {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 3 + value
-                : 3 + value}
+              {challenge?.tasks_list?.length > 0
+                ? challenge?.tasks_list?.length + 1 + value
+                : 1 + value}
             </p>
 
             <div
@@ -565,9 +565,9 @@ const PageDetails = ({ params }) => {
 
             <p className="font-bold ">
               Round{" "}
-              {challenge?.eligibility?.length > 0
-                ? challenge?.eligibility?.length + 4 + value
-                : 4 + value}
+              {challenge?.tasks_list?.length > 0
+                ? challenge?.tasks_list?.length + 2 + value
+                : 2 + value}
             </p>
 
             <div
