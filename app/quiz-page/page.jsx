@@ -100,16 +100,17 @@ const QuizPage = () => {
     if (!timer) return;
     const countdown = setInterval(() => {
       setTimer((prevTimer) => {
-        if (prevTimer <= 1000) {
+        if (prevTimer <= 1) {
           clearInterval(countdown);
           handleTimeOut();
           return 0;
         }
-        return prevTimer - 1000; // Decrement by 1 second (1000 milliseconds)
+        return prevTimer - 1; // Decrement by 1 millisecond
       });
-    }, 1000);
+    }, 1); // Update every 1 millisecond
     return () => clearInterval(countdown);
   }, [timer]);
+  
 
   useEffect(() => {
     if (!dataQuestion) return;
@@ -145,8 +146,11 @@ const QuizPage = () => {
   const handleTimeOut = async () => {
     await submitMarks(0);
   };
+  // console.log(timer)
 
   const submitMarks = async (earnedMarks, answer_ids, question_ids) => {
+    console.log(earnedMarks)
+    // console.log(timer)
     try {
       setIsLoading(true)
       const formData = new URLSearchParams({
