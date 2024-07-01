@@ -113,7 +113,7 @@ const Signup = () => {
           </div>
           <div className="py-3">
             <p className="font-bold">
-              Previously registered?{" "}
+              Previously registered before 27-06-2024?{" "}
               <span>
                 <Link className="font-bold text-blue-400" href={"/previous-users"}>
                   Add username
