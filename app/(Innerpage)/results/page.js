@@ -259,7 +259,7 @@ const Results = () => {
                                 Round {item2.number}
                               </TableCell>
                               <TableCell className="font-bold text-center">
-                               {item2.task_id == 129 ? item2.compatibility : item2.total_percent}%
+                               {item2.task_id == 129 ? item2.compatibility : item2.total_percent.toFixed(2)}%
                               </TableCell>
                               <TableCell className="font-bold text-center">
                                {item2.task_id == 129 ? "55%" : `50%`}
