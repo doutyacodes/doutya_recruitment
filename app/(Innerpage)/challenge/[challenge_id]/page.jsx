@@ -459,7 +459,7 @@ const PageDetails = ({ params }) => {
                         `${item4.total_user_percent.toFixed(2)}%`}
                     </p>
                     <p className="text-center font-semibold text-sm text-white">
-                      {item4.task_name}
+                     Required percentage - {item4.task_percent}%
                     </p>
                   </div>
                 </div>
