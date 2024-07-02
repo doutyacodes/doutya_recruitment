@@ -528,7 +528,7 @@ const PageDetails = ({ params }) => {
                 Technical Live Round
               </p>
               <p className="text-center font-semibold text-sm text-white">
-                06-07-2024 {challenge.page_type == "job" ? "08:00" : "07:00"} PM
+                09-07-2024 {challenge.page_type == "job" ? "08:00" : "07:00"} PM
               </p>
             </div>
           </div>
