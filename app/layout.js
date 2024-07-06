@@ -5,9 +5,9 @@ import { StoreProvider } from "./StoreProvider";
 import GlobalProvider from "./QuizProvider";
 const nunito = Nunito({ subsets: ["latin"] });
 export const metadata = {
-  title: "Doutya Recruit",
+  title: "Xortlist Recruit",
   description:
-    "At Doutya Recruit, we revolutionize the hiring process by focusing on real skills over traditional resumes. Our innovative recruitment platform presents candidates with tailored quizzes that simulate the challenges they'll face in the job. Instead of reviewing portfolios and past experience, we evaluate applicants based on their performance in these quizzes, ensuring that only the most capable and qualified individuals advance. Join us in transforming the way talent is discovered and hired—proving that actions speak louder than words.",
+    "At Xortlist Recruit, we revolutionize the hiring process by focusing on real skills over traditional resumes. Our innovative recruitment platform presents candidates with tailored quizzes that simulate the challenges they'll face in the job. Instead of reviewing portfolios and past experience, we evaluate applicants based on their performance in these quizzes, ensuring that only the most capable and qualified individuals advance. Join us in transforming the way talent is discovered and hired—proving that actions speak louder than words.",
 };
 
 export default function RootLayout({ children }) {
