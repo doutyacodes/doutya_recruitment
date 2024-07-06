@@ -139,6 +139,72 @@ const Navbar = () => {
           </li>
         
       </ul>
+      <div className="fixed md:hidden py-1 px-3 w-full left-0 bottom-0 z-50">
+        <div className="px-3 py-1 max-w-[800px] rounded-full bg-[#24975c]/95 border mx-auto relative flex w-full justify-around items-center">
+          <Link
+            prefetch={false}
+            href={"/home"}
+            className="w-1/3 text-sm flex flex-col items-center justify-center"
+          >
+            {pathname.includes("home") ? (
+              <RiHome5Fill color="#fdbd5b" size={24} />
+            ) : (
+              <RiHome5Line color="white" size={24} />
+            )}
+            <p className={pathname.includes("home") ? "text-[#fdbd5b]" : "text-white"}>
+              Home
+            </p>
+          </Link>
+          <Link
+            prefetch={false}
+            href={"/results"}
+            className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
+          >
+            {pathname.includes("results") ? (
+              <RiClipboardFill color="#fdbd5b" size={24} />
+            ) : (
+              <RiClipboardLine color="white" size={24} />
+            )}
+            <p className={pathname.includes("results") ? "text-[#fdbd5b]" : "text-white"}>
+              Results
+            </p>
+          </Link>
+          {user ? (
+            <div className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center">
+              <Sheet open={sheetOpen2} onOpenChange={setSheetOpen2}>
+                <SheetTrigger>
+                  {pathname.includes("user") ? (
+                    <RiUser3Fill color="#fdbd5b" size={24} className="mx-auto" />
+                  ) : (
+                    <RiUser3Line color="white" size={24} className="mx-auto" />
+                  )}
+                  <p className={pathname.includes("user") ? "text-[#fdbd5b]" : "text-white"}>
+                    Profile
+                  </p>
+                </SheetTrigger>
+                <SheetContent side={"right"}>
+                  <RightSidebar setSheetOpen2={setSheetOpen2} />
+                </SheetContent>
+              </Sheet>
+            </div>
+          ) : (
+            <Link
+              prefetch={false}
+              href={"/signup"}
+              className="w-1/3 text-sm flex-wrap flex flex-col items-center justify-center"
+            >
+              {pathname.includes("signup") ? (
+                <RiUser3Fill color="#fdbd5b" size={24} />
+              ) : (
+                <RiUser3Line color="white" size={24} />
+              )}
+              <p className={pathname.includes("signup") ? "text-[#fdbd5b]" : "text-white"}>
+                Profile
+              </p>
+            </Link>
+          )}
+        </div>
+      </div>
     </nav>
   );
 };

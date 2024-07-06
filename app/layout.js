@@ -18,7 +18,6 @@ export default function RootLayout({ children }) {
           <GlobalProvider>{children}</GlobalProvider>
         </StoreProvider>
         <Toaster />
-
       </body>
     </html>
   );
