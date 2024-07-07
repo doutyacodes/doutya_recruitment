@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Popover,
@@ -25,6 +25,7 @@ import {
 import { Button } from "@/components/ui/button";
 import YearMonthPicker from "../(components)/YearMonthPicker";
 import Image from "next/image";
+import { toast } from "@/components/ui/use-toast";
 
 const SignUp = () => {
   const router = useRouter();
@@ -46,10 +47,8 @@ const SignUp = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState(null);
-
- 
-
-
+  const [eyes, setEyes] = useState(false);
+  const [eyes2, setEyes2] = useState(false);
 
   const formatDate = (date) => {
     const d = new Date(date);
@@ -78,83 +77,135 @@ const SignUp = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-  
+
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    const mobileRegex = /^[0-9]{10}$/;
+
     // Ensure all required fields are filled
     const requiredFields = [
-      'username',
-      'password',
-      'confirmPassword',
-      'name',
-      'education',
-      'date',
-      'gender',
-      'mobile'
+      "username",
+      "password",
+      "confirmPassword",
+      "name",
+      "education",
+      "date",
+      "gender",
+      "mobile",
     ];
-  
+
     for (const field of requiredFields) {
       if (!form[field]) {
-        return alert("Please fill all fields to continue.");
+        toast({
+          variant: "destructive",
+          title: "Missing Field",
+          description: "Please fill all fields to continue.",
+        });
+        return;
       }
     }
-  
+
     // Check if passwords match
     if (form.password !== form.confirmPassword) {
-      return alert("Passwords do not match.");
+      toast({
+        variant: "destructive",
+        title: "Password Mismatch",
+        description: "Passwords do not match.",
+      });
+      return;
     }
-  
+
+    // Check if name contains only letters and spaces, and is within the maximum length
+    if (!nameRegex.test(form.name) || form.name.length > 50) {
+      toast({
+        variant: "destructive",
+        title: "Invalid Name",
+        description:
+          "Name must contain only letters and spaces and be less than 50 characters.",
+      });
+      return;
+    }
+
+    // Check if username contains only letters, numbers, underscores, and spaces
+    if (!usernameRegex.test(form.username)) {
+      toast({
+        variant: "destructive",
+        title: "Invalid Username",
+        description:
+          "Username must contain only letters, numbers, underscores, and spaces.",
+      });
+      return;
+    }
+
+    // Check if mobile number contains exactly 10 digits
+    if (!mobileRegex.test(form.mobile)) {
+      toast({
+        variant: "destructive",
+        title: "Invalid Mobile Number",
+        description: "Mobile number must contain exactly 10 digits.",
+      });
+      return;
+    }
+
     // Calculate age from date
     const age = calculateAge(date);
-  
+
     if (age < 18) {
-      return alert("You must be at least 18 years old to sign up.");
+      toast({
+        variant: "destructive",
+        title: "Age Restriction",
+        description: "You must be at least 18 years old to sign up.",
+      });
+      return;
     }
-  
+
     try {
       setIsLoading(true);
-  
+
       const formData = new FormData();
       formData.append("username", form.username);
       formData.append("password", form.password);
       formData.append("name", form.name);
       formData.append("mobile", form.mobile);
       formData.append("education", form.education);
-      formData.append("college", form.college || '');
-      formData.append("university", form.university || '');
-      formData.append("student", form.student || '');
+      formData.append("college", form.college || "");
+      formData.append("university", form.university || "");
+      formData.append("student", form.student || "");
       formData.append("date", formatDate(date)); // Ensure formatDate function is defined
       formData.append("gender", form.gender);
-      formData.append("yearOfPassing", form.yearOfPassing || '');
-      formData.append("monthOfPassing", form.monthOfPassing || '');
-  
-      // console.log(form);
-  
+      formData.append("yearOfPassing", form.yearOfPassing || "");
+      formData.append("monthOfPassing", form.monthOfPassing || "");
+
       const response = await axios.post(`${baseURL}/sign-up.php`, formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Use proper content type for FormData
         },
       });
-  
+
       const result = response.data;
-      // console.log(result);
-  
+
       if (result.success) {
         dispatch(loginSuccess(result.user));
         router.replace("/follow-page");
       } else {
         console.log(result.error);
-        alert(result.error[0] || "Something went wrong.");
+        toast({
+          variant: "destructive",
+          title: "Submission Error",
+          description: result.error[0] || "Something went wrong.",
+        });
       }
     } catch (error) {
       console.error("Error submitting data:", error);
-      alert("Something went wrong while submitting the form.");
+      toast({
+        variant: "destructive",
+        title: "Submission Error",
+        description: "Something went wrong while submitting the form.",
+      });
     } finally {
       setIsLoading(false);
     }
   };
-  
-
-
-
 
   return (
     <div className="h-full w-full p-4  min-h-screen">
@@ -205,7 +256,7 @@ const SignUp = () => {
               Please fill in your name as per your official document. You can't
               reverse this process.
             </span>
-            
+
             <Input
               value={form.username}
               placeholder="Username"
@@ -216,17 +267,29 @@ const SignUp = () => {
                 })
               }
             />
-            <Input
-              value={form.password}
-              placeholder="Password"
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  password: e.target.value,
-                })
-              }
-              type="password"
-            />
+            <div className="w-full grid grid-cols-12">
+              <div className="w-full col-span-10 md:col-span-11">
+                <Input
+                  value={form.password}
+                  placeholder="Password"
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      password: e.target.value,
+                    })
+                  }
+                  type={eyes ? "text" : "password"}
+                />
+              </div>
+                <p
+                  onClick={() => setEyes((prevEyes) => !prevEyes)}
+                  className="md:col-span-1 flex items-center justify-center  col-span-2  border border-slate-200 focus:border-slate-400 focus:outline-none rounded-md"
+                >
+                  {eyes ? <EyeOff /> : <Eye />}
+                </p>
+            </div>
+            <div className="w-full grid grid-cols-12">
+              <div className="w-full col-span-10 md:col-span-11">
             <Input
               value={form.confirmPassword}
               placeholder="Confirm Password"
@@ -236,8 +299,15 @@ const SignUp = () => {
                   confirmPassword: e.target.value,
                 })
               }
-              type="password"
-            />
+              type={eyes2 ? "text" : "password"} />
+              </div>
+              <p
+                  onClick={() => setEyes2((prevEyes2) => !prevEyes2)}
+                  className="md:col-span-1 flex items-center justify-center  col-span-2  border border-slate-200 focus:border-slate-400 focus:outline-none rounded-md"
+                >
+                  {eyes2 ? <EyeOff /> : <Eye />}
+                </p>
+            </div>
             <Input
               value={form.mobile}
               placeholder="Mobile Number"
@@ -266,8 +336,6 @@ const SignUp = () => {
               </PopoverContent>
             </Popover>
 
-            
-            
             <p>Are you a college student?</p>
             <div className="flex space-x-5">
               <button

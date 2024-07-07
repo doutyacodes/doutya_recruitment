@@ -21,6 +21,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { auth } from "../(components)/firebase";
+import { toast } from "@/components/ui/use-toast";
 const Previous = () => {
   const [otp, setOtp] = useState("");
   const [ph, setPh] = useState("");
@@ -107,6 +108,16 @@ const Previous = () => {
     }
   };
   const handleSubmit = async () => {
+    const phoneRegex = /^\d{10}$/;
+
+    if (!phoneRegex.test(ph)) {
+    toast({
+      variant: "destructive",
+      title: "Invalid Phone Number",
+      description: "Phone number must be exactly 10 digits and contain only numbers.",
+    });
+    return;
+  }
     try {
       const formatPh = countryCode + ph;
       const response = await axios.get(
@@ -256,7 +267,7 @@ const Previous = () => {
             {!showOTP && (
               <>
                 <input
-                  type="text"
+                  type="number"
                   className="focus:outline-none p-3 bg-white border w-full rounded-lg"
                   placeholder="eg: 9876543210"
                   onChange={(e) => setPh(e.target.value)}
@@ -266,7 +277,7 @@ const Previous = () => {
             {showOTP && !showUser && (
               <>
                 <input
-                  type="text"
+                  type="number"
                   className="focus:outline-none p-3 bg-white border w-full rounded-lg"
                   placeholder="OTP"
                   onChange={(e) => setOtp(e.target.value)}

@@ -1,5 +1,5 @@
 "use client";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -14,12 +14,31 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [eyes, setEyes] = useState(false);
   const dispatch = useAppDispatch();
 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (username.length <= 0) {
+      toast({
+        variant: "destructive",
+        title: "Incomplete data.",
+        description: "Please fill in the username.",
+      });
+      return;
+    }
+    
+    if (password.length <= 0) {
+      toast({
+        variant: "destructive",
+        title: "Incomplete data.",
+        description: "Please fill in the password.",
+      });
+      return;
+    }
+    
     setIsLoading(true);
 
     try {
@@ -35,21 +54,20 @@ const Signup = () => {
           },
         }
       );
-// console.log(response.data)
-     if(response.data.success)
-        {
-          dispatch(loginSuccess(response.data.user));
-          router.replace("/home");
-  
-        }
-        if(response.data.success==false){
-            toast({
-                variant: "destructive",
-                title: "Uh oh! Something went wrong.",
-                description: `${response.data.error ? response.data.error : "Please try again."}`
-                
-              })
-        }
+      // console.log(response.data)
+      if (response.data.success) {
+        dispatch(loginSuccess(response.data.user));
+        router.replace("/home");
+      }
+      if (response.data.success == false) {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${
+            response.data.error ? response.data.error : "Please try again."
+          }`,
+        });
+      }
     } catch (error) {
       // Handle error
       console.error(error);
@@ -61,16 +79,16 @@ const Signup = () => {
   return (
     <div className="h-full w-full p-4 min-h-screen">
       <div className="h-full w-full p-4 bg-white rounded-md max-w-[800px] mx-auto ">
-       <div className="w-full mx-auto flex justify-center items-center">
-       <Link href={"/home"}>
-          <Image
-            src={"/assets/images/doutya4.png"}
-            alt="logo"
-            width={150}
-            height={150}
-          />
-        </Link>
-       </div>
+        <div className="w-full mx-auto flex justify-center items-center">
+          <Link href={"/home"}>
+            <Image
+              src={"/assets/images/doutya4.png"}
+              alt="logo"
+              width={150}
+              height={150}
+            />
+          </Link>
+        </div>
         <form
           onSubmit={handleSubmit}
           className="h-full w-full flex flex-col justify-center items-center p-2 mt-6 space-y-4"
@@ -93,13 +111,19 @@ const Signup = () => {
           </div>
           <div className="w-full space-y-3">
             <p className="text-sm">Password</p>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="p-3 w-full border border-slate-200 focus:border-slate-400 focus:outline-none rounded-md"
-            />
+            <div className="w-full grid grid-cols-12 ">
+              <input
+                type={eyes ?  "text" : "password"}
+
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className=" col-span-10 md:col-span-11 p-3 w-full border border-slate-200 focus:border-slate-400 focus:outline-none rounded-md"
+              />
+              <p onClick={()=>setEyes((prevEyes)=>!prevEyes)} className="md:col-span-1 flex items-center justify-center  col-span-2 p-3 border border-slate-200 focus:border-slate-400 focus:outline-none rounded-md">
+                {eyes ? <EyeOff /> : <Eye />}
+              </p>
+            </div>
           </div>
           <div className="py-3">
             <p className="font-bold">
@@ -115,7 +139,10 @@ const Signup = () => {
             <p className="font-bold">
               Previously registered before 27-06-2024?{" "}
               <span>
-                <Link className="font-bold text-blue-400" href={"/previous-users"}>
+                <Link
+                  className="font-bold text-blue-400"
+                  href={"/previous-users"}
+                >
                   Add username
                 </Link>
               </span>

@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import { useAppSelector } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 
-const LeftSidebar = ({setSheetOpen}) => {
+const LeftSidebar = ({ setSheetOpen }) => {
   const user = useAppSelector((state) => state.auth.user);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,7 +28,7 @@ const LeftSidebar = ({setSheetOpen}) => {
   const [following, setFollowing] = useState([]);
   const [friends, setFriends] = useState([]);
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPages = async () => {
@@ -38,8 +38,8 @@ const LeftSidebar = ({setSheetOpen}) => {
             `${baseURL}/getAllUserPages.php?user_id=${user.id}`
           );
           if (response.status === 200) {
-            setUserPages(response.data);
             // console.log(response.data);
+            setUserPages(response.data);
           } else {
             console.error("Failed to fetch pages");
           }
@@ -129,10 +129,10 @@ const LeftSidebar = ({setSheetOpen}) => {
 
     fetchSearch();
   }, [user, searchQuery]);
-  const handleNav = (Navpass) =>{
-    setSheetOpen(false)
-    router.push(Navpass)
-  }
+  const handleNav = (Navpass) => {
+    setSheetOpen(false);
+    router.push(Navpass);
+  };
   return (
     <div className=" w-full h-full  overflow-scroll">
       <div className="flex mt-5 gap-3 bg-white border border-black/5 items-center rounded-md relative">
@@ -148,14 +148,18 @@ const LeftSidebar = ({setSheetOpen}) => {
             {searchData?.length > 0 &&
               searchData?.map((item, index) => {
                 let Navpass;
-                const slug = generateSlug(item.page_title);
-
+                let slug;
+                // console.log(item)
+                if (item.type != "user") {
+                  slug = item.slug;
+                }
                 item.type == "user"
                   ? (Navpass = `/user/${item.id}`)
-                  : (Navpass = `/companies/${item.id}`);
+                  : (Navpass = `/companies/${slug}`);
                 // console.log(item)
                 return item.type == "user" ? (
-                  <Link prefetch={false} 
+                  <Link
+                    prefetch={false}
                     href={Navpass}
                     className="flex gap-2 mt-4 items-center "
                     key={index}
@@ -186,7 +190,8 @@ const LeftSidebar = ({setSheetOpen}) => {
                     </div>
                   </Link>
                 ) : (
-                  <Link prefetch={false} 
+                  <Link
+                    prefetch={false}
                     href={Navpass}
                     className="flex gap-2 mt-4 items-center border-t "
                     key={index}
@@ -235,11 +240,11 @@ const LeftSidebar = ({setSheetOpen}) => {
                 <AccordionContent>
                   {userPages?.length > 0 &&
                     userPages?.map((item, index) => {
-                        const slug = generateSlug(item.title);
+                      const slug = item.slug;
 
                       return (
                         <div
-                        onClick={()=>handleNav(`/companies/${slug}/${item.id}`)}
+                          onClick={() => handleNav(`/companies/${slug}`)}
                           className="flex gap-2 mt-4 items-center border-t cursor-pointer"
                           key={index}
                         >

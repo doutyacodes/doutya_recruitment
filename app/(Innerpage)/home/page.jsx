@@ -115,10 +115,10 @@ const BuzzwallPage = () => {
       <div className="w-full bg-white h-4" />
       <div className="w-full max-w-[1201px] mx-auto flex">
       <div className="hidden md:flex justify-center items-center w-56 mt-5 h-full">
-                <div className="w-full bg-white h-full rounded-md flex flex-col  items-center">
+                <div className="w-full bg-white h-full rounded-md flex flex-col  items-center py-4" >
                   <div
                     className={cn(
-                      " relative  h-16 rounded-full w-16 border border-black/5 justify-center items-center mt-4"
+                      " relative  h-20 rounded-full w-20 justify-center items-center "
                     )}
                   >
                     {user?.image?.length > 0 ? (
@@ -130,23 +130,25 @@ const BuzzwallPage = () => {
                       />
                     ):(
                       <Image
-                        src={"/assets/images/avatar.jpg"}
+                        src={"/assets/images/avatar.png"}
                         fill
                         alt="Profile Image"
                         className="rounded-full object-contain"
                       />
                     )}
                   </div>
-                 {user ?( <div className="flex flex-col justify-center gap-4 py-3 font-bold ">
+                 {user &&( <div className="flex flex-col justify-center gap-4 pt-3 font-bold ">
                     <p>{user?.name}</p>
                   </div>
-                  ):(
-                    <Button className="my-3">
-                    <Link prefetch={false} href="/login" className="w-full">
-                      Login
-                    </Link>
-                  </Button>
-                  )}
+                  )
+                  // :(
+                  //   <Button className="my-3">
+                  //   <Link prefetch={false} href="/login" className="w-full">
+                  //     Login
+                  //   </Link>
+                  // </Button>
+                  // )
+                  }
                   
                 </div>
               </div>
