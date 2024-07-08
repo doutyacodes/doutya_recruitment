@@ -201,7 +201,7 @@ const PageDetails = ({ params }) => {
               </div>
             )}
             <h3 className="font-bold text-center text-lg">{challenge.title}</h3>
-            <p>
+            <p className="text-pretty">
               <DescriptionText rules={challenge.description} />
             </p>
           </div>
@@ -213,7 +213,7 @@ const PageDetails = ({ params }) => {
     return (
       <div className="mt-2 bg-white rounded-md w-full flex-1  h-full overflow-scroll min-h-[70vh] p-4">
         {challenge?.rules ? (
-          <div className="mt-4 mb-6">
+          <div className="mt-4 mb-6 text-pretty">
             <p>
               <DescriptionText rules={challenge.rules} />
             </p>
@@ -241,7 +241,7 @@ const PageDetails = ({ params }) => {
           </h3>
         </div>
         {challenge?.salary_desc && (
-          <div className="mt-4 mb-6">
+          <div className="mt-4 mb-6 text-pretty">
             <DescriptionText rules={challenge.salary_desc} />
           </div>
         )}
@@ -283,7 +283,7 @@ const PageDetails = ({ params }) => {
                 You can gain upto {challenge.stars} stars.
               </p>
               {challenge?.star_description && (
-                <div className="mt-4 mb-6">
+                <div className="mt-4 mb-6 text-pretty">
                   <DescriptionText rules={challenge.star_description} />
                 </div>
               )}
@@ -348,7 +348,7 @@ const PageDetails = ({ params }) => {
           </div>
         </div>
         <div className="w-full flex flex-col gap-5 mt-5">
-          <div className="w-full flex flex-col gap-3 justify-center items-center">
+          <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
             <p className="font-bold ">Round 1</p>
             <div
               onClick={() => {
@@ -405,7 +405,7 @@ const PageDetails = ({ params }) => {
               // console.log("item4:", item4);
               // console.log("eligible:", eligible);
               return (
-                <div className="w-full flex flex-col gap-3 justify-center items-center">
+                <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
                   <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
                   <p className="font-bold ">Round {index + 2}</p>
 
@@ -459,7 +459,7 @@ const PageDetails = ({ params }) => {
                         `${item4.total_user_percent.toFixed(2)}%`}
                     </p>
                     <p className="text-center font-semibold text-sm text-white">
-                     Required percentage - {item4.task_percent}%
+                      Required percentage - {item4.task_percent}%
                     </p>
                   </div>
                 </div>
@@ -506,14 +506,14 @@ const PageDetails = ({ params }) => {
             );
           })}
 
-          <div className="w-full flex flex-col gap-3 justify-center items-center">
+          <div className="w-full flex cursor-pointer flex-col gap-3 justify-center items-center">
             <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
 
             <p className="font-bold ">
               Round{" "}
-              {challenge?.tasks_list?.length> 0
+              {challenge?.tasks_list?.length > 0
                 ? challenge?.tasks_list?.length + value
-                : 1+ value}
+                : 1 + value}
             </p>
 
             <div
@@ -532,7 +532,7 @@ const PageDetails = ({ params }) => {
               </p>
             </div>
           </div>
-          <div className="w-full flex flex-col gap-3 justify-center items-center">
+          <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
             <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
 
             <p className="font-bold ">
@@ -555,12 +555,11 @@ const PageDetails = ({ params }) => {
               </p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                <span className="font-bold"> 1 MIN VIDEO </span>:{" "}
-                <span>Tell us about yourself.</span>
+                <span className="font-bold"> Coding Round</span>
               </p>
             </div>
           </div>
-          <div className="w-full flex flex-col gap-3 justify-center items-center">
+          <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
             <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
 
             <p className="font-bold ">
@@ -638,7 +637,7 @@ const PageDetails = ({ params }) => {
   return (
     <>
       {isLoading ? (
-        <div className=" w-full h-full flex flex-1 justify-center items-center ">
+        <div className="w-full h-full flex justify-center items-center">
           <div role="status">
             <svg
               aria-hidden="true"
@@ -662,14 +661,14 @@ const PageDetails = ({ params }) => {
       ) : (
         <>
           <MyCompany />
-          <div className="w-full bg-white h-4 " />
+          <div className="w-full bg-white h-4" />
           <div className="mt-3 px-3 py-2 h-full relative max-w-[1201px] mx-auto">
             <div className="flex justify-between mt-2 uppercase items-center shadow rounded-md max-md:overflow-x-scroll max-md:gap-10 bg-[#24975c] text-white px-3">
               {(challenge.page_type == "job" ||
                 challenge.page_type == "internship") && (
                 <p
                   className={cn(
-                    "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
+                    "flex-1 text-center cursor-pointer py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all",
                     toggleNav == "Rounds" &&
                       "border-b border-black text-yellow-400"
                   )}
@@ -681,7 +680,7 @@ const PageDetails = ({ params }) => {
               {challenge.page_type != "tests" && (
                 <p
                   className={cn(
-                    "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
+                    "flex-1 text-center cursor-pointer py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all",
                     toggleNav == "Description" &&
                       "border-b border-black text-yellow-400"
                   )}
@@ -692,7 +691,7 @@ const PageDetails = ({ params }) => {
               )}
               <p
                 className={cn(
-                  "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
+                  "flex-1 text-center cursor-pointer py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all",
                   toggleNav == "Rules" &&
                     "border-b border-black text-yellow-400"
                 )}
@@ -705,17 +704,17 @@ const PageDetails = ({ params }) => {
                   <>
                     <p
                       className={cn(
-                        "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
+                        "flex-1 text-center cursor-pointer py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all",
                         toggleNav == "Salary" &&
                           "border-b border-black text-yellow-400"
                       )}
                       onClick={() => handleToggle("Salary")}
                     >
-                      {challenge.page_type == "job" ? "Salary" : "Stipend"}{" "}
+                      {challenge.page_type == "job" ? "Salary" : "Stipend"}
                     </p>
                     <p
                       className={cn(
-                        "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
+                        "flex-1 text-center cursor-pointer py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all",
                         toggleNav == "Eligibility" &&
                           "border-b border-black text-yellow-400"
                       )}
@@ -727,28 +726,22 @@ const PageDetails = ({ params }) => {
                 )}
               {(challenge.page_type == "tests" ||
                 challenge.page_type == "language") && (
-                <>
-                  <p
-                    className={cn(
-                      "flex-1 text-center py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all ",
-                      toggleNav == "Stars" &&
-                        "border-b border-black text-yellow-400"
-                    )}
-                    onClick={() => handleToggle("Stars")}
-                  >
-                    Stars
-                  </p>
-                </>
+                <p
+                  className={cn(
+                    "flex-1 text-center cursor-pointer py-3 bg-[#24975c] font-bold duration-200 ease-in-out transition-all",
+                    toggleNav == "Stars" &&
+                      "border-b border-black text-yellow-400"
+                  )}
+                  onClick={() => handleToggle("Stars")}
+                >
+                  Stars
+                </p>
               )}
             </div>
             <div className="w-full flex gap-2">
               <div className="hidden md:flex justify-center items-center w-56 mt-2 h-full">
-                <div className="w-full bg-white h-full rounded-md min-h-[70vh]  flex flex-col  items-center">
-                  <div
-                    className={cn(
-                      " relative  h-16 rounded-md w-16 border border-black/5 justify-center items-center mt-4"
-                    )}
-                  >
+                <div className="w-full bg-white h-full rounded-md min-h-[70vh] flex flex-col items-center">
+                  <div className="relative h-16 rounded-md w-16 border border-black/5 justify-center items-center mt-4">
                     {selectedMovie?.image?.length > 0 && (
                       <Image
                         src={baseImgURL + selectedMovie?.image}
@@ -758,7 +751,7 @@ const PageDetails = ({ params }) => {
                       />
                     )}
                   </div>
-                  <div className="flex flex-col justify-center gap-4 py-3 font-bold ">
+                  <div className="flex flex-col justify-center gap-4 py-3 font-bold">
                     <p>{selectedMovie?.title}</p>
                   </div>
                   {compatibiltyTest?.completed && (
@@ -770,12 +763,11 @@ const PageDetails = ({ params }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full relative">
+              <div className="w-full flex flex-col justify-center items-center h-full min-h-screen relative">
                 {!alreadyStarted && (
                   <Button
                     disabled={isLoading}
-                    className="bg-blue-400 rounded-full text-lg border border-white/40 shadow-lg px-3 max-w-[600px] mx-auto min-w-72 h-12 fixed left-1/2 bottom-24 transform -translate-x-1/2 -translate-y-1/4"
-                    style={{ zIndex: 10 }}
+                    className="bg-blue-400 fixed z-[999999] rounded-full text-lg border border-white/40 shadow-lg px-3 mx-auto min-w-72 h-12 top-1/2 left-1/2 transform -translate-x-1/4 -translate-y-1/4"
                   >
                     {challenge.page_type == "internship" ||
                     challenge.page_type == "tests" ? (
@@ -846,7 +838,7 @@ const PageDetails = ({ params }) => {
                           <AlertDialogTitle>Coming Soon</AlertDialogTitle>
                           <AlertDialogDescription>
                             {challenge.page_type == "job" ? "Job" : "Quiz"} will
-                            be available from 27-06-2024.
+                            be available from 13-07-2024.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
