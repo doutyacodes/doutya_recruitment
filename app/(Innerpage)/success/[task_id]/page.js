@@ -152,7 +152,7 @@ const Success = ({ params }) => {
             )}
             {
               <p className=" text-black/80 p-3 text-center">
-                {fullData?.textData}
+                {percentageDetails < 50 && fullData?.textData}
               </p>
             }
             <Link prefetch={false} href={`/${routes}`}>
