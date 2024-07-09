@@ -230,6 +230,7 @@ console.log(quizData.start_time)
           disabled={quizData.live === "yes" ? true : false}
         >
           <span className="text-xl font-bold mb-4">Welcome</span>
+          <span className="text-lg font-semibold my-4">The First Question Starts In</span>
           {quizData.live === "yes" && completed && (
             <span className="text-center text-red-500 text-lg font-bold">
               Oops!..Quiz has been already started
