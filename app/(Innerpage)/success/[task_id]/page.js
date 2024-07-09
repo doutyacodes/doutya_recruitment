@@ -15,6 +15,7 @@ const Success = ({ params }) => {
   const [starsDetails, setStarsDetails] = useState(0);
   const [percentageDetails, setPercentageDetails] = useState(0);
   const [types, setTypes] = useState(null);
+  const [user_rank, setUser_rank] = useState(null);
   const [pageTypes, setPageTypes] = useState(null);
   const [routes, setRoutes] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +43,7 @@ const Success = ({ params }) => {
         if (data.total_percent) setPercentageDetails(data.total_percent);
         if (data.types) setTypes(data.types);
         if (data.page_type) setPageTypes(data.page_type);
+        if (data.user_rank) setUser_rank(data.user_rank);
         if (data.url) {
           setRoutes(data.url);
         }
@@ -98,11 +100,16 @@ const Success = ({ params }) => {
           </div>
         ) : (
           <div className="w-full h-full bg-white flex flex-col min-h-[60vh] md:min-h-[80vh] rounded-md justify-center items-center">
-            {percentageDetails > 50 ? (
-              <IoIosCheckmarkCircle size={90} color="green" />
+            {user_rank && user_rank > 15 ? (
+              percentageDetails > 50 ? (
+                <IoIosCheckmarkCircle size={90} color="green" />
+              ) : (
+                <IoMdCloseCircle size={90} color="red" />
+              )
             ) : (
               <IoMdCloseCircle size={90} color="red" />
             )}
+
             {starsDetails.stars > 0 && (
               <div>
                 <p className="text-lg text-center my-5 space-y-5 font-bold">
@@ -120,6 +127,16 @@ const Success = ({ params }) => {
                 </p>
                 <p className="w-full text-center my-3 font-bold text-lg">
                   {percentageDetails?.toFixed(2)}%
+                </p>
+              </div>
+            )}
+            {user_rank && (
+              <div>
+                <p className="text-lg text-center space-y-5 font-bold">
+                  Your Rank
+                </p>
+                <p className="w-full text-center my-3 font-bold text-lg">
+                  #{user_rank}
                 </p>
               </div>
             )}

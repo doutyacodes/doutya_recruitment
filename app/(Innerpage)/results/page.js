@@ -63,7 +63,7 @@ const Results = () => {
       );
 
       const result = response.data;
-      // console.log(result)
+      console.log(result)
       if (result.success) {
         console.log("success");
       } else {
@@ -152,6 +152,9 @@ const Results = () => {
                 <TableHead className="text-center">Round</TableHead>
                 <TableHead className="text-center">Your Percentage</TableHead>
                 <TableHead className="text-center">Required Percentage</TableHead>
+                <TableHead className="text-center">Your Rank</TableHead>
+
+                <TableHead className="text-center">Required Rank</TableHead>
                 <TableHead className="text-center">Status</TableHead>
                 <TableHead className="text-center"></TableHead>
               </TableRow>
@@ -264,30 +267,62 @@ const Results = () => {
                               <TableCell className="font-bold text-center">
                                {item2.task_id == 129 ? "55%" : `50%`}
                               </TableCell>
+                              <TableCell className="font-bold text-center">
+                               {item2?.live && item2.live=="yes" && item2?.user_rank}
+                              </TableCell>
+                              <TableCell className="font-bold text-center">
+                               {item2?.live && item2.live=="yes" && item2?.rank}
+                              </TableCell>
 
                               <TableCell className="text-center">
-                                <Link href={`/challenge/${item.challenge_id}`}>
-                                  {item2?.quiz_status && (
-                                    <div
-                                      className={cn(
-                                        " rounded-full ",
-                                        item2?.quiz_status == "Success"
-                                          ? "bg-green-600"
-                                          : item2?.quiz_status == "ongoing"
-                                          ? "bg-orange-500"
-                                          : "bg-red-600"
-                                      )}
-                                    >
-                                      <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                                        {item2?.quiz_status == "Success"
-                                          ? "Success"
-                                          : item2?.quiz_status == "ongoing"
-                                          ? "Ongoing"
-                                          : "Failed"}
-                                      </p>
-                                    </div>
-                                  )}
-                                </Link>
+                              {item2.live === "yes" ? (
+  item2.rank >= item2.user_rank ? (
+    <Link href={`/challenge/${item.challenge_id}`}>
+      {item2.quiz_status && (
+        <div
+          className={cn(
+            "rounded-full",
+            item2.quiz_status === "Success" ? "bg-green-600" :
+            item2.quiz_status === "ongoing" ? "bg-orange-500" : "bg-red-600"
+          )}
+        >
+          <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+            {item2.quiz_status === "Success" ? "Success" :
+             item2.quiz_status === "ongoing" ? "Ongoing" : "Failed"}
+          </p>
+        </div>
+      )}
+    </Link>
+  ) : (
+    <Link href={`/challenge/${item.challenge_id}`}>
+      {item2.quiz_status && (
+        <div className={cn("bg-red-600")}>
+          <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+            Failed
+          </p>
+        </div>
+      )}
+    </Link>
+  )
+) : (
+  <Link href={`/challenge/${item.challenge_id}`}>
+    {item2.quiz_status && (
+      <div
+        className={cn(
+          "rounded-full",
+          item2.quiz_status === "Success" ? "bg-green-600" :
+          item2.quiz_status === "ongoing" ? "bg-orange-500" : "bg-red-600"
+        )}
+      >
+        <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+          {item2.quiz_status === "Success" ? "Success" :
+           item2.quiz_status === "ongoing" ? "Ongoing" : "Failed"}
+        </p>
+      </div>
+    )}
+  </Link>
+)}
+
                               </TableCell>
                             </TableRow>
                           );

@@ -8,6 +8,11 @@ import { useAppSelector } from "@/lib/hooks";
 import { Button } from "@/components/ui/button";
 import { isMobile } from "react-device-detect";
 import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const LobbyScreen = ({ params }) => {
   const [quizData, setQuizData] = useState(null);
@@ -146,16 +151,15 @@ const LobbyScreen = ({ params }) => {
       const h = Math.floor((countdown3 % (3600 * 24)) / 3600);
       const m = Math.floor((countdown3 % 3600) / 60);
       const s = countdown3 % 60;
-      
+
       // Convert to two digits
-      const twoDigitFormat = (num) => String(num).padStart(2, '0');
-      
+      const twoDigitFormat = (num) => String(num).padStart(2, "0");
+
       setDays(twoDigitFormat(d));
       setHours(twoDigitFormat(h));
       setMinutes(twoDigitFormat(m));
       setSeconds(twoDigitFormat(s));
     };
-    
 
     convertTime();
   }, [countdown3]);
@@ -232,19 +236,50 @@ const LobbyScreen = ({ params }) => {
 
   return (
     <div className="w-full  min-h-[85vh]  flex flex-col items-center justify-between">
-      {quizData?.banner && (
-        <div className="w-full flex justify-center bg-[#f9f9f9] py-3">
-          <Image src={baseImgURL + quizData?.banner} width={30} height={20} />
+      {quizData?.icon && (
+        <div className="w-full flex justify-center bg-[#f9f9f9] py-3 gap-2 items-center">
+          <Image src={baseImgURL + quizData?.icon} width={40} height={40} />
+          <p className="font-bold">{quizData.page_title}</p>
         </div>
       )}
       <div className="flex w-full flex-col items-center max-w-[1200px] mx-auto justify-center h-full p-4">
         {quizData ? (
           <button
-            className="bg-white shadow-md rounded-lg p-6 m-4 w-full min-h-[60vh] h-full flex flex-col items-center justify-center"
+            className="bg-white shadow-md rounded-lg p-6 m-4 w-full min-h-[60vh] h-full flex flex-col items-center justify-center relative"
             onClick={handleQuiz}
             disabled={quizData.live === "yes" ? true : false}
           >
-            <span className="text-xl sm:text-3xl font-bold mb-4 uppercase">{quizData.title}</span>
+            {quizData.live == "yes" && (
+              <div className="absolute top-2 right-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <div className="bg-green-600 font-bold text-white rounded-full px-5">
+                      Rules
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="min-w-72 max-w-96 p-3">
+                  <ol className="space-y-4">
+  {[
+    "Your marks are dependent on how quick and how accurate you are when answering the questions. Answering the questions at the last second is almost the same as getting it wrong.",
+    "The timer will not stop even if you click on the answer. The next question will only come when the whole time is over.",
+    "You can click the answer only once.",
+    "The first question will appear as soon as the time is over.",
+    "The leaderboard and results will appear at the end of the live quiz."
+  ].map((point, index) => (
+    <li key={index} className="text-xs text-gray-600">
+      <span className="font-bold">{index + 1}. </span>
+      {point}
+    </li>
+  ))}
+</ol>
+
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
+            <span className="text-xl sm:text-3xl font-bold mb-4 uppercase">
+              {quizData.title}
+            </span>
             {quizData.live === "yes" && !completed && (
               <span className="sm:text-xl text-lg font-semibold my-4">
                 The first question will appear in
@@ -293,7 +328,7 @@ const LobbyScreen = ({ params }) => {
               <Button
                 onClick={handleQuiz}
                 disabled={quizData.completed === "true" || isLoading}
-                className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold"
+                className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold w-full max-w-40 mt-5"
               >
                 Start
               </Button>
