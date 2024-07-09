@@ -771,7 +771,7 @@ const PageDetails = ({ params }) => {
                 </div>
               </div>
               <div className="w-full flex flex-col justify-center items-center h-full md:min-h-screen relative">
-                {!alreadyStarted && (
+                {!alreadyStarted && !challenge.challenge_id==90 && (
                   <Button
                     disabled={isLoading}
                     className="bg-blue-400 fixed z-[999999999] rounded-full text-lg border border-white/40 shadow-lg px-3 mx-auto min-w-72 h-12 md:bottom-[15%] md:left-1/2 transform md:-translate-x-1/4 md:-translate-y-1/4 bottom-[15%] left-1/2  -translate-x-1/2 translate-y-3/4"
