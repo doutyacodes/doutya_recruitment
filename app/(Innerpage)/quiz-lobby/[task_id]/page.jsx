@@ -260,11 +260,11 @@ const LobbyScreen = ({ params }) => {
                   <DropdownMenuContent className="min-w-72 max-w-96 p-3">
                   <ol className="space-y-4">
   {[
+    "You need to score atleast 50% and be in the top 20 ranks to qualify to the next round.",
     "Your marks are dependent on how quick and how accurate you are when answering the questions. Answering the questions at the last second is almost the same as getting it wrong.",
     "The timer will not stop even if you click on the answer. The next question will only come when the whole time is over.",
     "You can click the answer only once.",
     "The first question will appear as soon as the time is over.",
-    "The leaderboard and results will appear at the end of the live quiz."
   ].map((point, index) => (
     <li key={index} className="text-xs text-gray-600">
       <span className="font-bold">{index + 1}. </span>

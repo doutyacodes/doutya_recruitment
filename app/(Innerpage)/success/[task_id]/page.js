@@ -130,7 +130,7 @@ const Success = ({ params }) => {
                 </p>
               </div>
             )}
-            {user_rank && (
+            {user_rank && percentageDetails >= 50 && (
               <div>
                 <p className="text-lg text-center space-y-5 font-bold">
                   Your Rank
