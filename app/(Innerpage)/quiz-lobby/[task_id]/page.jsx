@@ -182,7 +182,8 @@ const LobbyScreen = ({ params }) => {
   }, [countdown3]);
 
   const handleQuiz = () => {
-    if (isQuizStarting) return; // Prevent multiple calls
+    // if (isQuizStarting) return; // Prevent multiple calls
+    console.log("hi")
     setIsQuizStarting(true);
 
     if (quizData) {
@@ -338,14 +339,14 @@ const LobbyScreen = ({ params }) => {
             )}
             {quizData.live === "yes" && completed &&  (
               <Button
-                onClick={handleQuiz}
-                disabled={quizData.completed === "true" || isLoading}
+                onClick={()=>gotoQuiz(quizData.challenge_id)}
+                // disabled={quizData.completed === "true"}
                 className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold w-full max-w-40 mt-5"
               >
                 Start
               </Button>
             )}
-            
+            {/* {console.log(quizData.completed)} */}
           </button>
         ) : (
           <div className="flex items-center justify-center min-h-screen">
