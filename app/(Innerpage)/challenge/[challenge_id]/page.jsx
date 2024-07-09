@@ -528,7 +528,7 @@ const PageDetails = ({ params }) => {
                 Technical Live Round
               </p>
               <p className="text-center font-semibold text-sm text-white">
-                09-07-2024 {challenge.page_type == "job" ? "08:00" : "07:00"} PM
+                09-07-2024 { challenge.challenge_id==91?"08:30":"07:00"} PM
               </p>
             </div>
           </div>
@@ -767,7 +767,7 @@ const PageDetails = ({ params }) => {
                 {!alreadyStarted && (
                   <Button
                     disabled={isLoading}
-                    className="bg-blue-400 fixed z-[999999999] rounded-full text-lg border border-white/40 shadow-lg px-3 mx-auto min-w-72 h-12 md:bottom-1/4 md:left-1/2 transform md:-translate-x-1/4 md:-translate-y-1/4 bottom-1/2 left-1/2  -translate-x-1/2 translate-y-3/4"
+                    className="bg-blue-400 fixed z-[999999999] rounded-full text-lg border border-white/40 shadow-lg px-3 mx-auto min-w-72 h-12 md:bottom-[15%] md:left-1/2 transform md:-translate-x-1/4 md:-translate-y-1/4 bottom-[15%] left-1/2  -translate-x-1/2 translate-y-3/4"
                   >
                     {challenge.page_type == "internship" ||
                     challenge.page_type == "tests" ? (
