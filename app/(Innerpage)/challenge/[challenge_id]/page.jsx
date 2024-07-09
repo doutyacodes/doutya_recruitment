@@ -452,7 +452,7 @@ const PageDetails = ({ params }) => {
                     )}
                   >
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
-                      {item4.task_variety}
+                     {item4.task_id == 145 && "LIVE -  "} {item4.task_variety}
                     </p>
                     <p className="text-center font-bold text-base text-white ">
                       {item4.task_id == 145 ? "Available on between 07:30 PM - 08:30PM  ": item4.attempted &&
