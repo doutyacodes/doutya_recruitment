@@ -258,21 +258,22 @@ const LobbyScreen = ({ params }) => {
                     </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="min-w-72 max-w-96 p-3">
-                  <ol className="space-y-4">
-  {[
-    "You need to score atleast 50% and be in the top 20 ranks to qualify to the next round.",
-    "Your marks are dependent on how quick and how accurate you are when answering the questions. Answering the questions at the last second is almost the same as getting it wrong.",
-    "The timer will not stop even if you click on the answer. The next question will only come when the whole time is over.",
-    "You can click the answer only once.",
-    "The first question will appear as soon as the time is over.",
-  ].map((point, index) => (
-    <li key={index} className="text-xs text-gray-600">
-      <span className="font-bold">{index + 1}. </span>
-      {point}
-    </li>
-  ))}
-</ol>
+                    <ol className="space-y-4">
+                      {[
+                        "The quiz will be available for participation between 7:30 PM and 8:30 PM.",
+                        " Results will be published after 8:45 PM.",
+                        "You need to score atleast 50% and be in the top 20 ranks to qualify to the next round.",
+                        "Your marks are dependent on how quick and how accurate you are when answering the questions. Answering the questions at the last second is almost the same as getting it wrong.",
 
+                        "You can click the answer only once.",
+                        "The first question will appear as soon as the time is over.",
+                      ].map((point, index) => (
+                        <li key={index} className="text-xs text-gray-600">
+                          <span className="font-bold">{index + 1}. </span>
+                          {point}
+                        </li>
+                      ))}
+                    </ol>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
