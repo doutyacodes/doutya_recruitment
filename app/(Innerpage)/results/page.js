@@ -278,19 +278,27 @@ const Results = () => {
                                 {item2.task_id == 129 ? "55%" : `50%`}
                               </TableCell>
                               <TableCell className="font-bold text-center">
-                                {item2.total_percent >= 50 && item2?.live &&
+                                {item2.total_percent >= 50 &&
+                                  item2?.live &&
                                   item2.live == "yes" &&
-                                  item2?.user_rank}
+                                  item2?.test_rank}
                               </TableCell>
-                              <TableCell className="font-bold text-center">
-                                {item2.total_percent >= 50 && item2?.live &&
-                                  item2.live == "yes" &&
+                              <TableCell
+                                className={`font-bold text-center ${
+                                  item2?.rank <= 20
+                                    ? "text-green-500"
+                                    : "text-red-500"
+                                }`}
+                              >
+                                {item2.total_percent >= 50 &&
+                                  item2?.live &&
+                                  item2.live === "yes" &&
                                   item2?.rank}
                               </TableCell>
 
                               <TableCell className="text-center">
                                 {item2.live === "yes" ? (
-                                  item2.rank >= item2.user_rank ? (
+                                  item2.rank >= item2.test_rank ? (
                                     <Link
                                       href={`/challenge/${item.challenge_id}`}
                                     >
