@@ -32,7 +32,8 @@ const LobbyScreen = ({ params }) => {
   const task_id = params.task_id;
   const { setQuizDatas } = useGlobalContext();
   const [isQuizStarting, setIsQuizStarting] = useState(false);
-
+  const [isLiveVisible, setIsLiveVisible] = useState(false);
+  const [currentTime2, setCurrentTime2] = useState(new Date());
   const visitForm = async () => {
     try {
       const formData = new URLSearchParams();
@@ -175,9 +176,9 @@ const LobbyScreen = ({ params }) => {
   }, [quizData, countdown3]);
 
   useEffect(() => {
-    if (countdown3 === 0) {
-      handleQuiz();
-    }
+    // if (countdown3 === 0) {
+    //   handleQuiz();
+    // }
   }, [countdown3]);
 
   const handleQuiz = () => {
@@ -234,6 +235,7 @@ const LobbyScreen = ({ params }) => {
     }
   };
 
+  
   return (
     <div className="w-full  min-h-[85vh]  flex flex-col items-center justify-between">
       {quizData?.icon && (
@@ -286,11 +288,11 @@ const LobbyScreen = ({ params }) => {
                 The first question will appear in
               </span>
             )}
-            {quizData.live === "yes" && completed && (
+            {/* {quizData.live === "yes" && completed && (
               <span className="text-center text-red-500 text-lg font-bold">
                 Oops!..Quiz has been already started
               </span>
-            )}
+            )} */}
             {quizData.live === "yes" && !completed && (
               <div className="flex flex-row gap-1 my-4">
                 {days > 0 && (
@@ -334,6 +336,16 @@ const LobbyScreen = ({ params }) => {
                 Start
               </Button>
             )}
+            {quizData.live === "yes" && completed &&  (
+              <Button
+                onClick={handleQuiz}
+                disabled={quizData.completed === "true" || isLoading}
+                className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold w-full max-w-40 mt-5"
+              >
+                Start
+              </Button>
+            )}
+            
           </button>
         ) : (
           <div className="flex items-center justify-center min-h-screen">
