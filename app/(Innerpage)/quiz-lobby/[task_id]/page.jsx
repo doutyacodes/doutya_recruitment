@@ -70,6 +70,7 @@ const LobbyScreen = ({ params }) => {
           console.log(response.data)
           if (response.status === 200) {
             setQuizData(response.data.challenges);
+            // console.log(response.data)
           } else {
             console.error("Failed to fetch quiz");
           }
@@ -92,7 +93,7 @@ const LobbyScreen = ({ params }) => {
 
   useEffect(() => {
     if (!quizData) return;
-
+console.log(quizData.start_time)
     const startTime = new Date(quizData.start_time);
     const timeDifferenceInSeconds = Math.floor(
       (currentTime.getTime() - startTime.getTime()) / 1000
