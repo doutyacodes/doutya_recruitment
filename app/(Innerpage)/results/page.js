@@ -168,7 +168,6 @@ const Results = () => {
               {todoData &&
                 todoData?.length > 0 &&
                 todoData.map((item, itemIndex) => {
-                  // console.log(item);
 
                   return (
                     <>
@@ -233,6 +232,8 @@ const Results = () => {
                           ) {
                             return;
                           }
+                          {                  console.log(item2);
+                          }
                           return (
                             <TableRow key={item2.number}>
                               <TableCell className="text-center">
@@ -277,24 +278,25 @@ const Results = () => {
                               <TableCell className="font-bold text-center">
                                 {item2.task_id == 129 ? "55%" : `50%`}
                               </TableCell>
-                              <TableCell className="font-bold text-center">
-                                {item2.total_percent >= 50 &&
-                                  item2?.live &&
-                                  item2.live == "yes" &&
-                                  item2?.test_rank}
-                              </TableCell>
                               <TableCell
                                 className={`font-bold text-center ${
-                                  item2?.rank <= 20
+                                  item2?.test_rank <= item2.rank
                                     ? "text-green-500"
                                     : "text-red-500"
                                 }`}
                               >
                                 {item2.total_percent >= 50 &&
                                   item2?.live &&
-                                  item2.live === "yes" &&
+                                  item2.live == "yes" &&
+                                  item2?.test_rank}
+                              </TableCell>
+                              <TableCell className="font-bold text-center">
+                                {item2.total_percent >= 50 &&
+                                  item2?.live &&
+                                  item2.live == "yes" &&
                                   item2?.rank}
                               </TableCell>
+                              
 
                               <TableCell className="text-center">
                                 {item2.live === "yes" ? (
@@ -329,7 +331,7 @@ const Results = () => {
                                     >
                                       {item2.quiz_status && (
                                         <div className={cn("bg-red-600")}>
-                                          <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+                                          <p className="text-white text-sm font-bold px-7 py-1 text-center flex rounded-full">
                                             Failed
                                           </p>
                                         </div>

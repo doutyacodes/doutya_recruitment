@@ -430,7 +430,7 @@ const PageDetails = ({ params }) => {
                           !item4.attempted &&
                           !challenge.tasks_list[index - 1].iseligibility)
                         ? "bg-gray-500"
-                        :item4.attempted && item4.task_id==145 ?"bg-blue-400 text-black"
+                        // :item4.attempted && item4.task_id==145 ?"bg-blue-400 text-black"
                         : user &&
                           compatibilityTest?.completed &&
                           isEligible &&
@@ -455,11 +455,9 @@ const PageDetails = ({ params }) => {
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
                      {item4.task_id == 145 && "LIVE -  "} {item4.task_variety}
                     </p>
-                   {item4.attempted  ?( <p className="text-center font-bold text-base text-white ">
-                      Results Pending
-                    </p>):(
+                   {(
                       <p className="text-center font-bold text-base text-white ">
-                      {item4.task_id == 145 ? "Available on between 07:30 PM - 08:30PM  ": item4.attempted &&
+                      { item4.attempted &&
                         `${item4.total_user_percent.toFixed(2)}%`}
                     </p>
                     )}
