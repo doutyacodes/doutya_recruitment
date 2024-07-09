@@ -337,9 +337,9 @@ const LobbyScreen = ({ params }) => {
                 Start
               </Button>
             )}
-            {quizData.live == "yes" && completed &&  (
+            {quizData.live === "yes" && completed &&  (
               <Button
-                onClick={()=>gotoQuiz(quizData.challenge_id)}
+                onClick={handleQuiz}
                 // disabled={quizData.completed === "true"}
                 className="px-5 py-3 bg-red-500 rounded-lg text-white font-bold w-full max-w-40 mt-5"
               >
