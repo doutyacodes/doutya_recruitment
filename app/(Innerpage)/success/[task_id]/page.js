@@ -136,7 +136,7 @@ const Success = ({ params }) => {
                   Your Rank
                 </p>
                 <p className="w-full text-center my-3 font-bold text-lg">
-                  #{user_rank}
+                Results will be published after 8:45 PM.
                 </p>
               </div>
             )}
