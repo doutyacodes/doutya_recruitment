@@ -250,7 +250,7 @@ const LobbyScreen = ({ params }) => {
           <button
             className="bg-white shadow-md rounded-lg p-6 m-4 w-full min-h-[60vh] h-full flex flex-col items-center justify-center relative"
             onClick={handleQuiz}
-            // disabled={quizData.live === "yes" ? true : false}
+            disabled={quizData.live === "yes" ? true : false}
           >
             {quizData.live == "yes" && (
               <div className="absolute top-2 right-2">
@@ -296,14 +296,16 @@ const LobbyScreen = ({ params }) => {
             )}
             {quizData.live === "yes" && !completed && (
               <div className="flex flex-row gap-1 my-4">
-                {days > 0 && (
+                {
+                days > 0 && (
                   <div className="text-center">
                     <span className="text-green-500 py-2 text-4xl font-bold">
                       {days}:
                     </span>
                     <span className="block text-sm font-medium mt-3">Days</span>
                   </div>
-                )}
+                )
+                }
                 <div className="text-center">
                   <span className="text-green-500 py-2 text-4xl font-bold">
                     {hours}:
