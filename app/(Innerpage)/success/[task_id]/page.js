@@ -130,7 +130,7 @@ const Success = ({ params }) => {
                 </p>
               </div>
             )}
-            {user_rank && percentageDetails >= 50 && (
+            {/* {user_rank && percentageDetails >= 50 && (
               <div>
                 <p className="text-lg text-center space-y-5 font-bold">
                   Your Rank
@@ -139,7 +139,7 @@ const Success = ({ params }) => {
                 Results will be published after 8:45 PM.
                 </p>
               </div>
-            )}
+            )} */}
             {types && types === "compatibility" && percentageDetails > 0 && (
               <div>
                 <p className="text-lg text-center space-y-5 font-bold">
