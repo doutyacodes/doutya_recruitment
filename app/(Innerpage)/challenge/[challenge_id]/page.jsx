@@ -453,27 +453,27 @@ const PageDetails = ({ params }) => {
                     )}
                   >
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
-                      {item4.task_variety} - {item4.task_id == 145 && " LIVE Round 1  "}
+                      {item4.task_variety} - {item4.task_id == 145 ? " LIVE Round 1  " :  item4.task_id == 146 && "LIVE Round 2 "}
+
                     </p>
-                   {/* {item4.attempted && 
-                   item4.task_id == 145  
-                   ?
-                   ( 
-                   <p className="text-center font-bold text-base text-white ">
-                      Results Will be Announced on 10-07-24 at 03:00 PM
-                    </p>):(
+                   {(
                       <p className="text-center font-bold text-base text-white ">
-                      {item4.task_id == 145 ? "Available on between 07:30 PM - 08:30PM  ": item4.attempted &&
+                      {item4.task_id == 146 ? "Available on 11-07-2024 07:00 PM  ": item4.attempted &&
                         `${item4.total_user_percent.toFixed(2)}%`}
                     </p>
-                    )} */}
-                     <p className="text-center font-bold text-base text-white ">
+                    )}
+                     {/* <p className="text-center font-bold text-base text-white ">
                       {item4.attempted &&
                         `${item4.total_user_percent.toFixed(2)}%`}
+                    </p> */}
+                    {item4.task_id==146 ? (
+                      <p className="text-center font-semibold text-sm text-white">
+                       Required Rank - Top 20
                     </p>
-                    <p className="text-center font-semibold text-sm text-white">
+                      
+                    ):(<p className="text-center font-semibold text-sm text-white">
                       Required percentage - {item4.task_percent}%
-                    </p>
+                    </p>)}
                   </div>
                 </div>
               );
@@ -548,49 +548,15 @@ const PageDetails = ({ params }) => {
               </div>
             </div>
           )}
-          {
-            challenge.challenge_id == 90 && (
-              <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
-            <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
-
-            <p className="font-bold ">
-              Round{" "}
-              {challenge?.tasks_list?.length > 0
-                ? challenge?.tasks_list?.length + value
-                : value}
-            </p>
-
-            <div
-              className={cn(
-                "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-
-                "from-gray-500 to-gray-400"
-              )}
-            >
-              <p className="text-center font-bold text-xl text-white underline uppercase">
-                {" "}
-                {challenge.challenge_id == 90 && "Technical LIVE Round 2  "}
-
-              </p>
-              <p className="text-center font-bold text-base text-white ">
-              11-07-2024 07:00 PM
-              </p>
-              <p className="text-center font-semibold text-sm text-white">
-                <span className="font-bold"> Required  Rank - Top 20
-                </span>
-              </p>
-            </div>
-          </div>
-            )
-          }
+         
           <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
             <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
 
             <p className="font-bold ">
               Round{" "}
               {challenge?.tasks_list?.length > 0
-                ? challenge?.tasks_list?.length + 1 + value
-                : 1 + value}
+                ? challenge?.tasks_list?.length +  value
+                :  value}
             </p>
 
             <div
