@@ -265,7 +265,7 @@ const LobbyScreen = ({ params }) => {
                       {[
                         `"The quiz will be available for participation between ${task_id==146 ? "7:00 PM and 8:00 PM" : "8:00 PM and 9:00 PM"}."`,
                         "The timer will not stop even if you click on the answer. The next question will only come when the whole time is over.",
-                        " Results will be published after 8:45 PM.",
+                        `Results will be published after ${task_id == 146 ? "8:45 PM" : "9:45 PM"}.`,
                         "You need to score atleast 50% and be in the top 20 ranks to qualify to the next round.",
                         "Your marks are dependent on how quick and how accurate you are when answering the questions. Answering the questions at the last second is almost the same as getting it wrong.",
 
