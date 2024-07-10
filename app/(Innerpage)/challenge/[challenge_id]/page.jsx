@@ -430,7 +430,7 @@ const PageDetails = ({ params }) => {
                           !item4.attempted &&
                           !challenge.tasks_list[index - 1].iseligibility)
                         ? "bg-gray-500"
-                        :item4.attempted && item4.task_id==145 ?"bg-blue-400 text-black"
+                        // :item4.attempted && item4.task_id==145 ?"bg-blue-400 text-black"
                         : user &&
                           compatibilityTest?.completed &&
                           isEligible &&
@@ -455,14 +455,22 @@ const PageDetails = ({ params }) => {
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
                      {item4.task_id == 145 && "LIVE -  "} {item4.task_variety}
                     </p>
-                   {item4.attempted && item4.task_id == 145  ?( <p className="text-center font-bold text-base text-white ">
+                   {/* {item4.attempted && 
+                   item4.task_id == 145  
+                   ?
+                   ( 
+                   <p className="text-center font-bold text-base text-white ">
                       Results Will be Announced on 10-07-24 at 03:00 PM
                     </p>):(
                       <p className="text-center font-bold text-base text-white ">
                       {item4.task_id == 145 ? "Available on between 07:30 PM - 08:30PM  ": item4.attempted &&
                         `${item4.total_user_percent.toFixed(2)}%`}
                     </p>
-                    )}
+                    )} */}
+                     <p className="text-center font-bold text-base text-white ">
+                      {item4.attempted &&
+                        `${item4.total_user_percent.toFixed(2)}%`}
+                    </p>
                     <p className="text-center font-semibold text-sm text-white">
                       Required percentage - {item4.task_percent}%
                     </p>
@@ -562,7 +570,7 @@ const PageDetails = ({ params }) => {
               </p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                <span className="font-bold"> Coding Round</span>
+                <span className="font-bold"> Technical Live Round</span>
               </p>
             </div>
           </div>
