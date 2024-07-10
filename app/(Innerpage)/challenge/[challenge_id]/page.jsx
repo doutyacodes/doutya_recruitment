@@ -453,7 +453,7 @@ const PageDetails = ({ params }) => {
                     )}
                   >
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
-                     {item4.task_id == 145 && "LIVE -  "} {item4.task_variety}
+                      {item4.task_variety} - {item4.task_id == 145 && " LIVE Round 1  "}
                     </p>
                    {/* {item4.attempted && 
                    item4.task_id == 145  
@@ -536,18 +536,21 @@ const PageDetails = ({ params }) => {
                   "from-gray-500 to-gray-400"
                 )}
               >
-                <p className="text-center font-bold text-xl text-white underline uppercase"></p>
+                <p className="text-center font-bold text-xl text-white underline uppercase">
+                </p>
                 <p className="text-center font-bold text-base text-white ">
                   Technical Live Round
                 </p>
                 <p className="text-center font-semibold text-sm text-white">
-                  {challenge.challenge_id == 91 ? "  10-07-2024 08:30" : " 09-07-2024 07:30"}{" "}
+                  {challenge.challenge_id == 91 ? "  11-07-2024 08:30" : " 09-07-2024 07:30"}{" "}
                   PM
                 </p>
               </div>
             </div>
           )}
-          <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
+          {
+            challenge.challenge_id == 90 && (
+              <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
             <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
 
             <p className="font-bold ">
@@ -566,7 +569,8 @@ const PageDetails = ({ params }) => {
             >
               <p className="text-center font-bold text-xl text-white underline uppercase">
                 {" "}
-                Technical
+                {challenge.challenge_id == 90 && "Technical LIVE Round 2  "}
+
               </p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
@@ -574,6 +578,8 @@ const PageDetails = ({ params }) => {
               </p>
             </div>
           </div>
+            )
+          }
           <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
             <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
 
@@ -594,7 +600,7 @@ const PageDetails = ({ params }) => {
               <p className="text-center font-bold text-xl text-white underline uppercase"></p>
               <p className="text-center font-bold text-base text-white "></p>
               <p className="text-center font-semibold text-sm text-white">
-                HR Interview
+                Final Round
               </p>
             </div>
           </div>

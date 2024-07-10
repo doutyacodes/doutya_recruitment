@@ -330,7 +330,7 @@ const LobbyScreen = ({ params }) => {
                 </div>
               </div>
             )}
-            {quizData.live === "no"  && (
+            {/* {quizData.live === "no" && ( */}
               <Button
                 onClick={handleQuiz}
                 disabled={quizData.completed === "true" || isLoading}
@@ -338,7 +338,7 @@ const LobbyScreen = ({ params }) => {
               >
                 Start
               </Button>
-            )}
+            {/* )} */}
             {/* {quizData.live === "yes" && completed &&  (
               <Button
                 onClick={handleQuiz}
