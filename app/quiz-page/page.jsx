@@ -98,18 +98,23 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (!timer) return;
+    const startTime = Date.now();
+  
     const countdown = setInterval(() => {
-      setTimer((prevTimer) => {
-        if (prevTimer <= 1) {
-          clearInterval(countdown);
-          handleTimeOut();
-          return 0;
-        }
-        return prevTimer - 1; // Decrement by 1 millisecond
-      });
-    }, 1); // Update every 1 millisecond
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(timer - elapsedTime, 0);
+  
+      setTimer(remainingTime);
+  
+      if (remainingTime === 0) {
+        clearInterval(countdown);
+        handleTimeOut();
+      }
+    }, 10); // Update every 10 milliseconds
+  
     return () => clearInterval(countdown);
   }, [timer]);
+  
   
 
   useEffect(() => {
