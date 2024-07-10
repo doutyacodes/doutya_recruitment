@@ -573,7 +573,7 @@ const PageDetails = ({ params }) => {
 
               </p>
               <p className="text-center font-bold text-base text-white ">
-              11-07-2024 07:00
+              11-07-2024 07:00 PM
               </p>
               <p className="text-center font-semibold text-sm text-white">
                 <span className="font-bold"> Required  Rank - Top 20
