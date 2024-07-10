@@ -453,12 +453,12 @@ const PageDetails = ({ params }) => {
                     )}
                   >
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
-                      {item4.task_variety} - {item4.task_id == 145 ? " LIVE Round 1  " :  item4.task_id == 146 && "LIVE Round 2 "}
+                      {item4.task_variety} {item4.task_id == 145 ? " - LIVE Round 1  " : item4.task_id == 147 ? " - LIVE Round "  : item4.task_id == 146 && " - LIVE Round 2 "}
 
                     </p>
                    {(
                       <p className="text-center font-bold text-base text-white ">
-                      {item4.task_id == 146 ? "Available on 11-07-2024 07:00 PM  ": item4.attempted &&
+                      {item4.task_id == 146 ? "Available on 11-07-2024 07:00 PM  ":item4.task_id == 147 ? "Available on 11-07-2024 08:00 PM  ": item4.attempted &&
                         `${item4.total_user_percent.toFixed(2)}%`}
                     </p>
                     )}
@@ -518,36 +518,7 @@ const PageDetails = ({ params }) => {
               />
             );
           })}
-          {challenge.challenge_id == 91 && (
-            <div className="w-full flex cursor-pointer flex-col gap-3 justify-center items-center">
-              <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
-
-              <p className="font-bold ">
-                Round{" "}
-                {challenge?.tasks_list?.length > 0
-                  ? challenge?.tasks_list?.length + value
-                  : 1 + value}
-              </p>
-
-              <div
-                className={cn(
-                  "p-3 min-h-32 justify-center duration-300 transition-all ease-in-out  items-center bg-gradient-to-r rounded-full w-full flex flex-col gap-3",
-
-                  "from-gray-500 to-gray-400"
-                )}
-              >
-                <p className="text-center font-bold text-xl text-white underline uppercase">
-                </p>
-                <p className="text-center font-bold text-base text-white ">
-                  Technical Live Round
-                </p>
-                <p className="text-center font-semibold text-sm text-white">
-                  {challenge.challenge_id == 91 ? "  11-07-2024 08:00" : " 09-07-2024 07:30"}{" "}
-                  PM
-                </p>
-              </div>
-            </div>
-          )}
+          
          
           <div className="w-full cursor-pointer flex flex-col gap-3 justify-center items-center">
             <div className=" h-12 p-[0.5px] rounded-md bg-slate-600" />
