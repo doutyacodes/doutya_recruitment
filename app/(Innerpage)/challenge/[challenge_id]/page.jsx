@@ -455,7 +455,7 @@ const PageDetails = ({ params }) => {
                     <p className="text-center font-bold tracking-wider text-xl text-white underline uppercase">
                      {item4.task_id == 145 && "LIVE -  "} {item4.task_variety}
                     </p>
-                   {item4.attempted  ?( <p className="text-center font-bold text-base text-white ">
+                   {item4.attempted && item4.task_id == 145  ?( <p className="text-center font-bold text-base text-white ">
                       Results Will be Announced on 10-07-24 at 03:00 PM
                     </p>):(
                       <p className="text-center font-bold text-base text-white ">
