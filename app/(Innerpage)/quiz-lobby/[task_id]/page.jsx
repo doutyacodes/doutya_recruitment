@@ -263,7 +263,7 @@ const LobbyScreen = ({ params }) => {
                   <DropdownMenuContent className="min-w-72 max-w-96 p-3">
                     <ol className="space-y-4">
                       {[
-                        "The quiz will be available for participation between 7:30 PM and 8:30 PM.",
+                        `"The quiz will be available for participation between ${task_id==146 ? "7:00 PM and 8:00 PM" : "8:00 PM and 9:00 PM"}."`,
                         "The timer will not stop even if you click on the answer. The next question will only come when the whole time is over.",
                         " Results will be published after 8:45 PM.",
                         "You need to score atleast 50% and be in the top 20 ranks to qualify to the next round.",
