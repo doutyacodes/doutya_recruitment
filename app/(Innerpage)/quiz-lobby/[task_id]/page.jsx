@@ -250,7 +250,7 @@ const LobbyScreen = ({ params }) => {
           <button
             className="bg-white shadow-md rounded-lg p-6 m-4 w-full min-h-[60vh] h-full flex flex-col items-center justify-center relative"
             onClick={handleQuiz}
-            disabled={quizData.live === "yes" ? true : false}
+            // disabled={quizData.live === "yes" ? true : false}
           >
             {quizData.live == "yes" && (
               <div className="absolute top-2 right-2">

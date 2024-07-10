@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { isMobile } from "react-device-detect";
+import { isMobile } from 'react-device-detect';
 
 const Results = () => {
   const [todoData, setTodoData] = useState([]);
@@ -50,10 +50,7 @@ const Results = () => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "results");
-      formData.append(
-        "devices",
-        isMobile ? "mobile devices" : "desktop devices"
-      );
+      formData.append("devices", isMobile ? 'mobile devices' : 'desktop devices');
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,
@@ -66,7 +63,7 @@ const Results = () => {
       );
 
       const result = response.data;
-      console.log(result);
+      // console.log(result)
       if (result.success) {
         console.log("success");
       } else {
@@ -154,12 +151,7 @@ const Results = () => {
                 <TableHead className="text-center">Job Title</TableHead>
                 <TableHead className="text-center">Round</TableHead>
                 <TableHead className="text-center">Your Percentage</TableHead>
-                <TableHead className="text-center">
-                  Required Percentage
-                </TableHead>
-                <TableHead className="text-center">Your Rank</TableHead>
-
-                <TableHead className="text-center">Required Rank</TableHead>
+                <TableHead className="text-center">Required Percentage</TableHead>
                 <TableHead className="text-center">Status</TableHead>
                 <TableHead className="text-center"></TableHead>
               </TableRow>
@@ -168,6 +160,7 @@ const Results = () => {
               {todoData &&
                 todoData?.length > 0 &&
                 todoData.map((item, itemIndex) => {
+                  // console.log(item);
 
                   return (
                     <>
@@ -204,22 +197,22 @@ const Results = () => {
                           </Link>
                         </TableCell>
 
-                        <TableCell className="text-center"></TableCell>
+                        <TableCell className="text-center">
+                         
+                        </TableCell>
                         <TableCell>
                           <div className="w-full flex justify-center items-center">
-                            {item.rounds[0] &&
-                              item.rounds[0].quiz_status != "ongoing" && (
-                                <div
-                                  className="duration-300 transition-all"
-                                  onClick={() => toggleCollapse(itemIndex)}
-                                >
-                                  {collapseStates[itemIndex] ? (
-                                    <ChevronUp size={20} />
-                                  ) : (
-                                    <ChevronDown size={20} />
-                                  )}
-                                </div>
+                           {item.rounds[0] &&
+                            item.rounds[0].quiz_status != "ongoing" &&( <div
+                              className="duration-300 transition-all"
+                              onClick={() => toggleCollapse(itemIndex)}
+                            >
+                              {collapseStates[itemIndex] ? (
+                                <ChevronUp size={20} />
+                              ) : (
+                                <ChevronDown size={20} />
                               )}
+                            </div>)}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -232,27 +225,23 @@ const Results = () => {
                           ) {
                             return;
                           }
-                          {                  console.log(item2);
-                          }
                           return (
                             <TableRow key={item2.number}>
                               <TableCell className="text-center">
-                                <Link href={`/challenge/${item.challenge_id}`}>
-                                  <div
-                                    className={
-                                      " relative  w-20 h-16 border rounded-lg"
-                                    }
-                                  >
-                                    <Image
-                                      src={
-                                        baseImgURL + item?.selectedMovie.image
-                                      }
-                                      fill
-                                      alt="Profile Image"
-                                      className="rounded-lg object-cover"
-                                    />
-                                  </div>
-                                </Link>
+                              <Link href={`/challenge/${item.challenge_id}`}>
+                            <div
+                              className={
+                                " relative  w-20 h-16 border rounded-lg"
+                              }
+                            >
+                              <Image
+                                src={baseImgURL + item?.selectedMovie.image}
+                                fill
+                                alt="Profile Image"
+                                className="rounded-lg object-cover"
+                              />
+                            </div>
+                          </Link>
                               </TableCell>
                               <TableCell className="text-center">
                                 {" "}
@@ -270,100 +259,35 @@ const Results = () => {
                                 Round {item2.number}
                               </TableCell>
                               <TableCell className="font-bold text-center">
-                                {item2.task_id == 129
-                                  ? item2.compatibility
-                                  : item2.total_percent.toFixed(2)}
-                                %
+                               {item2.task_id == 129 ? item2.compatibility : item2.total_percent.toFixed(2)}%
                               </TableCell>
                               <TableCell className="font-bold text-center">
-                                {item2.task_id == 129 ? "55%" : `50%`}
+                               {item2.task_id == 129 ? "55%" : `50%`}
                               </TableCell>
-                              <TableCell
-                                className={`font-bold text-center ${
-                                  item2?.test_rank <= item2.rank
-                                    ? "text-green-500"
-                                    : "text-red-500"
-                                }`}
-                              >
-                                {item2.total_percent >= 50 &&
-                                  item2?.live &&
-                                  item2.live == "yes" &&
-                                  item2?.test_rank}
-                              </TableCell>
-                              <TableCell className="font-bold text-center">
-                                {item2.total_percent >= 50 &&
-                                  item2?.live &&
-                                  item2.live == "yes" &&
-                                  item2?.rank}
-                              </TableCell>
-                              
 
                               <TableCell className="text-center">
-                                {item2.live === "yes" ? (
-                                  item2.rank >= item2.test_rank ? (
-                                    <Link
-                                      href={`/challenge/${item.challenge_id}`}
-                                    >
-                                      {item2.quiz_status && (
-                                        <div
-                                          className={cn(
-                                            "rounded-full",
-                                            item2.quiz_status === "Success"
-                                              ? "bg-green-600"
-                                              : item2.quiz_status === "ongoing"
-                                              ? "bg-orange-500"
-                                              : "bg-red-600"
-                                          )}
-                                        >
-                                          <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                                            {item2.quiz_status === "Success"
-                                              ? "Success"
-                                              : item2.quiz_status === "ongoing"
-                                              ? "Ongoing"
-                                              : "Failed"}
-                                          </p>
-                                        </div>
+                                <Link href={`/challenge/${item.challenge_id}`}>
+                                  {item2?.quiz_status && (
+                                    <div
+                                      className={cn(
+                                        " rounded-full ",
+                                        item2?.quiz_status == "Success"
+                                          ? "bg-green-600"
+                                          : item2?.quiz_status == "ongoing"
+                                          ? "bg-orange-500"
+                                          : "bg-red-600"
                                       )}
-                                    </Link>
-                                  ) : (
-                                    <Link
-                                      href={`/challenge/${item.challenge_id}`}
                                     >
-                                      {item2.quiz_status && (
-                                        <div className={cn("bg-red-600")}>
-                                          <p className="text-white text-sm font-bold px-7 py-1 text-center flex rounded-full">
-                                            Failed
-                                          </p>
-                                        </div>
-                                      )}
-                                    </Link>
-                                  )
-                                ) : (
-                                  <Link
-                                    href={`/challenge/${item.challenge_id}`}
-                                  >
-                                    {item2.quiz_status && (
-                                      <div
-                                        className={cn(
-                                          "rounded-full",
-                                          item2.quiz_status === "Success"
-                                            ? "bg-green-600"
-                                            : item2.quiz_status === "ongoing"
-                                            ? "bg-orange-500"
-                                            : "bg-red-600"
-                                        )}
-                                      >
-                                        <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
-                                          {item2.quiz_status === "Success"
-                                            ? "Success"
-                                            : item2.quiz_status === "ongoing"
-                                            ? "Ongoing"
-                                            : "Failed"}
-                                        </p>
-                                      </div>
-                                    )}
-                                  </Link>
-                                )}
+                                      <p className="text-white text-sm font-bold px-7 py-1 text-center flex">
+                                        {item2?.quiz_status == "Success"
+                                          ? "Success"
+                                          : item2?.quiz_status == "ongoing"
+                                          ? "Ongoing"
+                                          : "Failed"}
+                                      </p>
+                                    </div>
+                                  )}
+                                </Link>
                               </TableCell>
                             </TableRow>
                           );
@@ -451,29 +375,29 @@ const Results = () => {
   };
   return (
     <div className="w-full bg-gradient-to-r from-[#a3d9e3] to-[#d0f1c4] min-h-[95vh] p-3">
-      <div className="w-full max-w-[1200px] mx-auto">
-        <div className="flex justify-between items-center shadow">
-          <p
-            className={cn(
-              "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
-              toggleNav == "Jobs & Internships" && "border-b border-black"
-            )}
-            onClick={() => handleToggle("Jobs & Internships")}
-          >
-            Jobs & Internships
-          </p>
-          <p
-            className={cn(
-              "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
-              toggleNav == "Quiz" && "border-b border-black"
-            )}
-            onClick={() => handleToggle("Quiz")}
-          >
-            Quiz
-          </p>
-        </div>
-        {RenderData()}
+    <div className="w-full max-w-[1200px] mx-auto">
+      <div className="flex justify-between items-center shadow">
+        <p
+          className={cn(
+            "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+            toggleNav == "Jobs & Internships" && "border-b border-black"
+          )}
+          onClick={() => handleToggle("Jobs & Internships")}
+        >
+          Jobs & Internships
+        </p>
+        <p
+          className={cn(
+            "flex-1 text-center py-3 bg-white font-bold duration-200 ease-in-out transition-all ",
+            toggleNav == "Quiz" && "border-b border-black"
+          )}
+          onClick={() => handleToggle("Quiz")}
+        >
+          Quiz
+        </p>
       </div>
+      {RenderData()}
+    </div>
     </div>
   );
 };

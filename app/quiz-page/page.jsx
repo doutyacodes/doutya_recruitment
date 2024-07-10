@@ -29,6 +29,29 @@ const QuizPage = () => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
+  useEffect(() => {
+    const unloadListener = (e) => {
+      // Cancel the event
+      e.preventDefault();
+      // Chrome requires returnValue to be set
+      e.returnValue = '';
+
+      // Optionally, you can alert the user or perform other actions before unload
+      // alert("Are you sure you want to leave? Your progress may be lost.");
+
+      // Redirect to home or any other page
+      router.push('/');
+    };
+
+    // Add the event listener when component mounts
+    window.addEventListener('beforeunload', unloadListener);
+
+    // Clean up the event listener when component unmounts
+    return () => {
+      window.removeEventListener('beforeunload', unloadListener);
+    };
+  }, [router]);
+
   // Handle browser back and forward navigation
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -76,13 +99,14 @@ const QuizPage = () => {
         setCount_question(quizDatas2.dataQuiz.count_question);
         if (newDataQuestion.quiz_type !== "psychological" && newDataQuestion.page_type !== "language") {
           setTimer(newDataQuestion.timer * 1000); // Convert seconds to milliseconds
+          console.log(newDataQuestion.timer * 1000); // Convert seconds to milliseconds
         }
       }
       setIsLoading(false);
     };
     initializeQuizData();
   }, [currentIndex, user, router]);
-
+// {console.log(timer)}
   useEffect(() => {
     if (!dataQuestion) return;
     if (dataQuestion.type === "video" && videoRef.current) {
@@ -96,24 +120,8 @@ const QuizPage = () => {
     }
   }, [dataQuestion]);
 
-  useEffect(() => {
-    if (!timer) return;
-    const startTime = Date.now();
   
-    const countdown = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(timer - elapsedTime, 0);
   
-      setTimer(remainingTime);
-  
-      if (remainingTime === 0) {
-        clearInterval(countdown);
-        handleTimeOut();
-      }
-    }, 10); // Update every 10 milliseconds
-  
-    return () => clearInterval(countdown);
-  }, [timer]);
   
   
 
@@ -185,7 +193,26 @@ const QuizPage = () => {
 
     }
   };
-
+  useEffect(() => {
+    if (!timer) return; // Exit early if timer is not set
+  
+    let startTime = Date.now(); // Record the start time
+    let timerId = setTimeout(function tick() {
+      const elapsedTime = Date.now() - startTime; // Calculate elapsed time
+      const remainingTime = Math.max(timer - elapsedTime, 0); // Calculate remaining time
+  
+      setTimer(remainingTime); // Update the timer state with remaining time
+  
+      if (remainingTime > 0) {
+        timerId = setTimeout(tick, 50); // Schedule the next tick after 50 milliseconds
+      } else {
+        handleTimeOut(); // Call the timeout handler function when timer reaches 0
+      }
+    }, 1); // Start with a small delay
+  
+    return () => clearTimeout(timerId); // Cleanup function to clear timeout on component unmount or timer change
+  }, [timer]);
+  
   return (
     <div className="max-w-[1201px] min-h-screen overflow-x-scroll w-full mx-auto bg-blue-400 p-4" style={{ padding: "45px 20px" }}>
       {isLoading ? (
