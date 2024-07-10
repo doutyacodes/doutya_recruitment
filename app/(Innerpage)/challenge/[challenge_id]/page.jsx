@@ -542,7 +542,7 @@ const PageDetails = ({ params }) => {
                   Technical Live Round
                 </p>
                 <p className="text-center font-semibold text-sm text-white">
-                  {challenge.challenge_id == 91 ? "  11-07-2024 08:30" : " 09-07-2024 07:30"}{" "}
+                  {challenge.challenge_id == 91 ? "  11-07-2024 08:00" : " 09-07-2024 07:30"}{" "}
                   PM
                 </p>
               </div>
@@ -572,9 +572,12 @@ const PageDetails = ({ params }) => {
                 {challenge.challenge_id == 90 && "Technical LIVE Round 2  "}
 
               </p>
-              <p className="text-center font-bold text-base text-white "></p>
+              <p className="text-center font-bold text-base text-white ">
+              11-07-2024 07:00
+              </p>
               <p className="text-center font-semibold text-sm text-white">
-                <span className="font-bold"> Technical Live Round</span>
+                <span className="font-bold"> Required  Rank - Top 20
+                </span>
               </p>
             </div>
           </div>
