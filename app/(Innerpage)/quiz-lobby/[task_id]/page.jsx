@@ -183,7 +183,7 @@ const LobbyScreen = ({ params }) => {
 
   const handleQuiz = () => {
     // if (isQuizStarting) return; // Prevent multiple calls
-    console.log("hi")
+    console.log("hi");
     setIsQuizStarting(true);
 
     if (quizData) {
@@ -236,7 +236,6 @@ const LobbyScreen = ({ params }) => {
     }
   };
 
-  
   return (
     <div className="w-full  min-h-[85vh]  flex flex-col items-center justify-between">
       {quizData?.icon && (
@@ -263,12 +262,16 @@ const LobbyScreen = ({ params }) => {
                   <DropdownMenuContent className="min-w-72 max-w-96 p-3">
                     <ol className="space-y-4">
                       {[
-                        `The test starts exactly at   ${task_id==146 ? "7:00 PM " : "8:00 PM "}, 11-07-24.`,
+                        `The test starts exactly at   ${
+                          task_id == 146 ? "7:00 PM " : "8:00 PM "
+                        }, 11-07-24.`,
                         "The timer will not stop even if you click on the answer. The next question will only come when the whole time is over.",
-                        `Results will be published after ${task_id == 146 ? "8:45 PM" : "9:45 PM"}.`,
+                        `Results will be published after ${
+                          task_id == 146 ? "8:45 PM" : "9:45 PM"
+                        }.`,
                         "You need to score atleast 50% and be in the top 20 ranks to qualify to the next round.",
                         "Your marks are dependent on how quick and how accurate you are when answering the questions. Answering the questions at the last second is almost the same as getting it wrong.",
-
+                        "The results may take upto 30 minutes to get updated. Please check the results section.",
                         "You can click the answer only once.",
                         "The first question will appear as soon as the time is over.",
                       ].map((point, index) => (
@@ -297,16 +300,14 @@ const LobbyScreen = ({ params }) => {
             )}
             {quizData.live === "yes" && !completed && (
               <div className="flex flex-row gap-1 my-4">
-                {
-                days > 0 && (
+                {days > 0 && (
                   <div className="text-center">
                     <span className="text-green-500 py-2 text-4xl font-bold">
                       {days}:
                     </span>
                     <span className="block text-sm font-medium mt-3">Days</span>
                   </div>
-                )
-                }
+                )}
                 <div className="text-center">
                   <span className="text-green-500 py-2 text-4xl font-bold">
                     {hours}:
@@ -331,7 +332,7 @@ const LobbyScreen = ({ params }) => {
                 </div>
               </div>
             )}
-            {quizData.live === "no"  && (
+            {quizData.live === "no" && (
               <Button
                 onClick={handleQuiz}
                 disabled={quizData.completed === "true" || isLoading}
@@ -340,7 +341,7 @@ const LobbyScreen = ({ params }) => {
                 Start
               </Button>
             )}
-             {/* {quizData.live === "yes" && completed &&  (
+            {/* {quizData.live === "yes" && completed &&  (
               <Button
                 onClick={handleQuiz}
                 // disabled={quizData.completed === "true"}
