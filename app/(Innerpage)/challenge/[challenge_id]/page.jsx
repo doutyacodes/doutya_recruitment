@@ -458,7 +458,7 @@ const PageDetails = ({ params }) => {
                     </p>
                    {(
                       <p className="text-center font-bold text-base text-white ">
-                      {item4.task_id == 146 ? "Available on 11-07-2024 07:00 PM  ":item4.task_id == 147 ? "Available on 11-07-2024 08:00 PM  ": item4.attempted &&
+                      {item4.task_id == 146 ? "The test starts exactly at 7:00 PM , 11-07-24  ":item4.task_id == 147 ? "The test starts exactly at 8:00 PM , 11-07-24": item4.attempted &&
                         `${item4.total_user_percent.toFixed(2)}%`}
                     </p>
                     )}
