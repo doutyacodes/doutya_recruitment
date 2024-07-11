@@ -101,7 +101,7 @@ const Success = ({ params }) => {
         ) : (
           <div className="w-full h-full bg-white flex flex-col min-h-[60vh] md:min-h-[80vh] rounded-md justify-center items-center">
             {user_rank && user_rank <= 20 ? (
-              percentageDetails > 50 ? (
+              percentageDetails >= 50 ? (
                 <IoIosCheckmarkCircle size={90} color="green" />
               ) : (
                 <IoMdCloseCircle size={90} color="red" />
@@ -136,7 +136,7 @@ const Success = ({ params }) => {
                   Your Rank
                 </p>
                 <p className="w-full text-center my-3 font-bold text-lg">
-                #{user_rank}
+                {user_rank}
                 </p>
               </div>
             )}
