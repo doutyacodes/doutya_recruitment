@@ -83,7 +83,7 @@ const QuizPage = () => {
       setIsLoading(false);
     };
     fetchQuizCompleted();
-  }, [user, router]);
+  }, []);
 
   useEffect(() => {
     const initializeQuizData = async () => {
