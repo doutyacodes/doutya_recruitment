@@ -107,7 +107,11 @@ const Success = ({ params }) => {
                 <IoMdCloseCircle size={90} color="red" />
               )
             ) : (
-              <IoMdCloseCircle size={90} color="red" />
+              percentageDetails >= 50 ? (
+                <IoIosCheckmarkCircle size={90} color="green" />
+              ) : (
+                <IoMdCloseCircle size={90} color="red" />
+              )
             )}
 
             {starsDetails.stars > 0 && (
