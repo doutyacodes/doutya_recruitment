@@ -263,7 +263,7 @@ const LobbyScreen = ({ params }) => {
                   <DropdownMenuContent className="min-w-72 max-w-96 p-3">
                     <ol className="space-y-4">
                       {[
-                        `"The test starts exactly at   ${task_id==146 ? "7:00 PM " : "8:00 PM "}, 11-07-24."`,
+                        `The test starts exactly at   ${task_id==146 ? "7:00 PM " : "8:00 PM "}, 11-07-24.`,
                         "The timer will not stop even if you click on the answer. The next question will only come when the whole time is over.",
                         `Results will be published after ${task_id == 146 ? "8:45 PM" : "9:45 PM"}.`,
                         "You need to score atleast 50% and be in the top 20 ranks to qualify to the next round.",
