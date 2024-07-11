@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
-import { FaStar } from "react-icons/fa";
+import { FaInfoCircle, FaStar } from "react-icons/fa";
 
 const Success = ({ params }) => {
   const task_id = params.task_id;
@@ -100,65 +100,80 @@ const Success = ({ params }) => {
           </div>
         ) : (
           <div className="w-full h-full bg-white flex flex-col min-h-[60vh] md:min-h-[80vh] rounded-md justify-center items-center">
-            {user_rank && user_rank <= 20 ? (
-              percentageDetails >= 50 ? (
-                <IoIosCheckmarkCircle size={90} color="green" />
-              ) : (
-                <IoMdCloseCircle size={90} color="red" />
-              )
+            {percentageDetails >= 50 && fullData.live == "no" ? (
+              <IoIosCheckmarkCircle size={90} color="green" />
             ) : (
-              percentageDetails >= 50 ? (
-                <IoIosCheckmarkCircle size={90} color="green" />
-              ) : (
-                <IoMdCloseCircle size={90} color="red" />
-              )
+              fullData.live == "no" && <IoMdCloseCircle size={90} color="red" />
             )}
+            {fullData.live == "no" ? (
+              <>
+                {starsDetails.stars > 0 && (
+                  <div>
+                    <p className="text-lg text-center my-5 space-y-5 font-bold">
+                      Stars Achieved
+                    </p>
+                    <div className="flex gap-3 w-full justify-center my-4">
+                      {renderStars()}
+                    </div>
+                  </div>
+                )}
+                {types &&
+                  types !== "compatibility" &&
+                  percentageDetails > 0 && (
+                    <div>
+                      <p className="text-lg text-center space-y-5 font-bold">
+                        Your Performance
+                      </p>
+                      <p className="w-full text-center my-3 font-bold text-lg">
+                        {percentageDetails?.toFixed(2)}%
+                      </p>
+                    </div>
+                  )}
+                {user_rank && percentageDetails >= 50 && (
+                  <div>
+                    <p className="text-lg text-center space-y-5 font-bold">
+                      Your Rank
+                    </p>
+                    <p className="w-full text-center my-3 font-bold text-lg">
+                      {user_rank}
+                    </p>
+                  </div>
+                )}
+                {types &&
+                  types === "compatibility" &&
+                  percentageDetails > 0 && (
+                    <div>
+                      <p className="text-lg text-center space-y-5 font-bold">
+                        Your Compatibility with Doutya Technologies
+                      </p>
+                      <p className="w-full text-center my-3 font-bold text-lg">
+                        {percentageDetails?.toFixed(2)}%
+                      </p>
+                    </div>
+                  )}
+                {
+                  <p className=" text-black/80 p-3 text-center">
+                    {percentageDetails < 50 && fullData?.textData}
+                  </p>
+                }
+              </>
+            ) : (
+              <>
+              <div className="text-blue-400">
+              <FaInfoCircle  size={90} />
 
-            {starsDetails.stars > 0 && (
-              <div>
-                <p className="text-lg text-center my-5 space-y-5 font-bold">
-                  Stars Achieved
-                </p>
-                <div className="flex gap-3 w-full justify-center my-4">
-                  {renderStars()}
-                </div>
               </div>
-            )}
-            {types && types !== "compatibility" && percentageDetails > 0 && (
-              <div>
-                <p className="text-lg text-center space-y-5 font-bold">
-                  Your Performance
-                </p>
-                <p className="w-full text-center my-3 font-bold text-lg">
-                  {percentageDetails?.toFixed(2)}%
-                </p>
+              <div className="font-semibold text-center my-3 max-w-96">
+              The results may take upto 30 minutes to get updated. Please check the results section.
               </div>
+
+                {
+                  <p className=" text-black/80 p-3 text-center">
+                    {percentageDetails < 50 && fullData?.textData}
+                  </p>
+                }
+              </>
             )}
-            {user_rank && percentageDetails >= 50 && (
-              <div>
-                <p className="text-lg text-center space-y-5 font-bold">
-                  Your Rank
-                </p>
-                <p className="w-full text-center my-3 font-bold text-lg">
-                {user_rank}
-                </p>
-              </div>
-            )}
-            {types && types === "compatibility" && percentageDetails > 0 && (
-              <div>
-                <p className="text-lg text-center space-y-5 font-bold">
-                  Your Compatibility with Doutya Technologies
-                </p>
-                <p className="w-full text-center my-3 font-bold text-lg">
-                  {percentageDetails?.toFixed(2)}%
-                </p>
-              </div>
-            )}
-            {
-              <p className=" text-black/80 p-3 text-center">
-                {percentageDetails < 50 && fullData?.textData}
-              </p>
-            }
             <Link prefetch={false} href={`/${routes}`}>
               <Button className="bg-green-600 text-lg">
                 {types && types === "compatibility" ? "Go Home" : "Go Back"}
