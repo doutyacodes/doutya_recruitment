@@ -73,6 +73,7 @@ const QuizPage = () => {
           const response = await axios.get(
             `${baseURL}/get-quiz-completed.php?user_id=${user.id}&task_id=${quizDatas2.dataQuiz[0].task_id}`
           );
+          console.log(response.data)
           if (response.data.success) {
             router.replace("/home");
           }
