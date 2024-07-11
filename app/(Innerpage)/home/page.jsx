@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CirclePlus } from "lucide-react";
-import { isMobile } from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 import MyCompany from "../(components)/MyCompany";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,10 @@ const BuzzwallPage = () => {
       const formData = new URLSearchParams();
       formData.append("user_id", user ? user.id : null);
       formData.append("page_name", "home");
-      formData.append("devices", isMobile ? 'mobile devices' : 'desktop devices');
+      formData.append(
+        "devices",
+        isMobile ? "mobile devices" : "desktop devices"
+      );
 
       const response = await axios.post(
         `${baseURL}/page-visits.php`,
@@ -77,21 +80,20 @@ const BuzzwallPage = () => {
     }
   };
   const fetchUserPages = async () => {
-      try {
-        // Only fetch rewards if user data is available
-        const response = await axios.get(
-          `${baseURL}/get-all-user-pages.php?user_id=${user ? user.id : null}`
-        );
-// console.log(response.data)
-        if (response.data.success) {
-          setUserPages(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error while fetching pages:", error.message);
-      } finally {
-        setIsLoading(false);
+    try {
+      // Only fetch rewards if user data is available
+      const response = await axios.get(
+        `${baseURL}/get-all-user-pages.php?user_id=${user ? user.id : null}`
+      );
+      // console.log(response.data)
+      if (response.data.success) {
+        setUserPages(response.data.data);
       }
-    
+    } catch (error) {
+      console.error("Error while fetching pages:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const fetchAdd = async () => {
     try {
@@ -114,48 +116,48 @@ const BuzzwallPage = () => {
       <MyCompany />
       <div className="w-full bg-white h-4" />
       <div className="w-full max-w-[1201px] mx-auto flex">
-      <div className="hidden md:flex justify-center items-center w-56 mt-5 h-full">
-                <div className="w-full bg-white h-full rounded-md flex flex-col  items-center py-4" >
-                  <div
-                    className={cn(
-                      " relative  h-20 rounded-full w-20 justify-center items-center "
-                    )}
-                  >
-                    {user?.image?.length > 0 ? (
-                      <Image
-                        src={baseImgURL + user?.image}
-                        fill
-                        alt="Profile Image"
-                        className="rounded-full object-contain"
-                      />
-                    ):(
-                      <Image
-                        src={"/assets/images/avatar.png"}
-                        fill
-                        alt="Profile Image"
-                        className="rounded-full object-contain"
-                      />
-                    )}
-                  </div>
-                 {user &&( <div className="flex flex-col justify-center gap-4 pt-3 font-bold ">
-                    <p>{user?.name}</p>
-                  </div>
-                  )
-                  // :(
-                  //   <Button className="my-3">
-                  //   <Link prefetch={false} href="/login" className="w-full">
-                  //     Login
-                  //   </Link>
-                  // </Button>
-                  // )
-                  }
-                  
+        <div className="hidden md:flex justify-center items-center w-56 mt-5 h-full">
+          <div className="w-full bg-white h-full rounded-md flex flex-col  items-center py-4">
+            <div
+              className={cn(
+                " relative  h-20 rounded-full w-20 justify-center items-center "
+              )}
+            >
+              {user?.image?.length > 0 ? (
+                <Image
+                  src={baseImgURL + user?.image}
+                  fill
+                  alt="Profile Image"
+                  className="rounded-full object-contain"
+                />
+              ) : (
+                <Image
+                  src={"/assets/images/avatar.png"}
+                  fill
+                  alt="Profile Image"
+                  className="rounded-full object-contain"
+                />
+              )}
+            </div>
+            {
+              user && (
+                <div className="flex flex-col justify-center gap-4 pt-3 font-bold ">
+                  <p>{user?.name}</p>
                 </div>
-              </div>
+              )
+              // :(
+              //   <Button className="my-3">
+              //   <Link prefetch={false} href="/login" className="w-full">
+              //     Login
+              //   </Link>
+              // </Button>
+              // )
+            }
+          </div>
+        </div>
         <div className="w-full ">
-          
           <div className="w-full  grid grid-cols-12 gap-3 p-3 mt-2">
-            {filterChallenges?.length > 0 &&
+            {filterChallenges?.length > 0 ? (
               filterChallenges.map((item, index) => {
                 if (item.info_type === "challenge") {
                   let formattedEndDate;
@@ -198,7 +200,16 @@ const BuzzwallPage = () => {
                   );
                 }
                 return null; // This ensures a proper return value if neither condition is met
-              })}
+              })
+            ) : (
+              <div
+                className={cn(
+                  "shadow-xl text-xl font-semibold  rounded-md w-full bg-white py-3  col-span-12 min-h-72 flex justify-center items-center"
+                )}
+              >
+                No active tests at the moment.
+              </div>
+            )}
           </div>
         </div>
       </div>
