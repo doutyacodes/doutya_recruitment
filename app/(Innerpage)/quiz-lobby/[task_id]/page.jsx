@@ -176,9 +176,9 @@ const LobbyScreen = ({ params }) => {
   }, [quizData, countdown3]);
 
   useEffect(() => {
-    // if (countdown3 === 0) {
-    //   handleQuiz();
-    // }
+    if (countdown3 === 0) {
+      handleQuiz();
+    }
   }, [countdown3]);
 
   const handleQuiz = () => {
