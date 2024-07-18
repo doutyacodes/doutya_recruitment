@@ -58,7 +58,7 @@ const PageDetails = ({ params }) => {
       setChallenge_id(decryptedId);
     }
   }, [params.challenge_id]);
-  // console.log(params.challenge_id)
+  console.log(params.challenge_id)
   useEffect(() => {
     const fetchChallenge = async () => {
       let urlData = "getChallengeOne";
