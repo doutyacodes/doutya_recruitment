@@ -49,16 +49,16 @@ const PageDetails = ({ params }) => {
   
   const router = useRouter();
 
-  const challenge_ids = params.challenge_id;
-  useEffect(() => {
-    if (challenge_ids) {
-      const decryptedId = decryptId("U2FsdGVkX194O+5vIPUdFJsYjctbRapEk5uvtIi1ic0=");
-      // console.log(challenge_ids)
 
+  useEffect(() => {
+    if (params.challenge_id) {
+      // Decode the URL-encoded string before decryption
+      const decodedId = decodeURIComponent(params.challenge_id);
+      const decryptedId = decryptId(decodedId);
       setChallenge_id(decryptedId);
     }
-  }, [challenge_ids,params]);
-  // console.log(challenge_id)
+  }, [params.challenge_id]);
+  // console.log(params.challenge_id)
   useEffect(() => {
     const fetchChallenge = async () => {
       let urlData = "getChallengeOne";
