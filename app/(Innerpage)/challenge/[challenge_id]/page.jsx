@@ -55,9 +55,13 @@ const PageDetails = ({ params }) => {
       // Decode the URL-encoded string before decryption
       const decodedId = decodeURIComponent(params.challenge_id);
       const decryptedId = decryptId(decodedId);
+      console.log(decryptedId)
+
       setChallenge_id(decryptedId);
     }
   }, [params.challenge_id]);
+  console.log(challenge_id)
+
   console.log(params.challenge_id)
   useEffect(() => {
     const fetchChallenge = async () => {
@@ -126,7 +130,7 @@ const PageDetails = ({ params }) => {
     };
 
     fetchCompilibility();
-  }, [user]);
+  }, [user,challenge_id]);
   const fetchAlreadyDone = async () => {
     if (user) {
       try {
