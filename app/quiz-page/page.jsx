@@ -216,23 +216,28 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (!timer) return; // Exit early if timer is not set
-
+  
     let startTime = Date.now(); // Record the start time
-    let timerId = setTimeout(function tick() {
+    let timerId;
+  
+    const tick = () => {
       const elapsedTime = Date.now() - startTime; // Calculate elapsed time
       const remainingTime = Math.max(timer - elapsedTime, 0); // Calculate remaining time
-
+  
       setTimer(remainingTime); // Update the timer state with remaining time
-
+  
       if (remainingTime > 0) {
-        timerId = setTimeout(tick, 50); // Schedule the next tick after 50 milliseconds
+        timerId = requestAnimationFrame(tick); // Schedule the next tick
       } else {
         handleTimeOut(); // Call the timeout handler function when timer reaches 0
       }
-    }, 1); // Start with a small delay
-
-    return () => clearTimeout(timerId); // Cleanup function to clear timeout on component unmount or timer change
+    };
+  
+    timerId = requestAnimationFrame(tick); // Start the timer
+  
+    return () => cancelAnimationFrame(timerId); // Cleanup function to clear the timer on component unmount or timer change
   }, [timer]);
+  
 
   return (
     <div
@@ -291,7 +296,7 @@ const QuizPage = () => {
                       value={timer}
                       maxValue={dataQuestion?.timer * 1000} // Adjust to milliseconds
                       circleRatio={1}
-                      text={`${(timer / 1000).toFixed(0)}s`} // Display in seconds
+                      text={`${(timer / 1000).toFixed(2)}s`} // Display in seconds
                     />
                   </div>
                 )}
