@@ -60,7 +60,7 @@ const ChallengeHomeCard = ({
                 <div>
                   <p className="text-xs font-light">Deadline</p>
                   <p className="text-xs font-semibold text-slate-600">
-                  {item.challenge_id == 91 ? " 11-07-24 08:00 PM": " 11-07-24 07:00 PM"}, 
+                  {formattedEndDate}
                   </p>
                 </div>
                 {item.page_type && item.page_type !== "tests" ? (

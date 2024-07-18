@@ -122,7 +122,7 @@ const slug = generateSlug(item.page_title);
             <div>
               <p className="text-xs md:text-sm  font-light">Deadline</p>
               <p className="text-xs md:text-sm  font-extrabold text-slate-600">
-             {item.challenge_id == 91 ? " 11-07-24 08:00 PM": " 11-07-24 07:00 PM"}, 
+             {formattedEndDate}
               </p>
             </div>
             <div>
