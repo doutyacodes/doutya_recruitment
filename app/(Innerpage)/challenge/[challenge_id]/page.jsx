@@ -110,7 +110,7 @@ const PageDetails = ({ params }) => {
     fetchChallenge();
     fetchData();
     // console.log(challenge.task_id)
-  }, [alreadyStarted]);
+  }, [alreadyStarted,challenge_id]);
   useEffect(() => {
     const fetchCompilibility = async () => {
       if (user) {
