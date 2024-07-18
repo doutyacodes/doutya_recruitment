@@ -53,8 +53,7 @@ const PageDetails = ({ params }) => {
   useEffect(() => {
     if (params.challenge_id) {
       // Decode the URL-encoded string before decryption
-      const decodedId = decodeURIComponent(params.challenge_id);
-      const decryptedId = decryptId(decodedId);
+      const decryptedId = decryptId(params.challenge_id);
       console.log(decryptedId)
 
       setChallenge_id(decryptedId);
