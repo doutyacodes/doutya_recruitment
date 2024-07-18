@@ -5,6 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useAppSelector } from "@/lib/hooks";
 import { FaStar } from "react-icons/fa";
+import { encryptId } from "@/app/encryption";
 
 const ChallengeHomeCard = ({
   item,
@@ -27,7 +28,7 @@ const ChallengeHomeCard = ({
   return (
     <Link
       prefetch={false}
-      href={`/challenge/${item.challenge_id}`}
+      href={`/challenge/${encryptId(item.challenge_id)}`}
       className={cn("shadow-xl rounded-md max-md:w-76 md:min-w-96 bg-white ")}
     >
       <div>

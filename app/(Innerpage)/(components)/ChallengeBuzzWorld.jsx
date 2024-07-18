@@ -6,6 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useAppSelector } from "@/lib/hooks";
 import { FaStar } from "react-icons/fa";
+import { encryptId } from "@/app/encryption";
 const ChallengeBuzzWorld = ({
   item,
   formattedDate,
@@ -82,9 +83,9 @@ const slug = generateSlug(item.page_title);
         href={
           inTodo
             ? user
-              ? `/rounds/${item.challenge_id}`
-              : `/challenge/${item.challenge_id}`
-            : `/challenge/${item.challenge_id}`
+              ? `/rounds/${encryptId(item.challenge_id)}`
+              : `/challenge/${encryptId(item.challenge_id)}`
+            : `/challenge/${encryptId(item.challenge_id)}`
         }
         className=" rounded-md  min-w-72 "
       >

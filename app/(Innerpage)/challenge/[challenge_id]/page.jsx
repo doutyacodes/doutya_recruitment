@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import MyCompany from "../../(components)/MyCompany";
+import { decryptId } from "@/app/encryption";
 const PageDetails = ({ params }) => {
   const user = useAppSelector((state) => state.auth.user);
   // const user = { id: 24 };
@@ -44,9 +45,20 @@ const PageDetails = ({ params }) => {
   const [selectedMovie, setSelectedMovie] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEligible, setIsEligible] = useState(true);
+  const [challenge_id, setChallenge_id] = useState(null);
+  
   const router = useRouter();
 
-  const challenge_id = params.challenge_id;
+  const challenge_ids = params.challenge_id;
+  useEffect(() => {
+    if (challenge_ids) {
+      const decryptedId = decryptId("U2FsdGVkX194O+5vIPUdFJsYjctbRapEk5uvtIi1ic0=");
+      // console.log(challenge_ids)
+
+      setChallenge_id(decryptedId);
+    }
+  }, [challenge_ids,params]);
+  // console.log(challenge_id)
   useEffect(() => {
     const fetchChallenge = async () => {
       let urlData = "getChallengeOne";

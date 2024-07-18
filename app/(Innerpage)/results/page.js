@@ -21,6 +21,7 @@ import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { isMobile } from 'react-device-detect';
+import { encryptId } from "@/app/encryption";
 
 const Results = () => {
   const [todoData, setTodoData] = useState([]);
@@ -170,7 +171,7 @@ const Results = () => {
                     <>
                       <TableRow key={itemIndex}>
                         <TableCell className="text-center">
-                          <Link href={`/challenge/${item.challenge_id}`}>
+                          <Link href={`/challenge/${encryptId(item.challenge_id)}`}>
                             <div
                               className={
                                 " relative  w-20 h-16 border rounded-lg"
@@ -187,7 +188,7 @@ const Results = () => {
                         </TableCell>
                         <TableCell className="text-center">
                           {" "}
-                          <Link href={`/challenge/${item.challenge_id}`}>
+                          <Link href={`/challenge/${encryptId(item.challenge_id)}`}>
                             {item?.selectedMovie.title}
                           </Link>
                         </TableCell>
@@ -196,7 +197,7 @@ const Results = () => {
                           colSpan={2}
                         >
                           {" "}
-                          <Link href={`/challenge/${item.challenge_id}`}>
+                          <Link href={`/challenge/${encryptId(item.challenge_id)}`}>
                             {item?.title}
                           </Link>
                         </TableCell>
@@ -234,7 +235,7 @@ const Results = () => {
                           return (
                             <TableRow key={item2.number}>
                               <TableCell className="text-center">
-                                <Link href={`/challenge/${item.challenge_id}`}>
+                                <Link href={`/challenge/${encryptId(item.challenge_id)}`}>
                                   <div
                                     className={
                                       " relative  w-20 h-16 border rounded-lg"
@@ -253,13 +254,13 @@ const Results = () => {
                               </TableCell>
                               <TableCell className="text-center">
                                 {" "}
-                                <Link href={`/challenge/${item.challenge_id}`}>
+                                <Link href={`/challenge/${encryptId(item.challenge_id)}`}>
                                   {item?.selectedMovie.title}
                                 </Link>
                               </TableCell>
                               <TableCell className="font-bold text-center">
                                 {" "}
-                                <Link href={`/challenge/${item.challenge_id}`}>
+                                <Link href={`/challenge/${encryptId(item.challenge_id)}`}>
                                   {item2?.title}
                                 </Link>
                               </TableCell>
@@ -299,7 +300,7 @@ const Results = () => {
                                 {item2.live === "yes" ? (
                                   item2.rank >= item2.test_rank ? (
                                     <Link
-                                      href={`/challenge/${item.challenge_id}`}
+                                      href={`/challenge/${encryptId(item.challenge_id)}`}
                                     >
                                       {item2.quiz_status && (
                                         <div
@@ -324,7 +325,7 @@ const Results = () => {
                                     </Link>
                                   ) : (
                                     <Link
-                                      href={`/challenge/${item.challenge_id}`}
+                                      href={`/challenge/${encryptId(item.challenge_id)}`}
                                     >
                                       {item2.quiz_status && (
                                         <div className={cn("bg-red-600")}>
@@ -337,7 +338,7 @@ const Results = () => {
                                   )
                                 ) : (
                                   <Link
-                                    href={`/challenge/${item.challenge_id}`}
+                                    href={`/challenge/${encryptId(item.challenge_id)}`}
                                   >
                                     {item2.quiz_status && (
                                       <div
