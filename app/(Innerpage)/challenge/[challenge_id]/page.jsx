@@ -64,7 +64,8 @@ const PageDetails = ({ params }) => {
   console.log(params.challenge_id)
   useEffect(() => {
     const fetchChallenge = async () => {
-      let urlData = "getChallengeOne";
+      if(challenge_id){
+        let urlData = "getChallengeOne";
 
       try {
         setIsLoading(true);
@@ -102,6 +103,7 @@ const PageDetails = ({ params }) => {
         console.error("Error while fetching challenges:", error.message);
       } finally {
         setIsLoading(false);
+      }
       }
     };
 
